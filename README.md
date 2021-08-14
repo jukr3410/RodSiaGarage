@@ -1,6 +1,6 @@
 # rodsiagarage
 
-The application for garage.
+A new Flutter project.
 
 ## Getting Started
 
