@@ -15,6 +15,7 @@ class GarageApi {
     final url = '$baseUrl/garage-id/$id';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
+      print(response);
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
