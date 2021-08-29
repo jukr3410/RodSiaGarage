@@ -38,6 +38,7 @@ dependencies:
   shimmer: ^2.0.0
   top_snackbar_flutter: ^1.0.0
   flushbar: ^1.10.4
+  toast: ^0.1.5
 
 dev_dependencies:
   flutter_test:

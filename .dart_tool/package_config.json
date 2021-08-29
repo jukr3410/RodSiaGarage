@@ -440,6 +440,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "toast",
+      "rootUri": "file:///Users/jaturong/Library/flutter/.pub-cache/hosted/pub.dartlang.org/toast-0.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "top_snackbar_flutter",
       "rootUri": "file:///Users/jaturong/Library/flutter/.pub-cache/hosted/pub.dartlang.org/top_snackbar_flutter-1.0.0",
       "packageUri": "lib/",
@@ -488,7 +494,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-08-28T15:33:05.121866Z",
+  "generated": "2021-08-29T08:48:09.539773Z",
   "generator": "pub",
   "generatorVersion": "2.13.4"
 }
