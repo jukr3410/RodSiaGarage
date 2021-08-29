@@ -1,11 +1,17 @@
-//api base url
-//dev localhost api
 import 'package:flutter/material.dart';
 
+// api base url
+// dev localhost api
 final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
-//final baseUrlConstant = '';
+// final baseUrlConstant = '';
+
+// router path
+const REGISTER_ROUTE = "/register";
+const LOGIN_ROUTE = "/login";
+const EDIT_GARAGE_ROUTE = "/edit_garage";
+const ADD_SERVICE_ROUTE = "/add_service";
 
 // color that use in app
 const textColorBlack = Color(0xff38454C);
