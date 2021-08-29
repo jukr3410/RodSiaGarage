@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rodsiagarage">
    <application
-        android:label="rodsiagarage"
+        android:label="RODSIA Garage"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
