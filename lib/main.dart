@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/appbarGarage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/moreInfoRequestPage.dart';
+import 'package:logging/logging.dart';
 import 'package:rodsiagarage/router.dart';
 import 'package:logging/logging.dart';
 
