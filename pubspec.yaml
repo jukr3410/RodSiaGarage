@@ -43,6 +43,8 @@ dependencies:
   logging: ^1.0.1
   lite_rolling_switch: ^0.1.1
   flutter_switch: ^0.3.2
+  flutter_native_splash: ^1.2.1
+  fswitch: ^1.1.2
 
 
 dev_dependencies:
@@ -82,6 +84,7 @@ flutter:
     - assets/images/icon-desc.png
     - assets/images/icon-call.png
     - assets/images/icon-message.png
+    - assets/launcher/ic_launcher.png
     
   
   # An image asset can refer to one or more resolution-specific "variants", see

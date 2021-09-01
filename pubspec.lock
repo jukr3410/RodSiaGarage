@@ -237,6 +237,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.2"
+  flutter_native_splash:
+    dependency: "direct main"
+    description:
+      name: flutter_native_splash
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1"
   flutter_switch:
     dependency: "direct main"
     description:
@@ -256,6 +263,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  fswitch:
+    dependency: "direct main"
+    description:
+      name: fswitch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
   getwidget:
     dependency: "direct main"
     description:
@@ -548,6 +562,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
+  universal_io:
+    dependency: transitive
+    description:
+      name: universal_io
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:

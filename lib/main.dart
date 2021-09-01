@@ -2,11 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:rodsiagarage/constants.dart';
-import 'package:rodsiagarage/global_widgets/appbarGarage.dart';
+import 'package:rodsiagarage/global_widgets/appbarGarage.dart' as _appbar;
+import 'package:rodsiagarage/global_widgets/splash.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/moreInfoRequestPage.dart';
 import 'package:logging/logging.dart';
 import 'package:rodsiagarage/router.dart';
 import 'package:logging/logging.dart';
+import 'package:fswitch/fswitch.dart';
 
 void main() {
   _setupLogging();
@@ -21,15 +23,22 @@ class RodSiaGarageApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Kanit'),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(appBar: _appBar
+    return FutureBuilder(
+        future: Init.instance.initialize(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return MaterialApp(home: Splash());
+          } else
+            return MaterialApp(
+              theme: ThemeData(fontFamily: 'Kanit'),
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(appBar: _appBar
 
-          // body: MoreInfoRequestPage(),
-          ),
-      // onGenerateRoute: router.generateRoute,
-    );
+                  // body: MoreInfoRequestPage(),
+                  ),
+              // onGenerateRoute: router.generateRoute,
+            );
+        });
   }
 }
 
@@ -74,17 +83,36 @@ AppBar _appBar = AppBar(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 65),
       child: Container(
         alignment: Alignment.center,
-        child: LiteRollingSwitch(
-          value: true,
-          textOn: 'Online',
-          textOff: 'Offline',
-          colorOn: Colors.green,
-          colorOff: Colors.blueGrey,
-          iconOn: Icons.online_prediction_rounded,
-          iconOff: Icons.power_settings_new,
-          onChanged: (value) {
-            print('turned ${(value) ? 'on' : 'off'}');
-          },
+        child: Row(
+          children: [
+            // LiteRollingSwitch(
+            //   value: true,
+            //   textOn: '  Online',
+            //   textOff: '  Offline',
+            //   colorOn: Colors.green,
+            //   colorOff: Colors.blueGrey,
+            //   // iconOn: Icons.online_prediction_rounded,
+            //   // iconOff: Icons.power_settings_new,
+            //   onChanged: (value) {
+            //     print('turned ${(value) ? 'on' : 'off'}');
+            //   },
+            // ),
+            FSwitch(
+              open: true,
+              height: 25,
+              width: 70,
+              onChanged: (v) {},
+              closeChild: Text(
+                'Offline',
+                style: TextStyle(fontSize: 12),
+              ),
+              openChild: Text(
+                'Online',
+                style: TextStyle(fontSize: 12),
+              ),
+              openColor: Colors.green,
+            ),
+          ],
         ),
       ),
     ),
