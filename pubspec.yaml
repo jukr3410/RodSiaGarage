@@ -39,14 +39,9 @@ dependencies:
   top_snackbar_flutter: ^1.0.0
   flushbar: ^1.10.4
   toast: ^0.1.5
-<<<<<<< HEAD
-  flutter_svg: ^0.22.0
-  # flutter_switch: ^0.0.2
-=======
   rxdart: ^0.27.1
   logging: ^1.0.1
 
->>>>>>> 5827df92a0513b356fe095d77e712d24b98984d2
 
 dev_dependencies:
   flutter_test:
