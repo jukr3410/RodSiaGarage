@@ -206,12 +206,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "flutter_svg",
-      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.22.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "flutter_test",
       "rootUri": "file:///C:/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -332,18 +326,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "path_drawing",
-      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.5.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "path_parsing",
-      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/path_parsing-0.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "pedantic",
       "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.1",
       "packageUri": "lib/",
@@ -376,6 +358,12 @@
     {
       "name": "pubspec_parse",
       "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/pubspec_parse-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -512,7 +500,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-09-01T04:58:11.732269Z",
+  "generated": "2021-09-01T14:39:32.365183Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

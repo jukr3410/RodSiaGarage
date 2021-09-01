@@ -1,23 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:getwidget/components/toggle/gf_toggle.dart';
-import 'package:getwidget/getwidget.dart';
+// import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/appbarGarage.dart';
-import 'package:rodsiagarage/global_widgets/bottomBar.dart';
-import 'package:rodsiagarage/request_service_feature/widgets/alertRequestService.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/moreInfoRequestPage.dart';
-=======
-import 'package:logging/logging.dart';
->>>>>>> 5827df92a0513b356fe095d77e712d24b98984d2
 import 'package:rodsiagarage/router.dart';
+import 'package:logging/logging.dart';
 
 void main() {
   _setupLogging();
   Bloc.observer = GarageBlocObserver();
   runApp(RodSiaGarageApp(router: AppRouter()));
-}
+} 
 
 class RodSiaGarageApp extends StatelessWidget {
   final AppRouter router;
@@ -27,8 +21,30 @@ class RodSiaGarageApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Kanit'),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   backgroundColor: primaryColor,
+        //   actions: [
+        //     LiteRollingSwitch(
+        //       value: true,
+        //       textOn: 'active',
+        //       textOff: 'inactive',
+        //       colorOn: Colors.deepOrange,
+        //       colorOff: Colors.blueGrey,
+        //       iconOn: Icons.lightbulb_outline,
+        //       iconOff: Icons.power_settings_new,
+        //       onChanged: (bool state) {
+        //         print('turned ${(state) ? 'on' : 'off'}');
+        //       },
+        //     ),
+        //     TextButton(
+        //         onPressed: () {},
+        //         child: ImageIcon(AssetImage('assets/images/icon-notify.png'))),
+        //   ],
+        // ),
         body: MoreInfoRequestPage(),
       ),
       // onGenerateRoute: router.generateRoute,

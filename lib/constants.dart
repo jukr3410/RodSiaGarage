@@ -115,7 +115,6 @@ const tLocationThai = 'ตำแหน่ง:';
 const tProblemThai = 'ปัญหา:';
 
 //Tracking Status
-
 const trackingStatus = [
   'กำลังเตรียมของ',
   'กำลังเดินทาง',
