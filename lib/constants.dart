@@ -14,9 +14,9 @@ const EDIT_GARAGE_ROUTE = "/edit_garage";
 const ADD_SERVICE_ROUTE = "/add_service";
 
 // font size
-const fontSizeLarge = 16.0;
-const fontSizeMedium = 14.0;
-const fontSizeLow = 12.0;
+const fontSizeLarge = 20.0;
+const fontSizeMedium = 16.0;
+const fontSizeLow = 14.0;
 
 // color that use in app
 const textColorBlack = Color(0xff38454C);

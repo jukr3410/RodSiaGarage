@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-// import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/appbarGarage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/moreInfoRequestPage.dart';
@@ -12,7 +12,7 @@ void main() {
   _setupLogging();
   Bloc.observer = GarageBlocObserver();
   runApp(RodSiaGarageApp(router: AppRouter()));
-} 
+}
 
 class RodSiaGarageApp extends StatelessWidget {
   final AppRouter router;
@@ -24,30 +24,10 @@ class RodSiaGarageApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Kanit'),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        // appBar: AppBar(
-        //   centerTitle: true,
-        //   backgroundColor: primaryColor,
-        //   actions: [
-        //     LiteRollingSwitch(
-        //       value: true,
-        //       textOn: 'active',
-        //       textOff: 'inactive',
-        //       colorOn: Colors.deepOrange,
-        //       colorOff: Colors.blueGrey,
-        //       iconOn: Icons.lightbulb_outline,
-        //       iconOff: Icons.power_settings_new,
-        //       onChanged: (bool state) {
-        //         print('turned ${(state) ? 'on' : 'off'}');
-        //       },
-        //     ),
-        //     TextButton(
-        //         onPressed: () {},
-        //         child: ImageIcon(AssetImage('assets/images/icon-notify.png'))),
-        //   ],
-        // ),
-        body: MoreInfoRequestPage(),
-      ),
+      home: Scaffold(appBar: _appBar
+
+          // body: MoreInfoRequestPage(),
+          ),
       // onGenerateRoute: router.generateRoute,
     );
   }
@@ -85,3 +65,34 @@ void _setupLogging() {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
 }
+
+AppBar _appBar = AppBar(
+  // centerTitle: true,
+  backgroundColor: primaryColor,
+  actions: [
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 65),
+      child: Container(
+        alignment: Alignment.center,
+        child: LiteRollingSwitch(
+          value: true,
+          textOn: 'Online',
+          textOff: 'Offline',
+          colorOn: Colors.green,
+          colorOff: Colors.blueGrey,
+          iconOn: Icons.online_prediction_rounded,
+          iconOff: Icons.power_settings_new,
+          onChanged: (value) {
+            print('turned ${(value) ? 'on' : 'off'}');
+          },
+        ),
+      ),
+    ),
+    TextButton(
+        onPressed: () {},
+        child: ImageIcon(
+          AssetImage('assets/images/icon-notify.png'),
+          color: textColorBlack,
+        )),
+  ],
+);

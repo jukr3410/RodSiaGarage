@@ -237,6 +237,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.2"
+  flutter_switch:
+    dependency: "direct main"
+    description:
+      name: flutter_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -326,6 +333,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.4"
+  lite_rolling_switch:
+    dependency: "direct main"
+    description:
+      name: lite_rolling_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   logging:
     dependency: "direct main"
     description:
