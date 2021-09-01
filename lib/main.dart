@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:getwidget/components/toggle/gf_toggle.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiagarage/constants.dart';
@@ -7,9 +8,13 @@ import 'package:rodsiagarage/global_widgets/appbarGarage.dart';
 import 'package:rodsiagarage/global_widgets/bottomBar.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/alertRequestService.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/moreInfoRequestPage.dart';
+=======
+import 'package:logging/logging.dart';
+>>>>>>> 5827df92a0513b356fe095d77e712d24b98984d2
 import 'package:rodsiagarage/router.dart';
 
 void main() {
+  _setupLogging();
   Bloc.observer = GarageBlocObserver();
   runApp(RodSiaGarageApp(router: AppRouter()));
 }
@@ -55,4 +60,11 @@ class GarageBlocObserver extends BlocObserver {
     print('$error, $stackTrace');
     super.onError(bloc, error, stackTrace);
   }
+}
+
+void _setupLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
 }
