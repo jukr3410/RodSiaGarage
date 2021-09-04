@@ -84,7 +84,9 @@ flutter:
     - assets/images/icon-desc.png
     - assets/images/icon-call.png
     - assets/images/icon-message.png
+    - assets/images/icon-moreOption.png
     - assets/launcher/ic_launcher.png
+    - assets/images/icon-location-requestCard.png
     
   
   # An image asset can refer to one or more resolution-specific "variants", see

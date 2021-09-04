@@ -4,6 +4,7 @@ import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/add_service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
+import 'package:rodsiagarage/global_widgets/homePage.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 
@@ -20,6 +21,11 @@ class AppRouter {
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => AddServiceBloc(),
                 child: AddServiceScreen()));
+      case HOMEPAGE_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: HomePage()));
       default:
         return null;
     }
