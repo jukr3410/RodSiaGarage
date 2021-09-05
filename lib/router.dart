@@ -5,6 +5,7 @@ import 'package:rodsiagarage/core/repository/service_repository.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/add_service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
+import 'package:rodsiagarage/global_widgets/homePage.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 
@@ -39,6 +40,11 @@ class AppRouter {
       case EDIT_SERVICE_ROUTE:
         return MaterialPageRoute(
             builder: (_) => Center(child: Text("Edit service")));
+      case HOMEPAGE_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: HomePage()));
       default:
         return MaterialPageRoute(
             builder: (_) => Center(child: Text("Invalid Route")));

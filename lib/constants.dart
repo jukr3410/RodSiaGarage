@@ -18,6 +18,7 @@ const ADD_SERVICE_ROUTE = "/add_service";
 const EDIT_SERVICE_ROUTE = "/edit_service";
 const HISTORY_ROUTE = "/history";
 const HISTORY_INFO_ROUTE = "/history_info";
+const HOMEPAGE_ROUTE = "/homepage";
 
 // font size
 const fontSizeLarge = 20.0;
@@ -49,12 +50,22 @@ const boxShadow = BoxShadow(
 const borderRadiusHight = BorderRadius.all(Radius.circular(25));
 const borderRadiusMedium = BorderRadius.all(Radius.circular(10));
 const borderRadiusLow = BorderRadius.all(Radius.circular(5));
+
+// borderRadiusOnlyBottom
 const borderRadiusLowOnlyBottom = BorderRadius.only(
     bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5));
 const borderRadiusMediumOnlyBottom = BorderRadius.only(
     bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10));
 const borderRadiusHightOnlyBottom = BorderRadius.only(
     bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25));
+
+// borderRadiusOnlyTop
+const borderRadiusLowOnlyTop = BorderRadius.only(
+    topLeft: Radius.circular(5), topRight: Radius.circular(5));
+const borderRadiusMediumOnlyTop = BorderRadius.only(
+    topLeft: Radius.circular(10), topRight: Radius.circular(10));
+const borderRadiusHightOnlyTop = BorderRadius.only(
+    topLeft: Radius.circular(25), topRight: Radius.circular(25));
 
 // card stlye
 const cardWidthMedium = 320.0;
@@ -95,8 +106,15 @@ const mLoading = "loading";
 const mNotFound = "not found!";
 
 // src string for set widget
+String tImageAsset(String imageName) {
+  return 'assets/images/icon-' + imageName + '.png';
+}
+
+const tUpdateTrackingStatus = 'คุณต้องการอัพเดตใช้ไหม?';
 const tOKThai = 'ตกลง';
+const tBackToHomePage = 'กลับสู่หน้าหลัก';
 const tServiceThai = 'บริการ';
+const tFinishProvideService = 'การให้บริการเสร็จสิ้นแล้ว!';
 const tMoreInfoThai = 'ดูรายละเอียดเพิ่มเติม';
 const tConfirmSuccessThai = 'ยืนยันเสร็จสิ้นการบริการ';
 const tServiceOfGarageThai = 'บริการของร้าน';
