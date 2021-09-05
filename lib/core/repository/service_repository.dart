@@ -18,4 +18,12 @@ class ServiceRepository {
   Future<bool> addService({required Service service}) async {
     return await serviceApi.addService(service);
   }
+
+  Future<bool> updateService({required Service service}) async {
+    return await serviceApi.updateService(service);
+  }
+
+  Future<bool> deleteService({required String serviceId}) async {
+    return await serviceApi.deleteService(serviceId);
+  }
 }

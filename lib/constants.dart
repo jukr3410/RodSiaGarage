@@ -8,10 +8,16 @@ final baseUrlConstant = "http://localhost:3000/api";
 // production api
 //final baseUrlConstant = '';
 // router path
-const REGISTER_ROUTE = "/register";
 const LOGIN_ROUTE = "/login";
+const ADD_NUMBER_ROUTE = "/add_number";
+const OTP_ROUTE = "/otp";
+const REGISTER_ROUTE = "/register";
 const EDIT_GARAGE_ROUTE = "/edit_garage";
+const SERVICE_LIST_ROUTE = "/service_list";
 const ADD_SERVICE_ROUTE = "/add_service";
+const EDIT_SERVICE_ROUTE = "/edit_service";
+const HISTORY_ROUTE = "/history";
+const HISTORY_INFO_ROUTE = "/history_info";
 
 // font size
 const fontSizeLarge = 20.0;

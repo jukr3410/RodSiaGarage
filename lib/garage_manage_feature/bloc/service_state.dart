@@ -8,3 +8,19 @@ abstract class ServiceState extends Equatable {
 }
 
 class ServiceInitial extends ServiceState {}
+
+class ServicesLoading extends ServiceState {}
+
+class ServicesLoadSuccess extends ServiceState {
+  final List<Service> services;
+
+  const ServicesLoadSuccess({required this.services});
+
+  @override
+  List<Object> get props => [services];
+
+  @override
+  String toString() => 'ServicesLoadSuccess { services: $services }';
+}
+
+class ServicesError extends ServiceState {}
