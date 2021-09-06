@@ -15,6 +15,7 @@ import 'package:rodsiagarage/login_feature/bloc/login_bloc.dart';
 import 'package:rodsiagarage/login_feature/widgets/login.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
+import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -66,7 +67,9 @@ class AppRouter {
       //       builder: (_) => BlocProvider(
       //           create: (BuildContext context) => RegisterBloc(),
       //           child: HomePage()));
-
+      case TRACKING_REQUEST_ROUTE:
+        return MaterialPageRoute(builder: (_) => TrackingRequestPage());
+        
       default:
         return MaterialPageRoute(
             builder: (_) => Center(child: Text("Invalidate Route!!")));

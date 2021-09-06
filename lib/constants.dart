@@ -19,10 +19,11 @@ const EDIT_SERVICE_ROUTE = "/edit_service";
 const HISTORY_ROUTE = "/history";
 const HISTORY_INFO_ROUTE = "/history_info";
 const MAIN_ROUTE = "/app";
+const TRACKING_REQUEST_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
 
 // font size
-const fontSizeLarge = 20.0;
+const fontSizeLarge = 18.0;
 const fontSizeMedium = 16.0;
 const fontSizeLow = 14.0;
 
@@ -41,6 +42,10 @@ const bgCodeColor = '#F2F4F6';
 const primaryCodeColor = '#FECE2F';
 
 const cardColor = Colors.white;
+
+// color status
+const redStatus = Colors.red;
+const greenStatus = Colors.green;
 
 // Style
 const boxShadow = BoxShadow(
@@ -113,6 +118,7 @@ String tImageAsset(String imageName) {
 
 const tUpdateTrackingStatus = 'คุณต้องการอัพเดตใช้ไหม?';
 const tOKThai = 'ตกลง';
+const tInSeriveThai = 'กำลังให้บริการ';
 const tBackToHomePage = 'กลับสู่หน้าหลัก';
 const tServiceThai = 'บริการ';
 const tFinishProvideService = 'การให้บริการเสร็จสิ้นแล้ว!';
@@ -138,6 +144,7 @@ const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
 const tProblemThai = 'ปัญหา:';
+const tEstimateDuration = 'ระยะเวลาประมาณ:';
 
 //Tracking Status
 const trackingStatus = [

@@ -13,7 +13,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
     return Row(
       children: [
         Image.asset(
-          image,
+          tImageAsset(image),
           width: 20,
         ),
         SizedBox(
@@ -35,7 +35,9 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
   TextStyle _textStyleSmall = TextStyle(
     fontSize: fontSizeLow,
   );
-  TextStyle _textStyleBig = TextStyle(fontSize: fontSizeLarge);
+  TextStyle _textStyleBig =
+      TextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.w400);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -58,20 +60,56 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                 padding: const EdgeInsets.all(defualtPaddingLow),
                 child: Row(
                   children: [
-                    SizedBox(
-                      width: 10,
+                    Flexible(
+                      flex: 7,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Image.asset(
+                            tImageAsset('profile2'),
+                            width: 27,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            child: RichText(
+                                overflow: TextOverflow.ellipsis,
+                                strutStyle: StrutStyle(
+                                  fontSize: 5,
+                                ),
+                                text: TextSpan(
+                                  text: 'BMW center',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: fontSizeLarge,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Kanit'),
+                                )),
+                          )
+                        ],
+                      ),
                     ),
-                    Image.asset(
-                      'assets/images/icon-profile2.png',
-                      width: 23,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'John Rider',
-                      style: _textStyleBig,
-                    ),
+                    // Expanded(
+                    //   flex: 3,
+                    //   child: Row(
+                    //     children: [
+                    //       CircleAvatar(
+                    //         backgroundColor: greenStatus,
+                    //         maxRadius: 5,
+                    //       ),
+                    //       SizedBox(
+                    //         width: 5,
+                    //       ),
+                    //       Text(
+                    //         'กำลังเตรียมตัว',
+                    //         style: TextStyle(fontSize: 12),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -84,23 +122,48 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                   Expanded(
                     flex: 9,
                     child: Container(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: defualtPaddingLow,
-                          ),
-                          _textInfo(
-                              'Honda civic 1.6L', 'assets/images/icon-car.png'),
-                          _textInfo('2.5 กิโลเมตร',
-                              'assets/images/icon-distance.png'),
-                          _textInfo('ถนนพระราม 2 ซอยท่าข้าม 20',
-                              'assets/images/icon-location2.png'),
-                          _textInfo('ตอนนี้รถเป็นอะไรก็ไม่รู้ สตาร์ทไม่ติด',
-                              'assets/images/icon-desc.png'),
-                          SizedBox(
-                            height: defualtPaddingLow,
-                          ),
-                        ],
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: defualtPaddingMedium,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  tEstimateDuration,
+                                ),
+                                Text(
+                                  '10.20 - 10.35',
+                                  style: _textStyleBig,
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: defualtPaddingMedium,
+                            ),
+                            _textInfo(
+                              'Honda civic 1.6L',
+                              'car',
+                            ),
+                            _textInfo(
+                              '2.5 กิโลเมตร',
+                              'distance',
+                            ),
+                            _textInfo(
+                              'ถนนพระราม 2 ซอยท่าข้าม 20',
+                              'location2',
+                            ),
+                            _textInfo(
+                              'ตอนนี้รถเป็นอะไรก็ไม่รู้ สตาร์ทไม่ติด',
+                              'desc',
+                            ),
+                            SizedBox(
+                              height: defualtPaddingLow,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -108,8 +171,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                     flex: 1,
                     child: Container(
                       alignment: Alignment.topCenter,
-                      child: Image.asset(
-                          'assets/images/icon-location-requestCard.png'),
+                      child: Image.asset(tImageAsset('location-requestCard')),
                     ),
                   )
                 ],
@@ -119,15 +181,14 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                    icon: ImageIcon(AssetImage('assets/images/icon-call.png')),
+                    icon: ImageIcon(AssetImage(tImageAsset('call'))),
                     onPressed: () {}),
                 SizedBox(
                   width: 100,
                 ),
                 IconButton(
-                    icon:
-                        ImageIcon(AssetImage('assets/images/icon-message.png')),
-                    onPressed: () {})
+                    icon: ImageIcon(AssetImage(tImageAsset('message'))),
+                    onPressed: () {}),
               ],
             )
           ],
