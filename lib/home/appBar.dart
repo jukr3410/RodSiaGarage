@@ -4,12 +4,12 @@ import 'package:fswitch/fswitch.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupBackHomePage.dart';
 
-class HomeScreen extends StatefulWidget {
+class CustomAppBar extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _CustomAppBarState createState() => _CustomAppBarState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

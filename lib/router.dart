@@ -10,7 +10,7 @@ import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
 import 'package:rodsiagarage/global_widgets/homePage.dart';
 import 'package:rodsiagarage/home/app.dart';
 import 'package:rodsiagarage/home/bloc/home_bloc.dart';
-import 'package:rodsiagarage/home/homeScreen.dart';
+import 'package:rodsiagarage/home/appBar.dart';
 import 'package:rodsiagarage/login_feature/bloc/login_bloc.dart';
 import 'package:rodsiagarage/login_feature/widgets/login.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
@@ -31,7 +31,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => HomeBloc(),
-                child: HomeScreen()));
+                child: CustomAppBar()));
 
       case LOGIN_ROUTE:
         return MaterialPageRoute(
