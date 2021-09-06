@@ -7,7 +7,10 @@ import 'package:rodsiagarage/core/repository/service_repository.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/add_service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
+import 'package:rodsiagarage/garage_manage_feature/widgets/editService.dart';
+import 'package:rodsiagarage/garage_manage_feature/widgets/serviceList.dart';
 import 'package:rodsiagarage/global_widgets/homePage.dart';
+import 'package:rodsiagarage/global_widgets/invalidRoute.dart';
 import 'package:rodsiagarage/home/app.dart';
 import 'package:rodsiagarage/home/bloc/home_bloc.dart';
 import 'package:rodsiagarage/home/appBar.dart';
@@ -19,6 +22,7 @@ import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
+    print("Route: $settings");
     switch (settings.name) {
       case "/":
         return MaterialPageRoute(
@@ -51,6 +55,13 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => Center(child: Text("Edit garage info")));
 
+      case SERVICE_LIST_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ServiceBloc(serviceRepository: ServiceRepository()),
+                child: ServiceListScreen()));
+
       case ADD_SERVICE_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -60,7 +71,10 @@ class AppRouter {
 
       case EDIT_SERVICE_ROUTE:
         return MaterialPageRoute(
-            builder: (_) => Center(child: Text("Edit service")));
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ServiceBloc(serviceRepository: ServiceRepository()),
+                child: EditServiceScreen()));
 
       // case HOMEPAGE_ROUTE:
       //   return MaterialPageRoute(
@@ -71,9 +85,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
         
       default:
-        return MaterialPageRoute(
-            builder: (_) => Center(child: Text("Invalidate Route!!")));
-        ;
+        return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
     }
   }
 }
