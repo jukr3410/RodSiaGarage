@@ -23,6 +23,7 @@ const HOMEPAGE_ROUTE = "/homepage";
 
 // font size
 const fontSizeLarge = 20.0;
+const fontSizeSemiLarge = 18.0;
 const fontSizeMedium = 16.0;
 const fontSizeLow = 14.0;
 
@@ -37,8 +38,13 @@ const textColorRed = Color(0xffDA5B49);
 const primaryColor = Color(0xffFECE2F);
 const colorGray = Color(0xffC4C4C4);
 const bgColor = Color(0xffF2F4F6);
+const bgColorRed = Color(0xffDA5B49);
 const bgCodeColor = '#F2F4F6';
 const primaryCodeColor = '#FECE2F';
+
+const iconColorBlack = Color(0xff38454C);
+const iconColorWhite = Colors.white;
+const iconColorRed = Color(0xffDA5B49);
 
 const cardColor = Colors.white;
 
@@ -138,6 +144,7 @@ const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
 const tProblemThai = 'ปัญหา:';
+const tServiceGarage = 'บริการของร้าน';
 
 //Tracking Status
 const trackingStatus = [
