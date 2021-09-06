@@ -26,22 +26,11 @@ class RodSiaGarageApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Init.instance.initialize(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return MaterialApp(home: Splash());
-          } else
-            return MaterialApp(
-              theme: ThemeData(fontFamily: 'Kanit'),
-              debugShowCheckedModeBanner: false,
-              home: Scaffold(
-                appBar: _appBar,
-                body: AlertPopupBackHomePage(),
-              ),
-              // onGenerateRoute: router.generateRoute,
-            );
-        });
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'Kanit'),
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: router.generateRoute,
+    );
   }
 }
 
@@ -78,52 +67,52 @@ void _setupLogging() {
   });
 }
 
-AppBar _appBar = AppBar(
-  // centerTitle: true,
-  backgroundColor: primaryColor,
-  actions: [
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 65),
-      child: Container(
-        alignment: Alignment.center,
-        child: Row(
-          children: [
-            // LiteRollingSwitch(
-            //   value: true,
-            //   textOn: '  Online',
-            //   textOff: '  Offline',
-            //   colorOn: Colors.green,
-            //   colorOff: Colors.blueGrey,
-            //   // iconOn: Icons.online_prediction_rounded,
-            //   // iconOff: Icons.power_settings_new,
-            //   onChanged: (value) {
-            //     print('turned ${(value) ? 'on' : 'off'}');
-            //   },
-            // ),
-            FSwitch(
-              open: true,
-              height: 25,
-              width: 70,
-              onChanged: (v) {},
-              closeChild: Text(
-                'Offline',
-                style: TextStyle(fontSize: 12),
-              ),
-              openChild: Text(
-                'Online',
-                style: TextStyle(fontSize: 12),
-              ),
-              openColor: Colors.green,
-            ),
-          ],
-        ),
-      ),
-    ),
-    TextButton(
-        onPressed: () {},
-        child: ImageIcon(
-          AssetImage('assets/images/icon-notify.png'),
-          color: textColorBlack,
-        )),
-  ],
-);
+// AppBar _appBar = AppBar(
+//   // centerTitle: true,
+//   backgroundColor: primaryColor,
+//   actions: [
+//     Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 65),
+//       child: Container(
+//         alignment: Alignment.center,
+//         child: Row(
+//           children: [
+//             // LiteRollingSwitch(
+//             //   value: true,
+//             //   textOn: '  Online',
+//             //   textOff: '  Offline',
+//             //   colorOn: Colors.green,
+//             //   colorOff: Colors.blueGrey,
+//             //   // iconOn: Icons.online_prediction_rounded,
+//             //   // iconOff: Icons.power_settings_new,
+//             //   onChanged: (value) {
+//             //     print('turned ${(value) ? 'on' : 'off'}');
+//             //   },
+//             // ),
+//             FSwitch(
+//               open: true,
+//               height: 25,
+//               width: 70,
+//               onChanged: (v) {},
+//               closeChild: Text(
+//                 'Offline',
+//                 style: TextStyle(fontSize: 12),
+//               ),
+//               openChild: Text(
+//                 'Online',
+//                 style: TextStyle(fontSize: 12),
+//               ),
+//               openColor: Colors.green,
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//     TextButton(
+//         onPressed: () {},
+//         child: ImageIcon(
+//           AssetImage('assets/images/icon-notify.png'),
+//           color: textColorBlack,
+//         )),
+//   ],
+// );

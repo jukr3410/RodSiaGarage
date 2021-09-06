@@ -18,6 +18,7 @@ const ADD_SERVICE_ROUTE = "/add_service";
 const EDIT_SERVICE_ROUTE = "/edit_service";
 const HISTORY_ROUTE = "/history";
 const HISTORY_INFO_ROUTE = "/history_info";
+const MAIN_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
 
 // font size

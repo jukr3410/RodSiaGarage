@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/repository/garage_repository.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/add_service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
 import 'package:rodsiagarage/global_widgets/homePage.dart';
+import 'package:rodsiagarage/home/app.dart';
+import 'package:rodsiagarage/home/bloc/home_bloc.dart';
+import 'package:rodsiagarage/home/homeScreen.dart';
+import 'package:rodsiagarage/login_feature/bloc/login_bloc.dart';
+import 'package:rodsiagarage/login_feature/widgets/login.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 
@@ -15,39 +22,54 @@ class AppRouter {
       case "/":
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: RegisterScreen()));
+                create: (BuildContext context) =>
+                    AuthenticationBloc(garageRepository: GarageRepository())
+                      ..add(AppStarted()),
+                child: App()));
+
+      case MAIN_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => HomeBloc(),
+                child: HomeScreen()));
+
+      case LOGIN_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (BuildContext context) => LoginBloc(),
+                  child: LoginScreen(),
+                ));
+
       case REGISTER_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RegisterBloc(),
                 child: RegisterScreen()));
+
       case EDIT_GARAGE_ROUTE:
         return MaterialPageRoute(
             builder: (_) => Center(child: Text("Edit garage info")));
+
       case ADD_SERVICE_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
                     ServiceBloc(serviceRepository: ServiceRepository()),
                 child: AddServiceScreen()));
-      case ADD_SERVICE_ROUTE:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) =>
-                    ServiceBloc(serviceRepository: ServiceRepository()),
-                child: AddServiceScreen()));
+
       case EDIT_SERVICE_ROUTE:
         return MaterialPageRoute(
             builder: (_) => Center(child: Text("Edit service")));
-      case HOMEPAGE_ROUTE:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: HomePage()));
+
+      // case HOMEPAGE_ROUTE:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //           create: (BuildContext context) => RegisterBloc(),
+      //           child: HomePage()));
+
       default:
         return MaterialPageRoute(
-            builder: (_) => Center(child: Text("Invalid Route")));
+            builder: (_) => Center(child: Text("Invalidate Route!!")));
         ;
     }
   }
