@@ -9,7 +9,7 @@ class ServiceApi {
 
   Future<List<Service>> getServiceByGarage({required String garageId}) async {
     List<Service> services = [];
-    final url = '$baseUrl/garage/:$garageId/services';
+    final url = '$baseUrl/garage/$garageId/services';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       print(response);

@@ -24,3 +24,13 @@ class ServicesLoadSuccess extends ServiceState {
 }
 
 class ServicesError extends ServiceState {}
+
+class AddServiceError extends ServiceState {
+  final String error;
+
+  AddServiceError({required this.error});
+}
+
+class AddingService extends ServiceState {}
+
+class ServiceAdded extends ServiceState {}

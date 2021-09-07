@@ -151,6 +151,9 @@ const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
 const tProblemThai = 'ปัญหา:';
 const tEstimateDuration = 'ระยะเวลาประมาณ:';
+const tServiceGarage = 'บริการของร้าน';
+const tAddService = 'เพิ่มบริการ';
+const tEditService = 'แก้ไขบริการ';
 
 //Tracking Status
 const trackingStatus = [

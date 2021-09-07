@@ -4,7 +4,6 @@ import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/repository/garage_repository.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
-import 'package:rodsiagarage/garage_manage_feature/bloc/add_service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/editService.dart';
@@ -59,7 +58,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
-                    ServiceBloc(serviceRepository: ServiceRepository()),
+                    ServiceBloc(serviceRepository: ServiceRepository())
+                      ..add(ServiceLoad()),
                 child: ServiceListScreen()));
 
       case ADD_SERVICE_ROUTE:
@@ -83,7 +83,7 @@ class AppRouter {
       //           child: HomePage()));
       case TRACKING_REQUEST_ROUTE:
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
-        
+
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
     }
