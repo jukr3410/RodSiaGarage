@@ -58,8 +58,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
-                    ServiceBloc(serviceRepository: ServiceRepository())
-                      ..add(ServiceLoad()),
+                    ServiceBloc(serviceRepository: ServiceRepository()),
                 child: ServiceListScreen()));
 
       case ADD_SERVICE_ROUTE:
@@ -67,7 +66,9 @@ class AppRouter {
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
                     ServiceBloc(serviceRepository: ServiceRepository()),
-                child: AddServiceScreen()));
+                child: AddServiceScreen(
+                  isEditing: false,
+                )));
 
       case EDIT_SERVICE_ROUTE:
         return MaterialPageRoute(

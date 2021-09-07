@@ -154,6 +154,9 @@ const tEstimateDuration = 'ระยะเวลาประมาณ:';
 const tServiceGarage = 'บริการของร้าน';
 const tAddService = 'เพิ่มบริการ';
 const tEditService = 'แก้ไขบริการ';
+const tServiceName = 'ชื่อบริการ';
+const tServiceDesc = 'คำอธิบาย';
+const tServiceType = 'ประเภทบริการ';
 
 //Tracking Status
 const trackingStatus = [

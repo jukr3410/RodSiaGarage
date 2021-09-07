@@ -18,7 +18,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   @override
   void initState() {
-    _serviceBloc = BlocProvider.of<ServiceBloc>(context);
+    _serviceBloc = BlocProvider.of<ServiceBloc>(context)..add(ServiceLoad());
     super.initState();
   }
 
@@ -63,6 +63,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   body() {
     return Container(
+      margin: EdgeInsets.all(16.0),
       child: BlocConsumer<ServiceBloc, ServiceState>(
         listener: (context, state) {
           if (state is ServicesLoading) {
@@ -91,7 +92,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               state is ServicesLoading && _services.isEmpty) {
             return Center(
                 child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: CircularProgressIndicator(),
             ));
           } else if (state is ServicesLoadSuccess) {
@@ -125,7 +126,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     return GestureDetector(
       child: Card(
         elevation: 3,
-        margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        margin: new EdgeInsets.symmetric(vertical: 8.0),
         color: cardColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,7 +151,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     service.name,
                     style: new TextStyle(
                         fontSize: fontSizeSemiLarge,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         color: textColorBlack),
                   ),
                   Container(
@@ -160,12 +161,12 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                           service.serviceType.name,
                           style: new TextStyle(
                               fontSize: fontSizeLow,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.w600,
                               color: textColorBlack),
                         ),
                       ])),
                   Container(
-                    margin: new EdgeInsets.only(top: 4),
+                    margin: new EdgeInsets.only(top: 0),
                     child: Text(
                       service.description,
                       overflow: TextOverflow.ellipsis,
