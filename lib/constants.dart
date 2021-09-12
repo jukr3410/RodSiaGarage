@@ -111,11 +111,12 @@ const defualtPaddingHight = 30.0;
 const defualtPaddingLow = 10.0;
 
 // message, wording
-const mError = "Service unvalidable, please try agian.";
-const mNoGarages = "no garages";
+const mError = "เกิดข้อผิดพลาด, โปรลองอีกครั้ง";
+const mNoGarages = "ไม่พบร้าน";
 const mNoMoreGarages = "no more garages";
-const mLoading = "loading";
-const mNotFound = "not found!";
+const mLoading = "กำลังโหลด";
+const mNotFound = "ไม่พบ!";
+const mServiceAdded = "เพิ่มบริการเรียบร้อย";
 
 // src string for set widget
 String tImageAsset(String imageName) {
