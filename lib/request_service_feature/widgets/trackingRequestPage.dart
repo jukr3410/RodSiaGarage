@@ -22,7 +22,10 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: primaryColor,
-        title: Text(tInSeriveThai),
+        title: Text(
+          tInSeriveThai,
+          style: TextStyle(color: textColorBlack),
+        ),
       ),
       backgroundColor: bgColor,
       body: Column(

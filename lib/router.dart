@@ -77,11 +77,6 @@ class AppRouter {
                     ServiceBloc(serviceRepository: ServiceRepository()),
                 child: EditServiceScreen()));
 
-      // case HOMEPAGE_ROUTE:
-      //   return MaterialPageRoute(
-      //       builder: (_) => BlocProvider(
-      //           create: (BuildContext context) => RegisterBloc(),
-      //           child: HomePage()));
       case TRACKING_REQUEST_ROUTE:
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
 

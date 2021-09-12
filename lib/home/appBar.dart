@@ -74,11 +74,20 @@ class _CustomAppBarState extends State<CustomAppBar> {
               navigateToService();
             },
             child: Text("Service")),
+        TextButton(
+            onPressed: () {
+              trackingRequestService();
+            },
+            child: Text('Tracking')),
       ],
     );
   }
 
   void navigateToService() {
     Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
+  }
+
+  void trackingRequestService() {
+    Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE);
   }
 }
