@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
-import 'package:rodsiagarage/core/models/service_type.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/core/repository/service_api.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
 import 'package:rodsiagarage/main.dart';

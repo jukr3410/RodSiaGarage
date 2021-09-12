@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiagarage/constants.dart';
-import 'package:rodsiagarage/core/models/service_type.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
 
 import '../../main.dart';
 

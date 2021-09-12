@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:rodsiagarage/core/models/garage_model.dart';
-import 'package:rodsiagarage/core/models/service_type.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
 
 Service serviceFromJson(String str) => Service.fromJson(json.decode(str));
 

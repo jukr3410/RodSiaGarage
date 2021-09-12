@@ -19,6 +19,8 @@ import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
 
+import 'core/models/service_model.dart';
+
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     print("Route: $settings");
@@ -69,11 +71,12 @@ class AppRouter {
                 child: AddServiceScreen()));
 
       case EDIT_SERVICE_ROUTE:
+        Service service = settings.arguments as Service;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
                     ServiceBloc(serviceRepository: ServiceRepository()),
-                child: EditServiceScreen()));
+                child: EditServiceScreen(service: service)));
 
       // case HOMEPAGE_ROUTE:
       //   return MaterialPageRoute(

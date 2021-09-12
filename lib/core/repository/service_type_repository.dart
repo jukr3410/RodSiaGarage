@@ -1,4 +1,4 @@
-import 'package:rodsiagarage/core/models/service_type.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/core/repository/service_type_api.dart';
 
 class ServiceTypeRepository {

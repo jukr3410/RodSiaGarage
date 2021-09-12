@@ -5,7 +5,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
-import 'package:rodsiagarage/core/models/service_type.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
