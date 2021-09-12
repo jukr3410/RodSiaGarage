@@ -7,6 +7,8 @@ abstract class ServiceEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ServiceInitializeEvent extends ServiceEvent {}
+
 class ServiceLoad extends ServiceEvent {}
 
 class ServiceAdd extends ServiceEvent {
@@ -18,7 +20,7 @@ class ServiceAdd extends ServiceEvent {
   List<Object> get props => [service];
 
   @override
-  String toString() => 'ServiceAdd {service: $service}';
+  String toString() => 'ServiceAdd {service: ${service.toJson()}}';
 }
 
 class ServiceUpdate extends ServiceEvent {
