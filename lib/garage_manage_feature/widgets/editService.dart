@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/service_model.dart';
 
-class EditServiceScreen extends StatelessWidget {
+@immutable
+class EditServiceScreen extends StatefulWidget {
+  Service service;
+  EditServiceScreen({Key? key, required this.service}) : super(key: key);
+
+  @override
+  _EditServiceScreenState createState() => _EditServiceScreenState();
+}
+
+class _EditServiceScreenState extends State<EditServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

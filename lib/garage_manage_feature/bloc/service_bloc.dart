@@ -1,15 +1,24 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
+import 'package:rodsiagarage/core/repository/service_api.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
+import 'package:rodsiagarage/main.dart';
 
 part 'service_event.dart';
 part 'service_state.dart';
 
 class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   final ServiceRepository serviceRepository;
+  StreamSubscription? _servicesSubscription;
+
+  ServiceApi serviceApi = ServiceApi();
 
   ServiceBloc({required this.serviceRepository}) : super(ServiceInitial());
 
@@ -27,6 +36,8 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       yield* _mapServiceUpdateToState(event);
     } else if (event is ServiceDelete) {
       yield* _mapServiceDeleteToState(event);
+    } else if (event is ServiceInitializeEvent) {
+      yield ServiceInitial();
     }
   }
 
@@ -43,7 +54,30 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   }
 
   Stream<ServiceState> _mapServiceAddToState(ServiceAdd event) async* {
-    serviceRepository.addService(service: event.service);
+    try {
+      yield ServicesLoading();
+      event.service.serviceType = ServiceType(
+          id: "61265f79f7b19f6ca9064b7e",
+          name: "name",
+          description: "description");
+
+      event.service.garage = Garage(
+          address: Address(
+              addressDesc: '', geolocation: Geolocation(lat: '', long: '')),
+          images: [],
+          id: this.mockGarageId,
+          name: "",
+          phone: "",
+          email: "",
+          password: "",
+          otp: "",
+          validatePhone: true);
+
+      await this.serviceRepository.addService(service: event.service);
+      yield ServiceAdded();
+    } catch (e) {
+      yield ServicesError();
+    }
   }
 
   Stream<ServiceState> _mapServiceUpdateToState(ServiceUpdate event) async* {
@@ -52,5 +86,11 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
   Stream<ServiceState> _mapServiceDeleteToState(ServiceDelete event) async* {
     serviceRepository.deleteService(serviceId: event.service.id);
+  }
+
+  @override
+  Future<void> close() {
+    _servicesSubscription?.cancel();
+    return super.close();
   }
 }

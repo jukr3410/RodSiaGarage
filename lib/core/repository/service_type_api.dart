@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiagarage/constants.dart';
-import 'package:rodsiagarage/core/models/service_type.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
+
+import '../../main.dart';
 
 class ServiceTypeApi {
   final baseUrl = baseUrlConstant;
@@ -14,7 +16,7 @@ class ServiceTypeApi {
     final url = '$baseUrl/service-types';
     final response = await httpClient.get(Uri.parse(url));
     if (response.statusCode != 200) {
-      print(response);
+      logger.e(response);
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body) as List;

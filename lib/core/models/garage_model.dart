@@ -4,58 +4,51 @@
 
 import 'dart:convert';
 
-Garage userFromJson(String str) => Garage.fromJson(json.decode(str));
+Garage garageFromJson(String str) => Garage.fromJson(json.decode(str));
 
-String userToJson(Garage data) => json.encode(data.toJson());
+String garageToJson(Garage data) => json.encode(data.toJson());
 
 class Garage {
   Garage({
-    required this.address,
-    required this.openingHour,
-    required this.images,
+    this.address,
+    this.openingHour,
+    this.images,
     required this.id,
     required this.name,
     required this.phone,
     required this.email,
     required this.password,
-    required this.otp,
+    this.otp,
     required this.validatePhone,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
-  Address address;
-  OpeningHour openingHour;
-  List<dynamic> images;
+  Address? address;
+  OpeningHour? openingHour;
+  List<dynamic>? images;
   String id;
   String name;
   String phone;
   String email;
   String password;
-  String otp;
+  String? otp;
   bool validatePhone;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
-        address: Address.fromJson(json["address"]),
-        openingHour: OpeningHour.fromJson(json["openingHour"]),
-        images: List<dynamic>.from(json["images"].map((x) => x)),
-        id: json["_id"],
-        name: json["name"],
-        phone: json["phone"],
-        email: json["email"],
-        password: json["password"],
-        otp: json["otp"],
-        validatePhone: json["validatePhone"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-      );
+      address: Address.fromJson(json["address"]),
+      openingHour: OpeningHour.fromJson(json["openingHour"]),
+      images: List<dynamic>.from(json["images"].map((x) => x)),
+      id: json["_id"],
+      name: json["name"],
+      phone: json["phone"],
+      email: json["email"],
+      password: json["password"],
+      otp: json["otp"],
+      validatePhone: json["validatePhone"]);
 
   Map<String, dynamic> toJson() => {
-        "address": address.toJson(),
-        "openingHour": openingHour.toJson(),
-        "images": List<dynamic>.from(images.map((x) => x)),
+        "address": address!.toJson(),
+        "openingHour": openingHour!.toJson(),
+        "images": List<dynamic>.from(images!.map((x) => x)),
         "_id": id,
         "name": name,
         "phone": phone,
@@ -63,8 +56,6 @@ class Garage {
         "password": password,
         "otp": otp,
         "validatePhone": validatePhone,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
       };
 }
 

@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
+import 'package:logger/logger.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiagarage/router.dart';
 
 void main() {
-  _setupLogging();
   Bloc.observer = GarageBlocObserver();
   runApp(RodSiaGarageApp(router: AppRouter()));
 }
@@ -54,9 +53,6 @@ class GarageBlocObserver extends BlocObserver {
   }
 }
 
-void _setupLogging() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((rec) {
-    print('${rec.level.name}: ${rec.time}: ${rec.message}');
-  });
-}
+var logger = Logger(
+  printer: PrettyPrinter(),
+);

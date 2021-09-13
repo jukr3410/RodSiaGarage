@@ -14,7 +14,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   ScrollController scrollController = ScrollController();
   late ServiceBloc _serviceBloc;
 
-  final List<Service> _services = [];
+  List<Service> _services = [];
 
   @override
   void initState() {
@@ -41,7 +41,8 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
           color: iconColorBlack,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          navigateToMain();
+
           // Let's create a new instance of the home page
           // Navigator.pushReplacement(
           //   context,
@@ -158,7 +159,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                       margin: new EdgeInsets.only(top: 4),
                       child: Row(children: [
                         Text(
-                          service.serviceType.name,
+                          service.serviceType!.name,
                           style: new TextStyle(
                               fontSize: fontSizeLow,
                               fontWeight: FontWeight.w600,
@@ -185,13 +186,20 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         ),
       ),
       onTap: () {
-        Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
+        //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
+        navigateToServiceEdit();
       },
     );
   }
 
-  void navigateToAddService() {
-    Navigator.pushNamed(context, ADD_SERVICE_ROUTE);
+  void navigateToMain() {
+    Navigator.pop(context);
+  }
+
+  Future<void> navigateToAddService() async {
+    await Navigator.pushNamed(context, ADD_SERVICE_ROUTE);
+    this._services = [];
+    _serviceBloc..add(ServiceLoad());
   }
 
   void navigateToServiceEdit() {

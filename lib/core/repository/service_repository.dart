@@ -16,7 +16,7 @@ class ServiceRepository {
   }
 
   Future<bool> addService({required Service service}) async {
-    return await serviceApi.addService(service);
+    return await serviceApi.addService(service: service);
   }
 
   Future<bool> updateService({required Service service}) async {

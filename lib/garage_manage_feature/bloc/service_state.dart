@@ -20,7 +20,7 @@ class ServicesLoadSuccess extends ServiceState {
   List<Object> get props => [services];
 
   @override
-  String toString() => 'ServicesLoadSuccess { services: $services }';
+  String toString() => 'ServicesLoadSuccess { services: ${services.toList()} }';
 }
 
 class ServicesError extends ServiceState {}
