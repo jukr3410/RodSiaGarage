@@ -22,4 +22,10 @@ class GarageRepository {
   Future<bool> updateGarage({required Garage garage}) async {
     return await garageApi.updateGarage(garage);
   }
+
+  Future<bool> updateOpenStatusGarage(
+      {required Garage garage, required bool openStatus}) async {
+    return await garageApi.updateOpenStatusGarage(
+        garage: garage, openStatus: openStatus);
+  }
 }
