@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
+
 Garage garageFromJson(String str) => Garage.fromJson(json.decode(str));
 
 String garageToJson(Garage data) => json.encode(data.toJson());
@@ -61,41 +63,21 @@ class Garage {
 
 class Address {
   Address({
-    required this.geolocation,
+    required this.geoLocation,
     required this.addressDesc,
   });
 
-  Geolocation geolocation;
+  GeoLocation geoLocation;
   String addressDesc;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-        geolocation: Geolocation.fromJson(json["geolocation"]),
+        geoLocation: GeoLocation.fromJson(json["geoLocation"]),
         addressDesc: json["addressDesc"],
       );
 
   Map<String, dynamic> toJson() => {
-        "geolocation": geolocation.toJson(),
+        "geolocation": geoLocation.toJson(),
         "addressDesc": addressDesc,
-      };
-}
-
-class Geolocation {
-  Geolocation({
-    required this.lat,
-    required this.long,
-  });
-
-  String lat;
-  String long;
-
-  factory Geolocation.fromJson(Map<String, dynamic> json) => Geolocation(
-        lat: json["lat"],
-        long: json["long"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "lat": lat,
-        "long": long,
       };
 }
 

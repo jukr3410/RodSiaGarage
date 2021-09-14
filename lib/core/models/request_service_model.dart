@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/user_model.dart';
 
@@ -93,25 +94,5 @@ class Car {
         "type": type,
         "year": year,
         "fuelType": fuelType,
-      };
-}
-
-class GeoLocation {
-  GeoLocation({
-    this.lat,
-    this.long,
-  });
-
-  String? lat;
-  String? long;
-
-  factory GeoLocation.fromJson(Map<String, dynamic> json) => GeoLocation(
-        lat: json["lat"],
-        long: json["long"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "lat": lat,
-        "long": long,
       };
 }

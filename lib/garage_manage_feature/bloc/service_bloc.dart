@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/core/repository/service_api.dart';
@@ -63,7 +64,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
       event.service.garage = Garage(
           address: Address(
-              addressDesc: '', geolocation: Geolocation(lat: '', long: '')),
+              addressDesc: '', geoLocation: GeoLocation(lat: '', long: '')),
           images: [],
           id: this.mockGarageId,
           name: "",
