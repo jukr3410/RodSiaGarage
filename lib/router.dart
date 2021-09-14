@@ -4,7 +4,9 @@ import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/repository/garage_repository.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
+import 'package:rodsiagarage/core/repository/service_type_repository.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
+import 'package:rodsiagarage/garage_manage_feature/bloc/service_type_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/editService.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/serviceList.dart';
@@ -66,20 +68,28 @@ class AppRouter {
 
       case ADD_SERVICE_ROUTE:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) =>
-                    ServiceBloc(serviceRepository: ServiceRepository()),
-                child: AddServiceScreen()));
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider<ServiceBloc>(
+                      create: (BuildContext context) =>
+                          ServiceBloc(serviceRepository: ServiceRepository())),
+                  BlocProvider<ServiceTypeBloc>(
+                      create: (BuildContext context) => ServiceTypeBloc(
+                          serviceTypeRepository: ServiceTypeRepository())),
+                ], child: AddServiceScreen()));
 
       case EDIT_SERVICE_ROUTE:
         final arg = settings.arguments as Map;
         Service service = arg['service'];
         logger.d('service Id: ' + service.id);
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) =>
-                    ServiceBloc(serviceRepository: ServiceRepository()),
-                child: EditServiceScreen(service: service)));
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider<ServiceBloc>(
+                      create: (BuildContext context) =>
+                          ServiceBloc(serviceRepository: ServiceRepository())),
+                  BlocProvider<ServiceTypeBloc>(
+                      create: (BuildContext context) => ServiceTypeBloc(
+                          serviceTypeRepository: ServiceTypeRepository())),
+                ], child: EditServiceScreen(service: service)));
 
       case TRACKING_REQUEST_ROUTE:
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
