@@ -6,3 +6,5 @@ abstract class RequestServiceEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class RequestServiceLoad extends RequestServiceEvent {}
