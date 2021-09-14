@@ -19,7 +19,7 @@ const EDIT_SERVICE_ROUTE = "/edit_service";
 const HISTORY_ROUTE = "/history";
 const HISTORY_INFO_ROUTE = "/history_info";
 const MAIN_ROUTE = "/app";
-const TRACKING_REQUEST_ROUTE = "/app";
+const TRACKING_REQUEST_ROUTE = "/tracking";
 const HOMEPAGE_ROUTE = "/homepage";
 
 // font size
@@ -38,6 +38,7 @@ const textColorRed = Color(0xffDA5B49);
 
 const primaryColor = Color(0xffFECE2F);
 const colorGray = Color(0xffC4C4C4);
+const colorGreen = Color(0x2ECC71);
 const bgColor = Color(0xffF2F4F6);
 const bgColorRed = Color(0xffDA5B49);
 const bgCodeColor = '#F2F4F6';

@@ -92,24 +92,6 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                         ],
                       ),
                     ),
-                    // Expanded(
-                    //   flex: 3,
-                    //   child: Row(
-                    //     children: [
-                    //       CircleAvatar(
-                    //         backgroundColor: greenStatus,
-                    //         maxRadius: 5,
-                    //       ),
-                    //       SizedBox(
-                    //         width: 5,
-                    //       ),
-                    //       Text(
-                    //         'กำลังเตรียมตัว',
-                    //         style: TextStyle(fontSize: 12),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
