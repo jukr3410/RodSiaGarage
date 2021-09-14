@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:rodsiagarage/core/models/service_model.dart';
+import 'package:rodsiagarage/core/models/user_model.dart';
 
 RequestService requestServiceFromJson(String str) =>
     RequestService.fromJson(json.decode(str));
@@ -27,7 +28,7 @@ class RequestService {
 
   String? id;
   String? problemDesc;
-  Service? user;
+  User? user;
   Service? service;
   Car? car;
   bool? confirmRequest;
@@ -39,7 +40,7 @@ class RequestService {
   factory RequestService.fromJson(Map<String, dynamic> json) => RequestService(
         id: json["_id"],
         problemDesc: json["problemDesc"],
-        user: Service.fromJson(json["user"]),
+        user: User.fromJson(json["user"]),
         service: Service.fromJson(json["service"]),
         car: Car.fromJson(json["car"]),
         confirmRequest: json["confirmRequest"],
