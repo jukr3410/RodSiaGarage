@@ -34,7 +34,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
       ),
       body: Center(
         child: Text(
-          "Edit Service",
+          "Edit Service ID: ${widget.service.id}",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: textColorBlack,

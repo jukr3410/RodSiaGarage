@@ -15,6 +15,7 @@ import 'package:rodsiagarage/home/bloc/home_bloc.dart';
 import 'package:rodsiagarage/home/appBar.dart';
 import 'package:rodsiagarage/login_feature/bloc/login_bloc.dart';
 import 'package:rodsiagarage/login_feature/widgets/login.dart';
+import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
@@ -71,7 +72,9 @@ class AppRouter {
                 child: AddServiceScreen()));
 
       case EDIT_SERVICE_ROUTE:
-        Service service = settings.arguments as Service;
+        final arg = settings.arguments as Map;
+        Service service = arg['service'];
+        logger.d('service Id: ' + service.id);
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>

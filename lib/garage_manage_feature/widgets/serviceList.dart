@@ -24,7 +24,25 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: setAppBar(), body: body());
+    return Scaffold(
+      appBar: setAppBar(),
+      body: body(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          navigateToAddService();
+        },
+        backgroundColor: primaryColor,
+        icon: Icon(
+          Icons.add,
+          color: iconColorBlack,
+          size: 30,
+        ),
+        label: Text(
+          tAddService,
+          style: TextStyle(color: textColorBlack, fontSize: fontSizeMedium),
+        ),
+      ),
+    );
   }
 
   setAppBar() {
@@ -51,13 +69,13 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         },
       ),
       actions: [
-        IconButton(
-          icon: Icon(Icons.add, color: iconColorBlack),
-          onPressed: () {
-            navigateToAddService();
-          },
-          iconSize: 30.0,
-        ),
+        // IconButton(
+        //   icon: Icon(Icons.add, color: iconColorBlack),
+        //   onPressed: () {
+        //     navigateToAddService();
+        //   },
+        //   iconSize: 30.0,
+        // ),
       ],
     );
   }
@@ -187,7 +205,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
       ),
       onTap: () {
         //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
-        navigateToServiceEdit();
+        navigateToServiceEdit(service);
       },
     );
   }
@@ -202,8 +220,11 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     _serviceBloc..add(ServiceLoad());
   }
 
-  void navigateToServiceEdit() {
-    Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
+  void navigateToServiceEdit(Service service) async {
+    await Navigator.pushNamed(context, EDIT_SERVICE_ROUTE,
+        arguments: {'service': service});
+    this._services = [];
+    _serviceBloc..add(ServiceLoad());
   }
 
   @override
