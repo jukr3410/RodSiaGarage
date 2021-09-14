@@ -48,7 +48,7 @@ class GarageApi {
     final url = '$baseUrl/garages/${garage.id}';
     final msg = jsonEncode(garage.toJson());
     final response =
-        await http.delete(Uri.parse(url), body: msg, headers: headers);
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
       logger.e(response);
       return false;
@@ -62,7 +62,7 @@ class GarageApi {
     final url = '$baseUrl/garages/${garage.id}/open-status';
     final msg = jsonEncode({'openStatus': openStatus});
     final response =
-        await http.delete(Uri.parse(url), body: msg, headers: headers);
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
       logger.e(response);
       return false;

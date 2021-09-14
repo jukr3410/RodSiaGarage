@@ -46,7 +46,7 @@ class ServiceApi {
     final url = '$baseUrl/services/${service.id}';
     final msg = jsonEncode(service.toJson());
     final response =
-        await http.delete(Uri.parse(url), body: msg, headers: headers);
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
       logger.e(response);
       return false;
