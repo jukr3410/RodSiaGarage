@@ -9,12 +9,10 @@ import '../../main.dart';
 class ServiceTypeApi {
   final baseUrl = baseUrlConstant;
 
-  late final http.Client httpClient;
-
   Future<List<ServiceType>> getServiceTypes() async {
     List<ServiceType> serviceTypes = [];
     final url = '$baseUrl/service-types';
-    final response = await httpClient.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       logger.e(response);
       throw new Exception('There was a problem ${response.statusCode}');

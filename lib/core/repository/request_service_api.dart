@@ -45,7 +45,7 @@ class RequestServiceApi {
   Future<bool> updateGeoLocation(
       {required String requestId, required GeoLocation geoLocation}) async {
     final url = '$baseUrl';
-    final msg = jsonEncode({'geoLocation': geoLocation});
+    final msg = jsonEncode({'geoLocationGarage': geoLocation});
     final response =
         await http.patch(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
