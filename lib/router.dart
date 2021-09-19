@@ -10,7 +10,7 @@ import 'package:rodsiagarage/garage_manage_feature/bloc/service_type_bloc.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/addService.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/editService.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/serviceList.dart';
-import 'package:rodsiagarage/global_widgets/homePage.dart';
+import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:rodsiagarage/global_widgets/invalidRoute.dart';
 import 'package:rodsiagarage/home/app.dart';
 import 'package:rodsiagarage/home/bloc/home_bloc.dart';
@@ -93,6 +93,9 @@ class AppRouter {
 
       case TRACKING_REQUEST_ROUTE:
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
+
+      case HOMEPAGE_ROUTE:
+        return MaterialPageRoute(builder: (_) => HomePage());
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

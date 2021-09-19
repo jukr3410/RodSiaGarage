@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fswitch/fswitch.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupBackHomePage.dart';
+import 'package:rodsiagarage/global_widgets/bottomBar.dart';
 
 class CustomAppBar extends StatefulWidget {
   @override
@@ -10,78 +11,31 @@ class CustomAppBar extends StatefulWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+  bool status = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: setAppBar(),
-      body: AlertPopupBackHomePage(),
-    );
+        bottomNavigationBar: BottomNavigrationBar(),
+        body: Center(
+          child: Column(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    navigateToService();
+                  },
+                  child: Text("Service")),
+              TextButton(
+                  onPressed: () {
+                    trackingRequestService();
+                  },
+                  child: Text('Tracking')),
+            ],
+          ),
+        ));
   }
 
-  setAppBar() {
-    return AppBar(
-      // centerTitle: true,
-      backgroundColor: primaryColor,
-      centerTitle: true,
-      title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-          child: Container(
-            alignment: Alignment.center,
-            child: Row(
-              children: [
-                // LiteRollingSwitch(
-                //   value: true,
-                //   textOn: '  Online',
-                //   textOff: '  Offline',
-                //   colorOn: Colors.green,
-                //   colorOff: Colors.blueGrey,
-                //   // iconOn: Icons.online_prediction_rounded,
-                //   // iconOff: Icons.power_settings_new,
-                //   onChanged: (value) {
-                //     print('turned ${(value) ? 'on' : 'off'}');
-                //   },
-                // ),
-                FSwitch(
-                  open: true,
-                  height: 30,
-                  width: 70,
-                  onChanged: (v) {},
-                  closeChild: Text(
-                    'Offline',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  openChild: Text(
-                    'Online',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  openColor: Colors.green,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ]),
-      actions: [
-        TextButton(
-            onPressed: () {},
-            child: ImageIcon(
-              AssetImage('assets/images/icon-notify.png'),
-              color: textColorBlack,
-            )),
-        TextButton(
-            onPressed: () {
-              navigateToService();
-            },
-            child: Text("Service")),
-        TextButton(
-            onPressed: () {
-              trackingRequestService();
-            },
-            child: Text('Tracking')),
-      ],
-    );
-  }
+  
 
   void navigateToService() {
     Navigator.pushNamed(context, SERVICE_LIST_ROUTE);

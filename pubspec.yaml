@@ -52,7 +52,9 @@ dependencies:
   geolocator: ^7.0.3
   geocoding: ^2.0.1
   slider_button: ^1.0.0
-
+  fancy_bottom_navigation: ^0.3.3
+  carousel_slider: ^4.0.0
+  dot_pagination_swiper: ^0.1.1
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +84,7 @@ flutter:
     - assets/images/icon-notify.png
     - assets/images/icon-profile.png
     - assets/images/icon-profile2.png
+    - assets/images/icon-profile-homePage.png
     - assets/images/icon-inbox.png
     - assets/images/icon-home.png
     - assets/images/icon-battery.png
@@ -92,6 +95,9 @@ flutter:
     - assets/images/icon-call.png
     - assets/images/icon-message.png
     - assets/images/icon-moreOption.png
+    - assets/images/icon-history.png
+    - assets/images/icon-serviceOfGarage.png
+    - assets/images/icon-supportCenter.png
     - assets/launcher/ic_launcher.png
     - assets/images/icon-location-requestCard.png
     

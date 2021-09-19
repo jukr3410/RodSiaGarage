@@ -18,9 +18,6 @@ class RodSiaGarageApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Kanit'),
-      // home: Scaffold(
-      //   body: TrackingRequestPage(),
-      // ),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
     );

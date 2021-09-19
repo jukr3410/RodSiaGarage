@@ -159,6 +159,8 @@ const tEditService = 'แก้ไขบริการ';
 const tServiceName = 'ชื่อบริการ';
 const tServiceDesc = 'คำอธิบาย';
 const tServiceType = 'ประเภทบริการ';
+const tHistory = 'ประวัติ';
+const tSupportCenter = 'ศูนย์ช่วยเหลือ';
 
 //Tracking Status
 const trackingStatus = [
