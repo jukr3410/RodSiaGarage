@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/request_service_model.dart';
 
 class InboxPage extends StatefulWidget {
   InboxPage({Key? key}) : super(key: key);
@@ -10,8 +12,20 @@ class InboxPage extends StatefulWidget {
 class _InboxPageState extends State<InboxPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: null,
+    return Center(
+      child: Column(
+        children: [
+          TextButton(
+              onPressed: () {
+                navigatorToRecapRequest();
+              },
+              child: Text("recap-request"))
+        ],
+      ),
     );
+  }
+
+  void navigatorToRecapRequest() {
+    Navigator.pushNamed(context, RECAP_DETAIL_REQUREST_ROUTE);
   }
 }

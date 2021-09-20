@@ -15,27 +15,28 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: BottomNavigrationBar(),
-        body: Center(
-          child: Column(
-            children: [
-              TextButton(
-                  onPressed: () {
-                    navigateToService();
-                  },
-                  child: Text("Service")),
-              TextButton(
-                  onPressed: () {
-                    trackingRequestService();
-                  },
-                  child: Text('Tracking')),
-            ],
-          ),
-        ));
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          bottomNavigationBar: BottomNavigrationBar(),
+          body: Center(
+            child: Column(
+              children: [
+                TextButton(
+                    onPressed: () {
+                      navigateToService();
+                    },
+                    child: Text("Service")),
+                TextButton(
+                    onPressed: () {
+                      trackingRequestService();
+                    },
+                    child: Text('Tracking')),
+              ],
+            ),
+          )),
+    );
   }
-
-  
 
   void navigateToService() {
     Navigator.pushNamed(context, SERVICE_LIST_ROUTE);

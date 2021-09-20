@@ -50,7 +50,7 @@ class _MenusSettingState extends State<MenusSetting> {
                   body: Column(
                     children: [
                       SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       CircleAvatar(
                         backgroundColor: Colors.transparent,

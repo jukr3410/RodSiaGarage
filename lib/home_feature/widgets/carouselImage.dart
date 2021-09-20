@@ -73,7 +73,9 @@ class MyImageView extends StatelessWidget {
           fit: BoxFit.fill,
           child: CachedNetworkImage(
             imageUrl: imgPath,
-            placeholder: (context, url) => CircularProgressIndicator(),
+            placeholder: (context, url) => CircularProgressIndicator(
+              color: textColorBlack,
+            ),
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           // Image.asset(imgPath)

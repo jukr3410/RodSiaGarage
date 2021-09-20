@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/repository/garage_repository.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
 import 'package:rodsiagarage/core/repository/service_type_repository.dart';
@@ -23,6 +24,7 @@ import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
+import 'package:rodsiagarage/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
 
 import 'core/models/service_model.dart';
@@ -53,7 +55,7 @@ class AppRouter {
                         ProfileBloc(garageRepository: GarageRepository()),
                   ),
                 ], child: CustomAppBar()));
-                
+
       case LOGIN_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -112,6 +114,13 @@ class AppRouter {
       case PROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(builder: (_) => ProfilePage(garage: garage));
+
+      case RECAP_DETAIL_REQUREST_ROUTE:
+        RequestService requestService = settings.arguments as RequestService;
+        return MaterialPageRoute(
+            builder: (_) => DetailAndGiveStarPage(
+                  requestService: requestService,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
