@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/repository/garage_repository.dart';
 import 'package:rodsiagarage/core/repository/service_repository.dart';
 import 'package:rodsiagarage/core/repository/service_type_repository.dart';
@@ -18,6 +19,8 @@ import 'package:rodsiagarage/home/appBar.dart';
 import 'package:rodsiagarage/login_feature/bloc/login_bloc.dart';
 import 'package:rodsiagarage/login_feature/widgets/login.dart';
 import 'package:rodsiagarage/main.dart';
+import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
+import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
@@ -38,10 +41,19 @@ class AppRouter {
 
       case MAIN_ROUTE:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) => HomeBloc(),
-                child: CustomAppBar()));
-
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(
+                      create: (BuildContext context) => AuthenticationBloc(
+                          garageRepository: GarageRepository())),
+                  BlocProvider(
+                    create: (BuildContext context) => HomeBloc(),
+                  ),
+                  BlocProvider(
+                    create: (BuildContext context) =>
+                        ProfileBloc(garageRepository: GarageRepository()),
+                  ),
+                ], child: CustomAppBar()));
+                
       case LOGIN_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -96,6 +108,10 @@ class AppRouter {
 
       case HOMEPAGE_ROUTE:
         return MaterialPageRoute(builder: (_) => HomePage());
+
+      case PROFILE_ROUTE:
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(builder: (_) => ProfilePage(garage: garage));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

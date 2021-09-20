@@ -74,7 +74,9 @@ class _HomePageState extends State<HomePage> {
                           tImageAsset('serviceOfGarage'),
                         ),
                         iconSize: 100,
-                        onPressed: () {}),
+                        onPressed: () {
+                          navigateToService();
+                        }),
                   ),
                   Text(tServiceThai)
                 ],
@@ -112,5 +114,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void navigateToService() {
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
   }
 }

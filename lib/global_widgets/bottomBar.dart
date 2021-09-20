@@ -3,10 +3,11 @@ import 'package:fswitch/fswitch.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/InboxPage.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
+import 'package:rodsiagarage/global_widgets/menusSetting.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:rodsiagarage/global_widgets/notifyPage.dart';
-import 'package:rodsiagarage/global_widgets/profilePage.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
   BottomNavigrationBar({Key? key}) : super(key: key);
@@ -45,9 +46,9 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
         label: 'Inbox'),
   ];
   List<TabData> _menuBarTest = <TabData>[
-    TabData(iconData: Icons.account_circle_sharp, title: "Profile"),
     TabData(iconData: Icons.home, title: "Home"),
-    TabData(iconData: Icons.message, title: "Inbox")
+    TabData(iconData: Icons.message, title: "Inbox"),
+    TabData(iconData: Icons.format_align_left, title: "More"),
   ];
 
   void _onItemTapped(int index) {
@@ -59,9 +60,9 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _pageWidget = <Widget>[
-      ProfilePage(),
       HomePage(),
       InboxPage(),
+      MenusSetting(garage: gargeMockup),
     ];
     return SafeArea(
       child: Scaffold(
@@ -78,7 +79,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
               tabs: _menuBarTest,
               onTabChangedListener: _onItemTapped,
               barBackgroundColor: primaryColor,
-              initialSelection: 1,
+              initialSelection: 0,
               inactiveIconColor: textColorBlack,
               circleColor: textColorBlack,
             ),

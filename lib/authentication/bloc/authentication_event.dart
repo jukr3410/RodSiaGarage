@@ -11,3 +11,4 @@ class AppStarted extends AuthenticationEvent {
   @override
   List<Object> get props => [];
 }
+class LoggedOut extends AuthenticationEvent {}

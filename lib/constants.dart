@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 
 //api base url
@@ -21,6 +22,7 @@ const HISTORY_INFO_ROUTE = "/history_info";
 const MAIN_ROUTE = "/app";
 const TRACKING_REQUEST_ROUTE = "/tracking";
 const HOMEPAGE_ROUTE = "/homepage";
+const PROFILE_ROUTE = "/profile";
 
 // font size
 const fontSizeLarge = 20.0;
@@ -139,6 +141,8 @@ const tWaitForGarageThai = 'กำลังรออู่ติดต่อก�
 const tAlertRequestService = 'มีคนต้องการความช่วยเหลือ!';
 const tRequestServiceThai = 'รับให้บริการเลย';
 const tDeclineThai = 'ปฏิเสธิ';
+const tPhone = 'โทรศัพท์';
+
 const tAddressThai = 'ที่อยู่: ';
 const tUpdateThai = 'อัพเดต';
 const tCancleThai = 'ยกเลิก';
@@ -169,3 +173,18 @@ const trackingStatus = [
   'ถึงที่หมายแล้ว',
   'งานเสร็จแล้ว'
 ];
+
+const menusSetting = [
+  'โปรไฟล์',
+  'ประวัติการใช้งาน',
+  'การตั้งค่า',
+  'ออกจากระบบ'
+];
+
+Garage gargeMockup = Garage(
+    id: '1',
+    name: 'Jone Cena',
+    phone: '0359887456',
+    email: "email@mail.com",
+    password: '1234',
+    validatePhone: true);
