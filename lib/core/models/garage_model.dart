@@ -76,7 +76,7 @@ class Address {
       );
 
   Map<String, dynamic> toJson() => {
-        "geolocation": geoLocation.toJson(),
+        "geoLocation": geoLocation.toJson(),
         "addressDesc": addressDesc,
       };
 }

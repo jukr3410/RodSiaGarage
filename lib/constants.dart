@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 
 //api base url
@@ -187,4 +188,5 @@ Garage gargeMockup = Garage(
     phone: '0359887456',
     email: "email@mail.com",
     password: '1234',
-    validatePhone: true);
+    validatePhone: true,
+    address: Address(addressDesc: '', geoLocation: GeoLocation()));

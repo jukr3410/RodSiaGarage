@@ -23,7 +23,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
   ServiceBloc({required this.serviceRepository}) : super(ServiceInitial());
 
-  String mockGarageId = "6129f203748ba19d14a2c1df";
+  String mockGarageId = "6129f2b0748ba19d14a2c1e3";
 
   @override
   Stream<ServiceState> mapEventToState(
