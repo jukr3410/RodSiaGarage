@@ -5,6 +5,7 @@ import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/user_model.dart';
+import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
 
 import 'package:rodsiagarage/profile_feature/widgets/infoProfile.dart';
 
@@ -50,6 +51,10 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 20,
             ),
 
+            Padding(
+              padding: const EdgeInsets.all(defualtPaddingMedium),
+              child: CarouselImage(),
+            ),
             Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: textColorBlack),

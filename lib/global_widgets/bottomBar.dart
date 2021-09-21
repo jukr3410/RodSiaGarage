@@ -142,7 +142,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
                 onPressed: () {},
                 child: ImageIcon(
                   AssetImage('assets/images/icon-notify.png'),
-                  color: textColorBlack,
+                  color: Colors.black,
                 )),
           ),
         ],

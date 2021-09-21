@@ -70,14 +70,16 @@ class MyImageView extends StatelessWidget {
         color: primaryColor,
         margin: EdgeInsets.symmetric(horizontal: 5),
         child: FittedBox(
-            fit: BoxFit.fill,
-            child:
-                // CachedNetworkImage(
-                //   imageUrl: imgPath,
-                //   placeholder: (context, url) => CircularProgressIndicator(),
-                //   errorWidget: (context, url, error) => Icon(Icons.error),
-                // ),
-                // Image.asset(imgPath)
-                Image.network(imgPath)));
+          fit: BoxFit.fill,
+          child: CachedNetworkImage(
+            imageUrl: imgPath,
+            placeholder: (context, url) => CircularProgressIndicator(
+              color: textColorBlack,
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ),
+          // Image.asset(imgPath)
+          // Image.network(imgPath),
+        ));
   }
 }

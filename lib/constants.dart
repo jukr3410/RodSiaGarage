@@ -24,7 +24,7 @@ const MAIN_ROUTE = "/app";
 const TRACKING_REQUEST_ROUTE = "/tracking";
 const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
-
+const RECAP_DETAIL_REQUREST_ROUTE = '/recap_detail_request';
 // font size
 const fontSizeLarge = 20.0;
 const fontSizeSemiLarge = 18.0;
