@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/addNumber.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
 import 'package:rodsiagarage/router.dart';
 
 void main() {
@@ -20,6 +22,7 @@ class RodSiaGarageApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Kanit'),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
+      // home: AddInfo(),
     );
   }
 }

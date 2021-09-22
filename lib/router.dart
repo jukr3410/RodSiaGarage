@@ -23,6 +23,7 @@ import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
@@ -121,6 +122,12 @@ class AppRouter {
             builder: (_) => DetailAndGiveStarPage(
                   requestService: requestService,
                 ));
+
+      case OTP_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: Otp()));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

@@ -121,6 +121,7 @@ const mNoMoreGarages = "no more garages";
 const mLoading = "กำลังโหลด";
 const mNotFound = "ไม่พบ!";
 const mServiceAdded = "เพิ่มบริการเรียบร้อย";
+const mErrorInputPhone = 'โปรดระบุเบอร์โทรศัพท์';
 
 // src string for set widget
 String tImageAsset(String imageName) {
@@ -130,6 +131,7 @@ String tImageAsset(String imageName) {
 const tUpdateTrackingStatus = 'คุณต้องการอัพเดตใช้ไหม?';
 const tOKThai = 'ตกลง';
 const tInSeriveThai = 'กำลังให้บริการ';
+const tNext = 'ถัดไป';
 const tBackToHomePage = 'กลับสู่หน้าหลัก';
 const tServiceThai = 'บริการ';
 const tFinishProvideService = 'การให้บริการเสร็จสิ้นแล้ว!';
@@ -143,7 +145,7 @@ const tAlertRequestService = 'มีคนต้องการความช�
 const tRequestServiceThai = 'รับให้บริการเลย';
 const tDeclineThai = 'ปฏิเสธิ';
 const tPhone = 'โทรศัพท์';
-
+const tRegistration = 'สร้างบัญชี';
 const tAddressThai = 'ที่อยู่: ';
 const tUpdateThai = 'อัพเดต';
 const tCancleThai = 'ยกเลิก';
@@ -152,10 +154,14 @@ const tSupportThai = 'ติดต่อซัพพอร์ท';
 const tYesThai = 'ใช้';
 const tMessage = "messages";
 const tEmail = "E-mail";
+const tEmailThai = "อีเมล";
+const tEdit = 'แก้ไข';
 const tPassword = "Password";
+const tPasswordThai = "รหัสผ่าน";
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
+const tLocationDesc = 'ตำแหน่งเพิ่มเติม:';
 const tProblemThai = 'ปัญหา:';
 const tEstimateDuration = 'ระยะเวลาประมาณ:';
 const tServiceGarage = 'บริการของร้าน';
