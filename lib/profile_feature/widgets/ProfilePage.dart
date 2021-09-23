@@ -6,6 +6,8 @@ import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/user_model.dart';
 import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
+import 'package:rodsiagarage/profile_feature/widgets/buttonToEditProfile.dart';
+import 'package:rodsiagarage/profile_feature/widgets/infoAddress.dart';
 
 import 'package:rodsiagarage/profile_feature/widgets/infoProfile.dart';
 
@@ -31,7 +33,12 @@ class _ProfilePageState extends State<ProfilePage> {
             Colors.yellow.shade50
           ])),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          title: Align(
+            alignment: Alignment.centerRight,
+            child: buttonToEditProfile(),
+          ),
           backgroundColor: textColorBlack,
         ),
         backgroundColor: Colors.transparent,
@@ -47,26 +54,29 @@ class _ProfilePageState extends State<ProfilePage> {
             InfoProfile(
               garage: widget.garage,
             ),
-            SizedBox(
-              height: 20,
-            ),
+
+            InfoAddress(),
 
             Padding(
               padding: const EdgeInsets.all(defualtPaddingMedium),
-              child: CarouselImage(),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'รูปภาพ:',
+                      style: TextStyle(
+                          fontSize: fontSizeMedium,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CarouselImage(),
+                ],
+              ),
             ),
-            Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: textColorBlack),
-                child: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {},
-                  color: primaryColor,
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            Text('แก้ไขรูปภาพ')
           ],
         ),
       ),

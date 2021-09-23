@@ -56,6 +56,10 @@ dependencies:
   carousel_slider: ^4.0.0
   dot_pagination_swiper: ^0.1.1
   cached_network_image: ^3.1.0
+  form_field_validator: ^1.1.0
+  flutter_multi_formatter: ^2.3.8
+  sms_autofill: ^2.0.0
+  sms_otp_auto_verify: ^1.2.2
 
 dev_dependencies:
   flutter_test:
