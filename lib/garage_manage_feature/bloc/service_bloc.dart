@@ -49,7 +49,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
           .getServiceByGarage(garageId: this.mockGarageId);
       yield ServicesLoadSuccess(services: services);
     } catch (e) {
-      print(e);
+      logger.e(e);
       yield ServicesError();
     }
   }
@@ -77,6 +77,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       await this.serviceRepository.addService(service: event.service);
       yield ServiceAdded();
     } catch (e) {
+      logger.e(e);
       yield ServicesError();
     }
   }
