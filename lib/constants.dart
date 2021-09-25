@@ -5,10 +5,10 @@ import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 
 //api base url
 //dev localhost api
-final baseUrlConstant = "http://localhost:3000/api";
+//final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
-//final baseUrlConstant = '';
+final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 // router path
 const LOGIN_ROUTE = "/login";
 const ADD_NUMBER_ROUTE = "/add_number";
