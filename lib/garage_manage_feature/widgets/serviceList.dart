@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 
 class ServiceListScreen extends StatefulWidget {
   @override
@@ -132,9 +134,34 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               ],
             ));
           }
-          return ListView.builder(
-            itemBuilder: (context, index) => _makeCardWidget(_services[index]),
-            itemCount: _services.length,
+          return new Container(
+            color: Colors.white,
+            child: ListView.builder(
+              itemCount: _services.length,
+              itemBuilder: (context, index) => Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: 0.25,
+                child: _makeCardWidget(_services[index]),
+                actions: <Widget>[
+                  new IconSlideAction(
+                    caption: tEdit,
+                    color: Colors.blue,
+                    icon: Icons.archive,
+                    onTap: () {
+                      _navigateAndDisplayEdit(context, index);
+                    },
+                  ),
+                  new IconSlideAction(
+                    caption: tDelete,
+                    color: Colors.red,
+                    icon: Icons.share,
+                    onTap: () {
+                      _navigateAndDisplayDelete(context, index);
+                    },
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
@@ -218,6 +245,33 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     await Navigator.pushNamed(context, ADD_SERVICE_ROUTE);
     this._services = [];
     _serviceBloc..add(ServiceLoad());
+  }
+
+  void _navigateAndDisplayDelete(BuildContext context, int index) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertPopupYesNo(title: 'คุณต้องการลบบริการอันนี้ใช้ไหม'));
+    if (result == 'Ok') {
+      navigatorToDelete();
+    }
+  }
+
+  void _navigateAndDisplayEdit(BuildContext context, int index) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertPopupYesNo(title: 'คุณต้องการแก้ไขบริการอันนี้ใช้ไหม'));
+    if (result == 'Ok') {
+      // navigateToServiceEdit(service);
+    }
+  }
+
+  void navigatorToDelete() {
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => ProfilePage(user: widget.user)));
   }
 
   void navigateToServiceEdit(Service service) async {

@@ -60,6 +60,8 @@ dependencies:
   flutter_multi_formatter: ^2.3.8
   sms_autofill: ^2.0.0
   sms_otp_auto_verify: ^1.2.2
+  flutter_slidable: ^0.6.0
+  direct_select: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -105,6 +107,12 @@ flutter:
     - assets/images/icon-supportCenter.png
     - assets/launcher/ic_launcher.png
     - assets/images/icon-location-requestCard.png
+    - assets/images/icon-break.png
+    - assets/images/icon-fuel.png
+    - assets/images/icon-engine-oil.png
+    - assets/images/icon-rickshaw.png
+    - assets/images/icon-tire.png
+    - assets/images/icon-battery.png
     
   
   # An image asset can refer to one or more resolution-specific "variants", see

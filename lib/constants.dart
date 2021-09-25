@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/geo_location_model.dart';
+import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 
 //api base url
@@ -154,6 +155,7 @@ const tSupportThai = 'ติดต่อซัพพอร์ท';
 const tYesThai = 'ใช้';
 const tMessage = "messages";
 const tEmail = "E-mail";
+const tDelete = 'ลบ';
 const tEmailThai = "อีเมล";
 const tEdit = 'แก้ไข';
 const tPassword = "Password";
@@ -166,6 +168,7 @@ const tProblemThai = 'ปัญหา:';
 const tEstimateDuration = 'ระยะเวลาประมาณ:';
 const tServiceGarage = 'บริการของร้าน';
 const tAddService = 'เพิ่มบริการ';
+const tService = 'เพิ่มบริการ';
 const tEditService = 'แก้ไขบริการ';
 const tServiceName = 'ชื่อบริการ';
 const tServiceDesc = 'คำอธิบาย';
@@ -196,3 +199,28 @@ Garage gargeMockup = Garage(
     password: '1234',
     validatePhone: true,
     address: Address(addressDesc: '', geoLocation: GeoLocation()));
+List<String> serviceType = [
+  'fuel',
+  'battery',
+  'break',
+  'tire',
+  'rickshaw',
+  'engine-oil'
+];
+List<String> serviceTypeName = [
+  'น้ำมัน',
+  'แบตเตอรี่',
+  'เบรค',
+  'ยางรถ',
+  'รถลาก',
+  'น้ำมันเครื่อง'
+];
+
+List<ServiceType> mockupServiceType = [
+  ServiceType(id: '1', name: 'น้ำมัน', description: 'description'),
+  ServiceType(id: '2', name: 'แบตเตอรี่', description: 'description'),
+  ServiceType(id: '3', name: 'เบรค', description: 'description'),
+  ServiceType(id: '4', name: 'ยางรถ', description: 'description'),
+  ServiceType(id: '5', name: 'รถลาก', description: 'description'),
+  ServiceType(id: '6', name: 'น้ำมันเครื่อง', description: 'description'),
+];
