@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rodsiagarage/constants.dart';
@@ -33,8 +34,15 @@ class _InfoAddressState extends State<InfoAddress> {
               height: 140,
               width: MediaQuery.of(context).size.width,
               child: FittedBox(
-                child: Image.network(
-                    'https://i.stack.imgur.com/chfhv.png'),
+                child: CachedNetworkImage(
+                  imageUrl: 'https://i.stack.imgur.com/chfhv.png',
+                  placeholder: (context, url) => CircularProgressIndicator(
+                    color: textColorBlack,
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+                // Image.network(
+                //     'https://i.stack.imgur.com/chfhv.png'),
               ),
             )
           ],

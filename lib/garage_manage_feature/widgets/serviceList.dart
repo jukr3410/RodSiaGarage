@@ -49,27 +49,23 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   setAppBar() {
     return AppBar(
+      iconTheme: IconThemeData(color: textColorBlack),
       backgroundColor: primaryColor,
       centerTitle: true,
       title: Text(
         tServiceGarage,
         style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
       ),
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: iconColorBlack,
-        ),
-        onPressed: () {
-          navigateToMain();
+      // leading: IconButton(
+      //   icon: Icon(
+      //     Icons.arrow_back,
+      //     color: iconColorBlack,
+      //   ),
+      //   onPressed: () {
+      //     navigateToMain();
 
-          // Let's create a new instance of the home page
-          // Navigator.pushReplacement(
-          //   context,
-          //   MAIN_ROUTE
-          // );
-        },
-      ),
+      //   },
+      // ),
       actions: [
         // IconButton(
         //   icon: Icon(Icons.add, color: iconColorBlack),
@@ -84,7 +80,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   body() {
     return Container(
-      margin: EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(defualtPaddingLow),
       child: BlocConsumer<ServiceBloc, ServiceState>(
         listener: (context, state) {
           if (state is ServicesLoading) {
@@ -140,21 +136,23 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               itemCount: _services.length,
               itemBuilder: (context, index) => Slidable(
                 actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.25,
+                actionExtentRatio: 0.18,
                 child: _makeCardWidget(_services[index]),
+                closeOnScroll: true,
+                movementDuration: Duration(seconds: 2),
                 actions: <Widget>[
                   new IconSlideAction(
                     caption: tEdit,
-                    color: Colors.blue,
-                    icon: Icons.archive,
+                    color: primaryColor,
+                    icon: Icons.edit_outlined,
                     onTap: () {
-                      _navigateAndDisplayEdit(context, index);
+                      navigateToServiceEdit(_services[index]);
                     },
                   ),
                   new IconSlideAction(
                     caption: tDelete,
                     color: Colors.red,
-                    icon: Icons.share,
+                    icon: Icons.delete,
                     onTap: () {
                       _navigateAndDisplayDelete(context, index);
                     },
@@ -172,57 +170,54 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     return GestureDetector(
       child: Card(
         elevation: 3,
-        margin: new EdgeInsets.symmetric(vertical: 8.0),
+        // margin: new EdgeInsets.symmetric(vertical: 8.0),
         color: cardColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: Icon(Icons.build_circle_outlined,
-                    size: 40, color: iconColorBlack),
+              padding: const EdgeInsets.only(
+                left: 15.0,
               ),
+              child: Icon(Icons.build_circle_outlined,
+                  size: 45, color: iconColorBlack),
             ),
             Flexible(
                 child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                  const EdgeInsets.symmetric(horizontal: 13.0, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     service.name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
                     style: new TextStyle(
-                        fontSize: fontSizeSemiLarge,
+                        fontSize: fontSizeMedium,
                         fontWeight: FontWeight.w600,
                         color: textColorBlack),
                   ),
-                  Container(
-                      margin: new EdgeInsets.only(top: 4),
-                      child: Row(children: [
-                        Text(
-                          service.serviceType!.name,
-                          style: new TextStyle(
-                              fontSize: fontSizeLow,
-                              fontWeight: FontWeight.w600,
-                              color: textColorBlack),
-                        ),
-                      ])),
-                  Container(
-                    margin: new EdgeInsets.only(top: 0),
-                    child: Text(
-                      service.description,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: false,
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal,
-                          color: textColorBlack),
-                    ),
+                  // Text(
+                  //   service.serviceType!.name,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   maxLines: 1,
+                  //   softWrap: false,
+                  //   style: new TextStyle(
+                  //       fontSize: fontSizeLow,
+                  //       fontWeight: FontWeight.w600,
+                  //       color: textColorBlack),
+                  // ),
+                  Text(
+                    service.description,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.normal,
+                        color: textColorBlack),
                   )
                 ],
               ),
@@ -232,7 +227,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
       ),
       onTap: () {
         //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
-        navigateToServiceEdit(service);
+        // navigateToServiceEdit(service);
       },
     );
   }
@@ -251,7 +246,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
-            AlertPopupYesNo(title: 'คุณต้องการลบบริการอันนี้ใช้ไหม'));
+            AlertPopupYesNo(title: 'คุณต้องการลบบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
       navigatorToDelete();
     }
@@ -261,7 +256,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
-            AlertPopupYesNo(title: 'คุณต้องการแก้ไขบริการอันนี้ใช้ไหม'));
+            AlertPopupYesNo(title: 'คุณต้องการแก้ไขบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
       // navigateToServiceEdit(service);
     }
@@ -277,8 +272,8 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   void navigateToServiceEdit(Service service) async {
     await Navigator.pushNamed(context, EDIT_SERVICE_ROUTE,
         arguments: {'service': service});
-    this._services = [];
-    _serviceBloc..add(ServiceLoad());
+    // this._services = [];
+    // _serviceBloc..add(ServiceLoad());
   }
 
   @override

@@ -8,6 +8,7 @@ import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
+import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -78,6 +79,11 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
         );
       }
     }, builder: (context, state) {
+      for (var i = 0; i < serviceTypeName.length; i++) {
+        if (serviceTypeName[i] == widget.service.serviceType) {
+          val = i;
+        }
+      }
       return Padding(
           padding: EdgeInsets.all(defualtPaddingMedium),
           child: Form(
@@ -86,12 +92,16 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                 Container(
                     child: TextFormField(
                   focusNode: myFocusNode,
-                  initialValue: '',
+                  initialValue: widget.service.name,
                   cursorColor: textColorBlack,
                   //style: Theme.of(context).textTheme.headline5,
                   decoration: InputDecoration(
                       hoverColor: primaryColor,
-                      hintText: 'ชื่อบริการ',
+                      hintText: widget.service.name,
+                      hintStyle: TextStyle(
+                          color: myFocusNode.hasFocus
+                              ? textColorBlack
+                              : Colors.black),
                       labelText: 'ชื่อบริการ',
                       labelStyle: TextStyle(
                           color: myFocusNode.hasFocus
@@ -116,64 +126,70 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  height: 270,
+                Expanded(
                   child: ListView.builder(
                       itemCount: mockupServiceType.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: _makeCardWidget(mockupServiceType[index]),
-                          trailing: Radio(
-                              activeColor: primaryColor,
-                              value: index,
-                              groupValue: val,
-                              onChanged: (int? value) {
-                                setState(() {
-                                  val = value!;
-                                  _serviceType = mockupServiceType[index];
-                                  logger.d(_serviceType.name);
-                                });
-                              }),
+                        return Card(
+                          elevation: 3,
+                          // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                          color: cardColor,
+                          child: ListTile(
+                            title: _makeCardWidget(
+                                mockupServiceType[index], index),
+                            trailing: Radio(
+                                activeColor: primaryColor,
+                                value: index,
+                                groupValue: val,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    val = value!;
+                                    _serviceType = mockupServiceType[index];
+                                    logger.d(_serviceType.name);
+                                  });
+                                }),
+                          ),
                         );
                       }),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(defualtPaddingLow),
-                  child: TextFormField(
-                    cursorColor: primaryColor,
-                    scrollPadding: EdgeInsets.only(top: 10),
-                    maxLines: 3,
-                    style: const TextStyle(
-                        color: textColorBlack, fontSize: fontSizeLow),
-                    decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: primaryColor,
-                            width: 2,
-                          ),
+                TextFormField(
+                  cursorColor: primaryColor,
+                  scrollPadding: EdgeInsets.only(top: 10),
+                  maxLines: 3,
+                  style: const TextStyle(
+                      color: textColorBlack, fontSize: fontSizeLow),
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: primaryColor,
+                          width: 2,
                         ),
-                        labelText: 'รายละเอียดเพื่มเติม',
-                        alignLabelWithHint: true,
-                        fillColor: Colors.red,
-                        contentPadding: EdgeInsets.all(defualtPaddingLow),
-                        labelStyle: TextStyle(
-                            fontSize: fontSizeLow, color: textColorBlack),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: hexToColor('#C4C4C4'), width: 0),
-                        )),
-                    onChanged: (val) {
-                      _service.description = val;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                    },
-                  ),
+                      ),
+                      labelText: 'รายละเอียดเพื่มเติม',
+                      alignLabelWithHint: true,
+                      // hintText: widget.service.description,
+                      fillColor: Colors.red,
+                      contentPadding: EdgeInsets.all(defualtPaddingLow),
+                      labelStyle: TextStyle(
+                          fontSize: fontSizeLow, color: textColorBlack),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: hexToColor('#C4C4C4'), width: 0),
+                      )),
+                  onChanged: (val) {
+                    _service.description = val;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -190,8 +206,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                           style: TextStyle(color: textColorBlack),
                         ),
                         onPressed: () {
-                          logger.d("${_service.name}");
-                          _serviceBloc.add(ServiceAdd(_service));
+                          _navigateAndDisplayEdit(context);
                         },
                       ),
                     ),
@@ -210,56 +225,51 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     }));
   }
 
-  _makeCardWidget(ServiceType serviceType) {
+  _makeCardWidget(ServiceType serviceT, int index) {
     return GestureDetector(
-      child: Card(
-        elevation: 3,
-        margin: new EdgeInsets.symmetric(vertical: 4.0),
-        color: cardColor,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: Icon(Icons.build_circle_outlined,
-                    size: 40, color: iconColorBlack),
-              ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 10),
+            child: Image.asset(
+              tImageAsset(serviceType[index].toString()),
+              width: 40,
             ),
-            Flexible(
-                child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    serviceType.name,
-                    style: new TextStyle(
-                        fontSize: fontSizeLow,
-                        fontWeight: FontWeight.w600,
+          ),
+          Flexible(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  serviceT.name,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: new TextStyle(
+                      fontSize: fontSizeLow,
+                      fontWeight: FontWeight.w600,
+                      color: textColorBlack),
+                ),
+                Container(
+                  margin: new EdgeInsets.only(top: 0),
+                  child: Text(
+                    serviceT.description.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.normal,
                         color: textColorBlack),
                   ),
-                  Container(
-                    margin: new EdgeInsets.only(top: 0),
-                    child: Text(
-                      serviceType.description.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: false,
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal,
-                          color: textColorBlack),
-                    ),
-                  )
-                ],
-              ),
-            )),
-          ],
-        ),
+                )
+              ],
+            ),
+          )),
+        ],
       ),
       onTap: () {
         //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
@@ -270,6 +280,18 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
 
   void navigateToServiceList() {
     Navigator.pop(context);
+  }
+
+  void _navigateAndDisplayEdit(BuildContext context) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertPopupYesNo(title: 'คุณต้องการแก้ไขบริการนี้ใช้ไหม'));
+    if (result == 'Ok') {
+      // Navigator.pushNamed(context, EDITCAR_CARTYPE_ROUTE,
+      //     arguments: EditCarNoNewCar(
+      //         carOld: widget.user.cars[index], index: index + 1));
+    }
   }
 
   @override

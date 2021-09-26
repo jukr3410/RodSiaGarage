@@ -22,6 +22,7 @@ import 'package:rodsiagarage/login_feature/widgets/login.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
+import 'package:rodsiagarage/profile_feature/widgets/editProfile.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
@@ -128,6 +129,13 @@ class AppRouter {
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RegisterBloc(),
                 child: Otp()));
+
+      case EDITPROFILE_ROUTE:
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(
+            builder: (_) => EditProfile(
+                  garage: garage,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
