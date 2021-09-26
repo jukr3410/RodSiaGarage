@@ -220,10 +220,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 16.0),
               child: SizedBox(
-                height: 60,
-                width: 60,
+                height: 30,
+                width: 30,
                 child: Image.asset(
                   tImageAsset(serviceType[index].toString()),
                   width: 10,

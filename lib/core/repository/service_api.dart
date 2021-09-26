@@ -18,7 +18,7 @@ class ServiceApi {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       logger.e(response);
-      throw new Exception('There was a problem ${response.statusCode}');
+      //throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body) as List;
     services = decodedJson
