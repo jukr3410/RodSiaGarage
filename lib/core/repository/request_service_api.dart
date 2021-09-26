@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiagarage/constants.dart';
-import 'package:rodsiagarage/core/models/geo_location_model.dart';
+
 import 'package:rodsiagarage/core/models/request_service_model.dart';
+import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/main.dart';
 
 class RequestServiceApi {

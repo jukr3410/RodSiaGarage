@@ -4,8 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:rodsiagarage/core/services/geo_location_model.dart';
+
 import 'car_model.dart';
-import 'geo_location_model.dart';
 
 RequestServiceAdd requestAddFromJson(String str) =>
     RequestServiceAdd.fromJson(json.decode(str));
