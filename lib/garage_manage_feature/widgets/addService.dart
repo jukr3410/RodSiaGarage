@@ -116,65 +116,70 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  height: 270,
+                Expanded(
                   child: ListView.builder(
                       itemCount: mockupServiceType.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title:
-                              _makeCardWidget(mockupServiceType[index], index),
-                          trailing: Radio(
-                              activeColor: primaryColor,
-                              value: index,
-                              groupValue: val,
-                              onChanged: (int? value) {
-                                setState(() {
-                                  val = value!;
-                                  _serviceType = mockupServiceType[index];
-                                  logger.d(_serviceType.name);
-                                });
-                              }),
+                        return Card(
+                          elevation: 3,
+                          // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                          color: cardColor,
+                          child: ListTile(
+                            title: _makeCardWidget(
+                                mockupServiceType[index], index),
+                            trailing: Radio(
+                                activeColor: primaryColor,
+                                value: index,
+                                groupValue: val,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    val = value!;
+                                    _serviceType = mockupServiceType[index];
+                                    logger.d(_serviceType.name);
+                                  });
+                                }),
+                          ),
                         );
                       }),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(defualtPaddingLow),
-                  child: TextFormField(
-                    cursorColor: primaryColor,
-                    scrollPadding: EdgeInsets.only(top: 10),
-                    maxLines: 3,
-                    style: const TextStyle(
-                        color: textColorBlack, fontSize: fontSizeLow),
-                    decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: primaryColor,
-                            width: 2,
-                          ),
+                TextFormField(
+                  cursorColor: primaryColor,
+                  scrollPadding: EdgeInsets.only(top: 10),
+                  maxLines: 3,
+                  
+                  style: const TextStyle(
+                      color: textColorBlack, fontSize: fontSizeLow),
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: primaryColor,
+                          width: 2,
                         ),
-                        labelText: 'รายละเอียดเพื่มเติม',
-                        alignLabelWithHint: true,
-                        fillColor: Colors.red,
-                        contentPadding: EdgeInsets.all(defualtPaddingLow),
-                        labelStyle: TextStyle(
-                            fontSize: fontSizeLow, color: textColorBlack),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: hexToColor('#C4C4C4'), width: 0),
-                        )),
-                    onChanged: (val) {
-                      _service.description = val;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                    },
-                  ),
+                      ),
+                      labelText: 'รายละเอียดเพื่มเติม',
+                      alignLabelWithHint: true,
+                      fillColor: Colors.red,
+                      contentPadding: EdgeInsets.all(defualtPaddingLow),
+                      labelStyle: TextStyle(
+                          fontSize: fontSizeLow, color: textColorBlack),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: hexToColor('#C4C4C4'), width: 0),
+                      )),
+                  onChanged: (val) {
+                    _service.description = val;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -191,13 +196,13 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                           style: TextStyle(color: textColorBlack),
                         ),
                         onPressed: () {
-                          _navigateAndDisplayDelete(context);
+                          _navigateAndDisplayAddSerivce(context);
                         },
                       ),
                     ),
                     GFButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        navigationToBack();
                       },
                       text: tCancleThai,
                       textColor: textColorBlack,
@@ -212,56 +217,49 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
 
   _makeCardWidget(ServiceType serviceT, int index) {
     return GestureDetector(
-      child: Card(
-        elevation: 3,
-        margin: new EdgeInsets.symmetric(vertical: 4.0),
-        color: cardColor,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: SizedBox(
-                height: 30,
-                width: 30,
-                child: Image.asset(
-                  tImageAsset(serviceType[index].toString()),
-                  width: 10,
-                ),
-              ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 10),
+            child: Image.asset(
+              tImageAsset(serviceType[index].toString()),
+              width: 40,
             ),
-            Flexible(
-                child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    serviceT.name,
-                    style: new TextStyle(
-                        fontSize: fontSizeLow,
-                        fontWeight: FontWeight.w600,
+          ),
+          Flexible(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  serviceT.name,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: new TextStyle(
+                      fontSize: fontSizeLow,
+                      fontWeight: FontWeight.w600,
+                      color: textColorBlack),
+                ),
+                Container(
+                  margin: new EdgeInsets.only(top: 0),
+                  child: Text(
+                    serviceT.description.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.normal,
                         color: textColorBlack),
                   ),
-                  Container(
-                    margin: new EdgeInsets.only(top: 0),
-                    child: Text(
-                      serviceT.description.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: false,
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal,
-                          color: textColorBlack),
-                    ),
-                  )
-                ],
-              ),
-            )),
-          ],
-        ),
+                )
+              ],
+            ),
+          )),
+        ],
       ),
       onTap: () {
         //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
@@ -282,15 +280,15 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     super.dispose();
   }
 
-  void _navigateAndDisplayDelete(BuildContext context) async {
+  void _navigateAndDisplayAddSerivce(BuildContext context) async {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
-            AlertPopupYesNo(title: 'คุณต้องการลบบริการนี้ใช้ไหม'));
+            AlertPopupYesNo(title: 'คุณต้องการเพิ่มบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
       logger.d("${_service.name}");
       _serviceBloc.add(ServiceAdd(_service));
-      navigatorToDelete();
+      navigatorToAddSerivce();
     }
   }
 
@@ -306,7 +304,11 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     }
   }
 
-  void navigatorToDelete() {
+  void navigationToBack() {
+    Navigator.pop(context);
+  }
+
+  void navigatorToAddSerivce() {
     //   Navigator.push(
     //       context,
     //       MaterialPageRoute(

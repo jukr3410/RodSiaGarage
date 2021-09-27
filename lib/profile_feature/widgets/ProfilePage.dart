@@ -37,7 +37,9 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: AppBar(
           title: Align(
             alignment: Alignment.centerRight,
-            child: buttonToEditProfile(),
+            child: buttonToEditProfile(
+              garage: widget.garage,
+            ),
           ),
           backgroundColor: textColorBlack,
         ),
@@ -49,14 +51,15 @@ class _ProfilePageState extends State<ProfilePage> {
             //   child: backPage(),
             // ),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
             InfoProfile(
               garage: widget.garage,
             ),
-
+            SizedBox(
+              height: 10,
+            ),
             InfoAddress(),
-
             Padding(
               padding: const EdgeInsets.all(defualtPaddingMedium),
               child: Column(

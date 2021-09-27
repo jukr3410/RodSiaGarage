@@ -3,6 +3,7 @@ import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/repository/request_service_api.dart';
+import 'package:rodsiagarage/core/services/geo_location_model.dart';
 
 class RequestServiceRepository {
   RequestServiceApi requestServiceApi = RequestServiceApi();

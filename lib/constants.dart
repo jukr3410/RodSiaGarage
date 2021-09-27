@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
+import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 
 //api base url
@@ -26,6 +27,8 @@ const TRACKING_REQUEST_ROUTE = "/tracking";
 const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
 const RECAP_DETAIL_REQUREST_ROUTE = '/recap_detail_request';
+const EDITPROFILE_ROUTE = '/edit-profile';
+
 // font size
 const fontSizeLarge = 20.0;
 const fontSizeSemiLarge = 18.0;

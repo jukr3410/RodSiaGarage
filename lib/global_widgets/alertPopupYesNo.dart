@@ -39,7 +39,7 @@ class AlertPopupYesNo extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {
                           Navigator.pop(context, 'Ok');
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                         },
                         child: Text(tOKThai),
                         style: flatButtonStyle(primaryColor, textColorBlack),
@@ -47,7 +47,7 @@ class AlertPopupYesNo extends StatelessWidget {
                   GFButton(
                     onPressed: () {
                       Navigator.pop(context, 'Cancal');
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                     },
                     child: Text(tCancleThai),
                     textColor: textColorBlack,

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:rodsiagarage/core/services/geo_location_model.dart';
+
 import 'car_model.dart';
 import '../services/geo_location_model.dart';
 

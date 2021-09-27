@@ -40,24 +40,24 @@ class _InfoProfileState extends State<InfoProfile> {
                         ),
                       ),
                     ),
-                    Positioned(
-                        bottom: 7,
-                        right: 18,
-                        child: Container(
-                          height: 35,
-                          width: 35,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.add_a_photo,
-                              size: 18,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {},
-                          ),
-                          decoration: BoxDecoration(
-                              color: textColorBlack,
-                              borderRadius: borderRadiusHight),
-                        )),
+                    // Positioned(
+                    //     bottom: 7,
+                    //     right: 18,
+                    //     child: Container(
+                    //       height: 35,
+                    //       width: 35,
+                    //       child: IconButton(
+                    //         icon: Icon(
+                    //           Icons.add_a_photo,
+                    //           size: 18,
+                    //           color: Colors.white,
+                    //         ),
+                    //         onPressed: () {},
+                    //       ),
+                    //       decoration: BoxDecoration(
+                    //           color: textColorBlack,
+                    //           borderRadius: borderRadiusHight),
+                    //     )),
                   ],
                 ),
               ],
