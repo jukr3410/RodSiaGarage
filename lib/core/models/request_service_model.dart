@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'car_model.dart';
-import 'geo_location_model.dart';
+import '../services/geo_location_model.dart';
 import 'service_model.dart';
 import 'user_model.dart';
 

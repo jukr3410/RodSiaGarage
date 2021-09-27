@@ -47,10 +47,17 @@ dependencies:
   fswitch: ^1.1.2
   flutter_form_builder: ^6.1.0+1
   logger: ^1.1.0
+  fluttertoast: ^7.1.6
 
+
+    # google map
   google_maps_flutter: ^2.0.8
   geolocator: ^7.0.3
   geocoding: ^2.0.1
+  location: ^4.3.0
+  flutter_polyline_points: ^1.0.0
+
+
   slider_button: ^1.0.0
   fancy_bottom_navigation: ^0.3.3
   carousel_slider: ^4.0.0
@@ -61,7 +68,15 @@ dependencies:
   sms_autofill: ^2.0.0
   sms_otp_auto_verify: ^1.2.2
   flutter_slidable: ^0.6.0
+
+    # local db
+  meta: ^1.3.0
+  uuid: ^3.0.4
+  sqflite: ^2.0.0+4
+  path_provider: ^2.0.0
   direct_select: ^2.0.0
+
+  permission_handler: ^8.1.6
 
 dev_dependencies:
   flutter_test:

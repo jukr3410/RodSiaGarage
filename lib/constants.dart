@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
-import 'package:rodsiagarage/core/models/geo_location_model.dart';
+import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 

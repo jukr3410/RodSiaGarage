@@ -27,7 +27,7 @@ class _MenusSettingState extends State<MenusSetting> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
-        if (state is Authenticated) {
+        if (state is AuthenticationUnauthenticated) {
           navigateToLogin();
         }
       },

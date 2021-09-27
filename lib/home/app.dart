@@ -19,13 +19,13 @@ class App extends StatelessWidget {
 
       ///when state is AuthenticationUninitialized
     }, listener: (context, state) {
-      if (state is Unauthenticated) {
+      if (state is AuthenticationUnauthenticated) {
         Timer(_duration, () {
           Navigator.pushReplacementNamed(context, LOGIN_ROUTE);
         });
       }
 
-      if (state is Authenticated) {
+      if (state is AuthenticationAuthenticated) {
         Timer(_duration, () {
           Navigator.pushReplacementNamed(context, MAIN_ROUTE);
         });
