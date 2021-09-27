@@ -178,6 +178,7 @@ const tServiceDesc = 'คำอธิบาย';
 const tServiceType = 'ประเภทบริการ';
 const tHistory = 'ประวัติ';
 const tSupportCenter = 'ศูนย์ช่วยเหลือ';
+const tLogin = 'เข้าสู่ระบบ';
 
 //Tracking Status
 const trackingStatus = [

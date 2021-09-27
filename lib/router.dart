@@ -24,6 +24,8 @@ import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiagarage/profile_feature/widgets/editProfile.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/addNumber.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
@@ -60,16 +62,34 @@ class AppRouter {
 
       case LOGIN_ROUTE:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (BuildContext context) => LoginBloc(),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<LoginBloc>(
+                        create: (BuildContext context) => LoginBloc(
+                            garageRepository: GarageRepository(),
+                            authenticationBloc: AuthenticationBloc(
+                                garageRepository: GarageRepository()))),
+                  ],
                   child: LoginScreen(),
                 ));
+
+      case ADD_NUMBER_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: AddNumber()));
+
+      case OTP_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: Otp()));
 
       case REGISTER_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RegisterBloc(),
-                child: RegisterScreen()));
+                child: AddInfo()));
 
       case EDIT_GARAGE_ROUTE:
         return MaterialPageRoute(
