@@ -29,7 +29,12 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
   FocusNode myFocusNode = new FocusNode();
   FocusNode myFocusNode1 = new FocusNode();
 
-  Service _service = Service(id: "", name: "", description: "");
+  Service _service = Service(
+      id: "",
+      name: "",
+      description: "",
+      serviceType: mockupServiceType[2],
+      garage: gargeMockup);
   ServiceType _serviceType = ServiceType(id: '', name: '', description: '');
 
   int val = -1;

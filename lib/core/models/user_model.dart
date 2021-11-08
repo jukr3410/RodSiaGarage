@@ -10,18 +10,18 @@ String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   User({
-    this.id,
-    this.name,
-    this.email,
-    this.phone,
-    this.profileImage,
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.profileImage,
   });
 
-  String? id;
-  String? name;
-  String? email;
-  String? phone;
-  String? profileImage;
+  String id;
+  String name;
+  String email;
+  String phone;
+  String profileImage;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],

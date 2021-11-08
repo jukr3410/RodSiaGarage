@@ -28,7 +28,12 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   FocusNode myFocusNode = new FocusNode();
   FocusNode myFocusNode1 = new FocusNode();
 
-  Service _service = Service(id: "", name: "", description: "");
+  Service _service = Service(
+      id: "",
+      name: "",
+      description: "",
+      serviceType: mockupServiceType[1],
+      garage: gargeMockup);
   ServiceType _serviceType = ServiceType(id: '', name: '', description: '');
 
   int val = -1;
@@ -149,7 +154,6 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   cursorColor: primaryColor,
                   scrollPadding: EdgeInsets.only(top: 10),
                   maxLines: 3,
-                  
                   style: const TextStyle(
                       color: textColorBlack, fontSize: fontSizeLow),
                   decoration: InputDecoration(

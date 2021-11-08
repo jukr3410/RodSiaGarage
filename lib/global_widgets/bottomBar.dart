@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fswitch/fswitch.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/global_widgets/InboxPage.dart';
+import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
+import 'package:rodsiagarage/global_widgets/alertShowChangeStatus.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 import 'package:rodsiagarage/global_widgets/menusSetting.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
-import 'package:rodsiagarage/global_widgets/notifyPage.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
@@ -20,35 +22,36 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   int _selectedIndex = 0;
   bool status = true;
 
-  List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-        icon: Container(
-          margin: EdgeInsets.only(left: 30),
-          child: ImageIcon(AssetImage(tImageAsset('profile'))),
-        ),
-        label: 'Profile'),
-    BottomNavigationBarItem(
-        label: 'HomePage',
-        icon: Container(
-          margin: EdgeInsets.only(bottom: 10),
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: ImageIcon(
-              AssetImage(tImageAsset('home')),
-            ),
-          ),
-        )),
-    BottomNavigationBarItem(
-        icon: Container(
-          margin: EdgeInsets.only(right: 30),
-          child: ImageIcon(AssetImage(tImageAsset('inbox'))),
-        ),
-        label: 'Inbox'),
-  ];
+  // List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
+  //   BottomNavigationBarItem(
+  //       icon: Container(
+  //         margin: EdgeInsets.only(left: 30),
+  //         child: ImageIcon(AssetImage(tImageAsset('profile'))),
+  //       ),
+  //       label: 'Profile'),
+  //   BottomNavigationBarItem(
+  //       label: 'HomePage',
+  //       icon: Container(
+  //         margin: EdgeInsets.only(bottom: 10),
+  //         child: CircleAvatar(
+  //           backgroundColor: Colors.white,
+  //           child: ImageIcon(
+  //             AssetImage(tImageAsset('home')),
+  //           ),
+  //         ),
+  //       )),
+  //   BottomNavigationBarItem(
+  //       icon: Container(
+  //         margin: EdgeInsets.only(right: 30),
+  //         child: ImageIcon(AssetImage(tImageAsset('inbox'))),
+  //       ),
+  //       label: 'Inbox'),
+  // ];
+
   List<TabData> _menuBarTest = <TabData>[
-    TabData(iconData: Icons.home, title: "Home"),
-    TabData(iconData: Icons.message, title: "Inbox"),
-    TabData(iconData: Icons.format_align_left, title: "More"),
+    TabData(iconData: Icons.home, title: "หน้าหลัก"),
+    TabData(iconData: Icons.notifications, title: "แจ้งเตือน"),
+    TabData(iconData: Icons.format_align_left, title: "เพิ่มเติม"),
   ];
 
   void _onItemTapped(int index) {
@@ -57,13 +60,14 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     });
   }
 
+  List<Widget> _pageWidget = <Widget>[
+    HomePage(),
+    NotifyPage(),
+    MenusSetting(garage: gargeMockup),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> _pageWidget = <Widget>[
-      HomePage(),
-      InboxPage(),
-      MenusSetting(garage: gargeMockup),
-    ];
     return SafeArea(
       child: Scaffold(
           appBar: setAppBar(),
@@ -82,6 +86,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
               initialSelection: 0,
               inactiveIconColor: textColorBlack,
               circleColor: textColorBlack,
+              textColor: textColorBlack,
             ),
           )
           // BottomNavigationBar(
@@ -107,21 +112,20 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
       title: Stack(
         alignment: Alignment.center,
         children: [
+          // Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: Text(
+          //       _menuBarTest[_selectedIndex].title,
+          //       style: TextStyle(color: textColorBlack),
+          //     )),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.centerRight,
             child: FSwitch(
               open: status,
-              height: 35,
-              width: 80,
+              height: 30,
+              width: 75,
               onChanged: (v) {
-                setState(() {
-                  status = v;
-                  if (status == true) {
-                    print('Status: Online');
-                  } else {
-                    print('Status: Offline');
-                  }
-                });
+                _navigateToChangeStatus(context, v);
               },
               closeChild: Text(
                 'Offline',
@@ -133,20 +137,37 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
                   fontSize: 12,
                 ),
               ),
-              openColor: Colors.green.shade800,
+              openColor: Colors.green.shade600,
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-                onPressed: () {},
-                child: ImageIcon(
-                  AssetImage('assets/images/icon-notify.png'),
-                  color: Colors.black,
-                )),
-          ),
+          // Align(
+          //   alignment: Alignment.centerRight,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       Icons.notifications,
+          //       color: textColorBlack,
+          //       size: 30,
+          //     ),
+          //     onPressed: () {},
+          //   ),
+          // ),
         ],
       ),
     );
+  }
+
+  void _navigateToChangeStatus(BuildContext context, bool v) async {
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertShowChangeStatus());
+
+    setState(() {
+      status = v;
+      if (status == true) {
+        print('Status: Online');
+      } else {
+        print('Status: Offline');
+      }
+    });
   }
 }

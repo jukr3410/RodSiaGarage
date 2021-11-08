@@ -44,43 +44,44 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundColor: textColorBlack,
         ),
         backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            // Container(
-            //   alignment: Alignment.centerLeft,
-            //   child: backPage(),
-            // ),
-            SizedBox(
-              height: 15,
-            ),
-            InfoProfile(
-              garage: widget.garage,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            InfoAddress(),
-            Padding(
-              padding: const EdgeInsets.all(defualtPaddingMedium),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'รูปภาพ:',
-                      style: TextStyle(
-                          fontSize: fontSizeMedium,
-                          fontWeight: FontWeight.w600),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(defualtPaddingLow),
+            child: Column(
+              children: [
+                InfoProfile(
+                  garage: widget.garage,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InfoAddress(),
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'รูปภาพ:',
+                        style: TextStyle(
+                            fontSize: fontSizeMedium,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CarouselImage(),
-                ],
-              ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CarouselImage(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

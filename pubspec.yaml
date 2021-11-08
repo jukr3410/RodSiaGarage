@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -78,6 +80,7 @@ dependencies:
   direct_select: ^2.0.0
 
   permission_handler: ^8.1.6
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -129,7 +132,16 @@ flutter:
     - assets/images/icon-rickshaw.png
     - assets/images/icon-tire.png
     - assets/images/icon-battery.png
-    
+    - assets/images/icon-phone-support.png
+    - assets/images/icon-email-support.png
+    - assets/images/icon-โปรโมชั่น.png
+    - assets/images/icon-อัพเดต.png
+    - assets/images/icon-น้ำมัน.png
+    - assets/images/icon-เบรก.png
+    - assets/images/icon-แบตเตอรี่.png
+    - assets/images/icon-ยาง.png
+    - assets/images/icon-ประตูกุญแจ.png
+    - assets/images/icon-รถยก.png
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/services/geo_location_model.dart';
 
 Garage garageFromJson(String str) => Garage.fromJson(json.decode(str));
@@ -34,6 +35,7 @@ class Garage {
   String password;
   String? otp;
   bool validatePhone;
+  List<Service>? services;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
       address: Address.fromJson(json["address"]),

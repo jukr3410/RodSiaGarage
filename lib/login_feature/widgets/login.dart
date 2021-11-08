@@ -183,9 +183,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         RequiredValidator(
                                             errorText:
                                                 "Please, input password."),
-                                        MinLengthValidator(8,
-                                            errorText:
-                                                "Please, input password aleast 8 charector."),
+                                        // MinLengthValidator(8,
+                                        //     errorText:
+                                        //         "Please, input password aleast 8 charector."),
                                       ])),
                                   SizedBox(
                                     height: 30,

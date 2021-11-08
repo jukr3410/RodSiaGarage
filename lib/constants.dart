@@ -4,10 +4,11 @@ import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/core/services/geo_location_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
+import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 
 //api base url
 //dev localhost api
-//final baseUrlConstant = "http://localhost:3000/api";
+// final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
 final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
@@ -28,6 +29,9 @@ const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
 const RECAP_DETAIL_REQUREST_ROUTE = '/recap_detail_request';
 const EDITPROFILE_ROUTE = '/edit-profile';
+const SUPPORT_CENTER_ROUTE = '/support-center-route';
+const SETTING_ROUTE = '/setting-route';
+const NOTIFY_ROUTE = '/notify-route';
 
 // font size
 const fontSizeLarge = 20.0;
@@ -188,12 +192,8 @@ const trackingStatus = [
   'งานเสร็จแล้ว'
 ];
 
-const menusSetting = [
-  'โปรไฟล์',
-  'ประวัติการใช้งาน',
-  'การตั้งค่า',
-  'ออกจากระบบ'
-];
+const menusSetting = ['โปรไฟล์', 'การตั้งค่า', 'ออกจากระบบ'];
+const menusSettingRoute = [PROFILE_ROUTE, SETTING_ROUTE];
 
 Garage gargeMockup = Garage(
     id: '1',
@@ -228,4 +228,67 @@ List<ServiceType> mockupServiceType = [
   ServiceType(id: '4', name: 'ยางรถ', description: 'description'),
   ServiceType(id: '5', name: 'รถลาก', description: 'description'),
   ServiceType(id: '6', name: 'น้ำมันเครื่อง', description: 'description'),
+];
+
+List<NotifyInfo> mockupNotify = [
+  NotifyInfo(
+      typeNotify: 'โปรโมชั่น',
+      title: 'ส่วนลดพิเศษประจำสัปดาห์',
+      desc: [
+        'เพียงใส่โค้ดส่วนลด RODSIANEW ท่านก็จะได้รับส่วนลด 20% สำหรับ ลูกค้าใหม่และ RODSIAAPP สำหรับลูกค้าเก่าจะได้รับส่วนลด 10%',
+      ],
+      image:
+          'https://hoonhoonbeauty.com/wp-content/uploads/2017/04/AdobeStock_262035364_Promotion-1024x382.jpeg',
+      startDate: DateTime(2021, 10, 1),
+      endDate: DateTime(2021, 10, 15),
+      condition: [
+        'เงื่อนไปเป็นไปตามที่บริษัทกำหนด',
+        'ต้องขอบริการเป็นประเภทยาง'
+      ]),
+  NotifyInfo(
+      typeNotify: 'อัพเดต',
+      title: 'อัพเดตเวอร์ชั้นล่าสุด',
+      desc: [
+        'เป็นเวอร์ชั้นที่มีการพัฒนาเรื่องความปลอดภัย เพิ่มความแม่นยำให้การหาอู๋ซ้อมรถ เพื่อให้ลูกค้าสบายใจได้เลย',
+        'อัปเดตแอป Android ด้วยตนเอง\n  1.วิธีอัปเดตแอปทีละรายการหรือหลายรายการโดยใช้แอป Google Play Store บนอุปกรณ์เคลื่อนที่มีดังนี้\n  2.เปิดแอป Google Play Store Google Play\n  3.แตะไอคอนโปรไฟล์ที่ด้านบนขวา \n  4.แตะจัดการแอปและอุปกรณ์ แอปที่พร้อมอัปเดตจะมีป้าย "มีเวอร์ชันอัปเดต"\n  5.แตะอัปเดต'
+      ],
+      image:
+          'https://www.thrillogyproductions.com/wp-content/uploads/2018/12/Update.jpg',
+      startDate: DateTime(2021, 10, 30),
+      endDate: null,
+      condition: [
+        'คุณสามารถอัปเดต iPhone, iPad หรือ iPod touch ของคุณเป็น iOS หรือ iPadOS เวอร์ชั่นล่าสุดแบบไร้สายได้',
+        'หากคุณใช้ iOS หรือ iPadOS เวอร์ชั่น 14.5 หรือใหม่กว่า คุณอาจเห็นตัวเลือกให้เลือกระหว่างการอัพเดทซอฟต์แวร์สองเวอร์ชั่น ตัวเลือกนี้ช่วยให้คุณสามารถเลือกระหว่างการอัพเดทเป็นเวอร์ชั่นล่าสุดของ iOS หรือ iPadOS 15 ทันทีที่เปิดตัว หรือใช้เป็น iOS หรือ iPadOS 14 ต่อไปในขณะที่ยังคงได้รับรายการอัพเดทความปลอดภัยที่สําคัญเป็นระยะเวลาหนึ่ง',
+        'หากคุณไม่เห็นรายการอัปเดตในอุปกรณ์ คุณสามารถอัปเดตด้วยตนเองได้โดยใช้คอมพิวเตอร์ ดูวิธีอัปเดตอุปกรณ์ของคุณด้วยตนเอง หากคุณใช้ Mac ที่มี macOS Catalina หรือใหม่กว่า หรือหากคุณใช้ Mac ที่มี macOS Mojave หรือรุ่นก่อนหน้า หรือใช้ PC ที่ใช้ Windows'
+      ]),
+  NotifyInfo(
+      typeNotify: 'โปรโมชั่น',
+      title: 'ส่วนลดพิเศษประจำสัปดาห์',
+      desc: [
+        'เพียงใส่โค้ดส่วนลด RODSIANEW ท่านก็จะได้รับส่วนลด 20% สำหรับ ลูกค้าใหม่และ RODSIAAPP สำหรับลูกค้าเก่าจะได้รับส่วนลด 10%'
+      ],
+      image:
+          'https://hoonhoonbeauty.com/wp-content/uploads/2017/04/AdobeStock_262035364_Promotion-1024x382.jpeg',
+      startDate: DateTime(2021, 10, 1),
+      endDate: DateTime(2021, 10, 15),
+      condition: [
+        'เงื่อนไปเป็นไปตามที่บริษัทกำหนด',
+        'ต้องขอบริการเป็นประเภทยาง'
+      ]),
+  NotifyInfo(
+      typeNotify: 'อัพเดต',
+      title: 'อัพเดตเวอร์ชั้นล่าสุด',
+      desc: [
+        'เป็นเวอร์ชั้นที่มีการพัฒนาเรื่องความปลอดภัย เพิ่มความแม่นยำให้การหาอู๋ซ้อมรถ เพื่อให้ลูกค้าสบายใจได้เลย',
+        'อัปเดตแอป Android ด้วยตนเอง\n  1.วิธีอัปเดตแอปทีละรายการหรือหลายรายการโดยใช้แอป Google Play Store บนอุปกรณ์เคลื่อนที่มีดังนี้\n  2.เปิดแอป Google Play Store Google Play\n  3.แตะไอคอนโปรไฟล์ที่ด้านบนขวา \n  4.แตะจัดการแอปและอุปกรณ์ แอปที่พร้อมอัปเดตจะมีป้าย "มีเวอร์ชันอัปเดต"\n  5.แตะอัปเดต'
+      ],
+      image:
+          'https://www.thrillogyproductions.com/wp-content/uploads/2018/12/Update.jpg',
+      startDate: DateTime(2021, 10, 30),
+      endDate: null,
+      condition: [
+        'คุณสามารถอัปเดต iPhone, iPad หรือ iPod touch ของคุณเป็น iOS หรือ iPadOS เวอร์ชั่นล่าสุดแบบไร้สายได้',
+        'หากคุณใช้ iOS หรือ iPadOS เวอร์ชั่น 14.5 หรือใหม่กว่า คุณอาจเห็นตัวเลือกให้เลือกระหว่างการอัพเดทซอฟต์แวร์สองเวอร์ชั่น ตัวเลือกนี้ช่วยให้คุณสามารถเลือกระหว่างการอัพเดทเป็นเวอร์ชั่นล่าสุดของ iOS หรือ iPadOS 15 ทันทีที่เปิดตัว หรือใช้เป็น iOS หรือ iPadOS 14 ต่อไปในขณะที่ยังคงได้รับรายการอัพเดทความปลอดภัยที่สําคัญเป็นระยะเวลาหนึ่ง',
+        'หากคุณไม่เห็นรายการอัปเดตในอุปกรณ์ คุณสามารถอัปเดตด้วยตนเองได้โดยใช้คอมพิวเตอร์ ดูวิธีอัปเดตอุปกรณ์ของคุณด้วยตนเอง หากคุณใช้ Mac ที่มี macOS Catalina หรือใหม่กว่า หรือหากคุณใช้ Mac ที่มี macOS Mojave หรือรุ่นก่อนหน้า หรือใช้ PC ที่ใช้ Windows'
+      ]),
 ];

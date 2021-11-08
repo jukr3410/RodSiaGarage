@@ -34,48 +34,47 @@ class _MenusSettingState extends State<MenusSetting> {
       builder: (context, state) {
         return BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            return SafeArea(
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                      Colors.yellow.shade800,
-                      Colors.yellow.shade400,
-                      Colors.yellow.shade50
-                    ])),
-                child: Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 70,
-                        child: ClipOval(
-                          child: Image.asset(
-                            tImageAsset('profile-homePage'),
-                            height: 130,
-                            width: 130,
-                            fit: BoxFit.cover,
-                          ),
+            return Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                    Colors.yellow.shade800,
+                    Colors.yellow.shade400,
+                    Colors.yellow.shade50
+                  ])),
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 70,
+                      child: ClipOval(
+                        child: Image.asset(
+                          tImageAsset('profile-homePage'),
+                          height: 130,
+                          width: 130,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        // widget.user.name,
-                        widget.garage.name,
-                        style: TextStyle(fontSize: fontSizeLarge),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 70),
-                          child: Container(
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      // widget.user.name,
+                      "หม่ำ",
+                      style: TextStyle(fontSize: fontSizeLarge),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 70),
+                        child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius: borderRadiusHightOnlyTop,
@@ -89,23 +88,41 @@ class _MenusSettingState extends State<MenusSetting> {
                                             bottom: BorderSide(
                                       color: Colors.grey.shade400,
                                     ))),
-                                    child: Column(
-                                      children: [
-                                        _TextButtonManus(
-                                            menusSetting[0], PROFILE_ROUTE),
-                                        _TextButtonManus(
-                                            menusSetting[1], PROFILE_ROUTE),
-                                        _TextButtonManus(
-                                            menusSetting[2], PROFILE_ROUTE),
-                                        _TextButtonManus(
-                                            menusSetting[3], PROFILE_ROUTE),
-                                      ],
-                                    ))),
-                          ),
-                        ),
+                                    child: ListView.builder(
+                                        itemCount: menusSetting.length,
+                                        itemBuilder: (context, index) {
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              GestureDetector(
+                                                child: Text(
+                                                  menusSetting[index]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: textColorBlack,
+                                                  ),
+                                                ),
+                                                onTap: () {
+                                                  if (index ==
+                                                      menusSetting.length - 1) {
+                                                    _authenticationBloc
+                                                        .add(LoggedOut());
+                                                  } else {
+                                                    navigator(menusSettingRoute[
+                                                        index]);
+                                                  }
+                                                },
+                                              ),
+                                              Divider(
+                                                color: textColorBlack,
+                                              ),
+                                            ],
+                                          );
+                                        })))),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
