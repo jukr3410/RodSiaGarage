@@ -60,6 +60,7 @@ class Garage {
         "password": password,
         "otp": otp,
         "validatePhone": validatePhone,
+        "services": List<dynamic>.from(services!.map((x) => x))
       };
 }
 

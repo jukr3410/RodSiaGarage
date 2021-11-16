@@ -5,6 +5,7 @@ import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:rodsiagarage/garage_manage_feature/widgets/showInfoService.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 
 class ServiceListScreen extends StatefulWidget {
@@ -28,7 +29,91 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: setAppBar(),
-      body: body(),
+      body: Container(
+        margin: EdgeInsets.all(defualtPaddingLow),
+        child: BlocConsumer<ServiceBloc, ServiceState>(
+          listener: (context, state) {
+            if (state is ServicesLoading) {
+              // ScaffoldMessenger.of(context)
+              //     .showSnackBar(SnackBar(content: Text(garageState.message)));
+
+            } else if (state is ServicesLoadSuccess && state.services.isEmpty) {
+              // ScaffoldMessenger.of(context)
+              //     .showSnackBar(SnackBar(content: Text('No more garages')));
+            } else if (state is ServicesError) {
+              // ScaffoldMessenger.of(context)
+              //     .showSnackBar(SnackBar(content: Text(garageState.error)));
+
+              // showTopSnackBar(
+              //   context,
+              //   CustomSnackBar.error(
+              //     message: mError,
+              //   ),
+              // );
+
+            }
+            return;
+          },
+          builder: (context, state) {
+            if (state is ServiceInitial ||
+                state is ServicesLoading && _services.isEmpty) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                child: CircularProgressIndicator(),
+              ));
+            } else if (state is ServicesLoadSuccess) {
+              _services.addAll(state.services);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            } else if (state is ServicesError && _services.isEmpty) {
+              return Center(
+                  child: Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      _serviceBloc..add(ServiceLoad());
+                    },
+                    icon: Icon(Icons.refresh),
+                  ),
+                  const SizedBox(height: 15),
+                  Text(mError, textAlign: TextAlign.center),
+                ],
+              ));
+            }
+            return new Container(
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: _services.length,
+                itemBuilder: (context, index) => Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.18,
+                  child: _makeCardWidget(context, _services[index]),
+                  closeOnScroll: true,
+                  movementDuration: Duration(seconds: 2),
+                  actions: <Widget>[
+                    new IconSlideAction(
+                      caption: tEdit,
+                      color: primaryColor,
+                      icon: Icons.edit_outlined,
+                      onTap: () {
+                        _navigateAndDisplayEdit(context, _services[index]);
+                      },
+                    ),
+                    new IconSlideAction(
+                      caption: tDelete,
+                      color: Colors.red,
+                      icon: Icons.delete,
+                      onTap: () {
+                        _navigateAndDisplayDelete(context, _services[index]);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           navigateToAddService();
@@ -78,95 +163,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     );
   }
 
-  body() {
-    return Container(
-      margin: EdgeInsets.all(defualtPaddingLow),
-      child: BlocConsumer<ServiceBloc, ServiceState>(
-        listener: (context, state) {
-          if (state is ServicesLoading) {
-            // ScaffoldMessenger.of(context)
-            //     .showSnackBar(SnackBar(content: Text(garageState.message)));
-
-          } else if (state is ServicesLoadSuccess && state.services.isEmpty) {
-            // ScaffoldMessenger.of(context)
-            //     .showSnackBar(SnackBar(content: Text('No more garages')));
-          } else if (state is ServicesError) {
-            // ScaffoldMessenger.of(context)
-            //     .showSnackBar(SnackBar(content: Text(garageState.error)));
-
-            // showTopSnackBar(
-            //   context,
-            //   CustomSnackBar.error(
-            //     message: mError,
-            //   ),
-            // );
-
-          }
-          return;
-        },
-        builder: (context, state) {
-          if (state is ServiceInitial ||
-              state is ServicesLoading && _services.isEmpty) {
-            return Center(
-                child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: CircularProgressIndicator(),
-            ));
-          } else if (state is ServicesLoadSuccess) {
-            _services.addAll(state.services);
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          } else if (state is ServicesError && _services.isEmpty) {
-            return Center(
-                child: Column(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    _serviceBloc..add(ServiceLoad());
-                  },
-                  icon: Icon(Icons.refresh),
-                ),
-                const SizedBox(height: 15),
-                Text(mError, textAlign: TextAlign.center),
-              ],
-            ));
-          }
-          return new Container(
-            color: Colors.white,
-            child: ListView.builder(
-              itemCount: _services.length,
-              itemBuilder: (context, index) => Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: 0.18,
-                child: _makeCardWidget(_services[index]),
-                closeOnScroll: true,
-                movementDuration: Duration(seconds: 2),
-                actions: <Widget>[
-                  new IconSlideAction(
-                    caption: tEdit,
-                    color: primaryColor,
-                    icon: Icons.edit_outlined,
-                    onTap: () {
-                      navigateToServiceEdit(_services[index]);
-                    },
-                  ),
-                  new IconSlideAction(
-                    caption: tDelete,
-                    color: Colors.red,
-                    icon: Icons.delete,
-                    onTap: () {
-                      _navigateAndDisplayDelete(context, index);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  _makeCardWidget(Service service) {
+  _makeCardWidget(BuildContext context, Service service) {
     return GestureDetector(
       child: Card(
         elevation: 3,
@@ -176,12 +173,13 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                left: 15.0,
-              ),
-              child: Icon(Icons.build_circle_outlined,
-                  size: 45, color: iconColorBlack),
-            ),
+                padding: const EdgeInsets.only(
+                  left: 15.0,
+                ),
+                child: Image.asset(
+                  tImageAsset(service.serviceType.name),
+                  width: 40,
+                )),
             Flexible(
                 child: Padding(
               padding:
@@ -210,7 +208,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                   //       color: textColorBlack),
                   // ),
                   Text(
-                    service.description,
+                    service.description!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: false,
@@ -226,14 +224,13 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         ),
       ),
       onTap: () {
-        //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
-        // navigateToServiceEdit(service);
+        _navigateToShowInfoService(context, service);
       },
     );
   }
 
-  void navigateToMain() {
-    Navigator.pop(context);
+  void navigatorToListSerivce() {
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
   }
 
   Future<void> navigateToAddService() async {
@@ -242,23 +239,33 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     _serviceBloc..add(ServiceLoad());
   }
 
-  void _navigateAndDisplayDelete(BuildContext context, int index) async {
+  void _navigateAndDisplayDelete(BuildContext context, Service service) async {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: 'คุณต้องการลบบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
-      navigatorToDelete();
+      _serviceBloc.add(ServiceDelete(service));
+      // new Future.delayed(const Duration(seconds: 3), () {
+      //   navigatorToListSerivce();
+      // });
+      navigatorToListSerivce();
     }
   }
 
-  void _navigateAndDisplayEdit(BuildContext context, int index) async {
+  void _navigateToShowInfoService(BuildContext context, Service service) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => ShowInfoService(service: service));
+  }
+
+  void _navigateAndDisplayEdit(BuildContext context, Service service) async {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: 'คุณต้องการแก้ไขบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
-      // navigateToServiceEdit(service);
+      navigateToServiceEdit(service);
     }
   }
 
@@ -270,8 +277,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   }
 
   void navigateToServiceEdit(Service service) async {
-    await Navigator.pushNamed(context, EDIT_SERVICE_ROUTE,
-        arguments: {'service': service});
+    await Navigator.pushNamed(context, EDIT_SERVICE_ROUTE, arguments: service);
     // this._services = [];
     // _serviceBloc..add(ServiceLoad());
   }

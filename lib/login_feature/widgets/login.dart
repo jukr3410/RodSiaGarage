@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         border: OutlineInputBorder(
                                             borderRadius: borderRadiusMedium,
                                             borderSide: BorderSide.none),
-                                        hintText: tPassword,
+                                        hintText: tPasswordThai,
                                         hintStyle: GoogleFonts.alata(
                                             textStyle: TextStyle(
                                                 color: textColorBlack,
