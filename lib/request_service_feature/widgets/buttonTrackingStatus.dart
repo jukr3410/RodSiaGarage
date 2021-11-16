@@ -68,7 +68,6 @@ class _ButtonTrackingStatusState extends State<ButtonTrackingStatus> {
   Widget _SlidButton() {
     return Center(
         child: SliderButton(
-          
       action: () {
         _onTappedNextStatus();
         if (numTextStatus == trackingStatus.length) {
@@ -129,7 +128,7 @@ class _ButtonTrackingStatusState extends State<ButtonTrackingStatus> {
                 },
                 child: Text(
                   textNextStatus(),
-                  style: TextStyle(fontSize: fontSizeMedium),
+                  style: TextStyle(fontSize: fontSizeL),
                 ))),
         Expanded(
           flex: 2,

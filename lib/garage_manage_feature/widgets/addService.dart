@@ -63,7 +63,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         centerTitle: true,
         title: Text(
           tAddService,
-          style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
+          style: TextStyle(color: textColorBlack, fontSize: fontSizeXl),
         ),
       ),
       body: setBody(),
@@ -262,7 +262,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   maxLines: 1,
                   softWrap: false,
                   style: new TextStyle(
-                      fontSize: fontSizeLow,
+                      fontSize: fontSizeM,
                       fontWeight: FontWeight.w600,
                       color: textColorBlack),
                 ),

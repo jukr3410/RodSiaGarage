@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       '168 garages',
                       style: TextStyle(
-                          fontSize: fontSizeLarge, fontWeight: FontWeight.w600),
+                          fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
                       softWrap: true,
                       maxLines: 1,
                     ),
@@ -62,13 +62,13 @@ class _HomePageState extends State<HomePage> {
                           tPhone + ': ',
                           style: TextStyle(
                               color: Colors.grey.shade700,
-                              fontSize: fontSizeLow - 2),
+                              fontSize: fontSizeM - 2),
                         ),
                         Text(
                           '0613512548',
                           style: TextStyle(
                               color: Colors.grey.shade700,
-                              fontSize: fontSizeLow - 2),
+                              fontSize: fontSizeM - 2),
                         )
                       ],
                     ),
@@ -78,13 +78,13 @@ class _HomePageState extends State<HomePage> {
                           tEmail + ': ',
                           style: TextStyle(
                               color: Colors.grey.shade700,
-                              fontSize: fontSizeLow - 2),
+                              fontSize: fontSizeM - 2),
                         ),
                         Text(
                           'ggg@mail.com',
                           style: TextStyle(
                               color: Colors.grey.shade700,
-                              fontSize: fontSizeLow - 2),
+                              fontSize: fontSizeM - 2),
                         )
                       ],
                     ),

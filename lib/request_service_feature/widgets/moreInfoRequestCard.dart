@@ -34,10 +34,10 @@ class _MoreInfoRequestCardState extends State<MoreInfoRequestCard> {
   }
 
   TextStyle _textStyleSmall = TextStyle(
-    fontSize: fontSizeLow,
+    fontSize: fontSizeM,
   );
   TextStyle _textStyleBig =
-      TextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: fontSizeXXl, fontWeight: FontWeight.bold);
   @override
   Widget build(BuildContext context) {
     return Center(

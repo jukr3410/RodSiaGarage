@@ -54,7 +54,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                 ),
                 Text(
                   'Jonh Cena',
-                  style: TextStyle(fontSize: fontSizeLarge),
+                  style: TextStyle(fontSize: fontSizeXXl),
                 ),
                 SizedBox(height: 40),
                 Align(
@@ -70,7 +70,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                               Text(
                                 'บริการที่ใช้:',
                                 style: TextStyle(
-                                    fontSize: fontSizeSemiLarge,
+                                    fontSize: fontSizeXl,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
@@ -87,7 +87,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                               Text(
                                 'สถานที่: ',
                                 style: TextStyle(
-                                    fontSize: fontSizeSemiLarge,
+                                    fontSize: fontSizeXl,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(

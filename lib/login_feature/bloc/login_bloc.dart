@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
+import 'package:rodsiagarage/core/models/garage_model_db.dart';
 import 'package:rodsiagarage/core/repository/garage_repository.dart';
 
 import '../../main.dart';
@@ -31,11 +32,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginLoading();
 
     try {
-      final garageDB = await garageRepository.authenticate(
+      final GarageDB garageDB = await garageRepository.authenticate(
         phone: event.phone,
         password: event.password,
       );
-      logger.d('garageDB: {$garageDB.phone}');
+      logger.d('garageDB Token: ${garageDB.token}');
 
       authenticationBloc.add(LoggedIn(garageDB: garageDB));
       //yield LoginInitial();

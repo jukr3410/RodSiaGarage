@@ -55,7 +55,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                 Text(
                   widget.requestService.user.name,
                   style: TextStyle(
-                      fontSize: fontSizeLarge + 2, fontWeight: FontWeight.bold),
+                      fontSize: fontSizeXXl + 2, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   widget.requestService.user.phone,
@@ -74,8 +74,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                         Text(
                           'บริการที่ใช้:',
                           style: TextStyle(
-                              fontSize: fontSizeMedium,
-                              fontWeight: FontWeight.bold),
+                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "- " + widget.requestService.service.serviceType.name,
@@ -93,8 +92,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                           softWrap: true,
                           maxLines: 3,
                           style: TextStyle(
-                              fontSize: fontSizeMedium,
-                              fontWeight: FontWeight.bold),
+                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
                         ),
                         Row(
                           children: [
@@ -126,8 +124,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                           softWrap: true,
                           maxLines: 3,
                           style: TextStyle(
-                              fontSize: fontSizeMedium,
-                              fontWeight: FontWeight.bold),
+                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "- " + widget.requestService.problemDesc,
@@ -139,8 +136,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                         Text(
                           'วันที่-เวลา',
                           style: TextStyle(
-                              fontSize: fontSizeMedium,
-                              fontWeight: FontWeight.bold),
+                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           DateFormat('yyyy-MMM-dd  HH:MM น.').format(
@@ -157,7 +153,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                             Text(
                               'สถานที่: ',
                               style: TextStyle(
-                                  fontSize: fontSizeMedium,
+                                  fontSize: fontSizeL,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(

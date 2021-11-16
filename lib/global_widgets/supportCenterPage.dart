@@ -36,7 +36,7 @@ class _SupportCenterPageState extends State<SupportCenterPage> {
                   children: [
                     Text(
                       'Email: ',
-                      style: TextStyle(fontSize: fontSizeSemiLarge),
+                      style: TextStyle(fontSize: fontSizeXl),
                     ),
                     Text(
                       'asdfoiahjsdf@mail.com',
@@ -60,7 +60,7 @@ class _SupportCenterPageState extends State<SupportCenterPage> {
                   children: [
                     Text(
                       'Phone: ',
-                      style: TextStyle(fontSize: fontSizeSemiLarge),
+                      style: TextStyle(fontSize: fontSizeXl),
                     ),
                     Text(
                       '546-46464565',

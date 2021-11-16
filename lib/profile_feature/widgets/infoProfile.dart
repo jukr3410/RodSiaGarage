@@ -12,7 +12,6 @@ class InfoProfile extends StatefulWidget {
 }
 
 class _InfoProfileState extends State<InfoProfile> {
-  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -72,7 +71,7 @@ class _InfoProfileState extends State<InfoProfile> {
               Text(
                 widget.garage.name,
                 style: TextStyle(
-                    fontSize: fontSizeLarge, fontWeight: FontWeight.w600),
+                    fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
                 softWrap: true,
                 maxLines: 1,
               ),

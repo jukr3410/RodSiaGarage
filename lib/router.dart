@@ -33,7 +33,6 @@ import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addNumber.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
-import 'package:rodsiagarage/register_garage_feature/widgets/registerScreen.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart'
@@ -84,20 +83,25 @@ class AppRouter {
       case ADD_NUMBER_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
+                create: (BuildContext context) =>
+                    RegisterBloc(garageRepository: GarageRepository()),
                 child: AddNumber()));
 
       case OTP_ROUTE:
+        Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: Otp()));
+                create: (BuildContext context) =>
+                    RegisterBloc(garageRepository: GarageRepository()),
+                child: Otp(garage: garage)));
 
       case REGISTER_ROUTE:
+        Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: AddInfo()));
+                create: (BuildContext context) =>
+                    RegisterBloc(garageRepository: GarageRepository()),
+                child: AddInfo(garage: garage)));
 
       case EDIT_GARAGE_ROUTE:
         return MaterialPageRoute(
@@ -155,12 +159,6 @@ class AppRouter {
             builder: (_) => DetailAndGiveStarPage(
                   requestService: requestService,
                 ));
-
-      case OTP_ROUTE:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: Otp()));
 
       case EDITPROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;

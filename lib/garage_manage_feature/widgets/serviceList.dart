@@ -126,7 +126,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         ),
         label: Text(
           tAddService,
-          style: TextStyle(color: textColorBlack, fontSize: fontSizeMedium),
+          style: TextStyle(color: textColorBlack, fontSize: fontSizeL),
         ),
       ),
     );
@@ -139,7 +139,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
       centerTitle: true,
       title: Text(
         tServiceGarage,
-        style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
+        style: TextStyle(color: textColorBlack, fontSize: fontSizeXl),
       ),
       // leading: IconButton(
       //   icon: Icon(
@@ -193,7 +193,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     maxLines: 1,
                     softWrap: false,
                     style: new TextStyle(
-                        fontSize: fontSizeMedium,
+                        fontSize: fontSizeL,
                         fontWeight: FontWeight.w600,
                         color: textColorBlack),
                   ),
@@ -203,7 +203,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                   //   maxLines: 1,
                   //   softWrap: false,
                   //   style: new TextStyle(
-                  //       fontSize: fontSizeLow,
+                  //       fontSize: fontSizeM,
                   //       fontWeight: FontWeight.w600,
                   //       color: textColorBlack),
                   // ),

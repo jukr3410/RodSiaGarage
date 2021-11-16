@@ -25,7 +25,7 @@ class InvalidRouteScreen extends StatelessWidget {
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: textColorRed,
-              fontSize: fontSizeLarge),
+              fontSize: fontSizeXXl),
         ),
       ),
     );

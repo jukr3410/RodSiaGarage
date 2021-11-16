@@ -57,7 +57,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
         centerTitle: true,
         title: Text(
           tEditService,
-          style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
+          style: TextStyle(color: textColorBlack, fontSize: fontSizeXl),
         ),
       ),
       body: setBody(),
@@ -263,7 +263,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                   maxLines: 1,
                   softWrap: false,
                   style: new TextStyle(
-                      fontSize: fontSizeLow,
+                      fontSize: fontSizeM,
                       fontWeight: FontWeight.w600,
                       color: textColorBlack),
                 ),

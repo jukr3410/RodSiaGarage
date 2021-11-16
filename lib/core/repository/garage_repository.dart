@@ -23,6 +23,18 @@ class GarageRepository {
     return await garageApi.addGarage(garage: garage);
   }
 
+  Future<bool> checkUsedNumberPhone({required Garage garage}) async {
+    return await garageApi.checkUsedNumberPhone(garage: garage);
+  }
+
+  Future<bool> requestSendOtpGarage({required Garage garage}) async {
+    return await garageApi.requestSendOtpGarage(garage: garage);
+  }
+
+  Future<bool> verifyOtpGarage({required Garage garage}) async {
+    return await garageApi.verifyOtpGarage(garage: garage);
+  }
+
   Future<bool> updateGarage({required Garage garage}) async {
     return await garageApi.updateGarage(garage);
   }
@@ -38,11 +50,11 @@ class GarageRepository {
     required String password,
   }) async {
     GarageLogin garageLogin = GarageLogin(phone: phone, password: password);
-    //Token token = await getToken(garageLogin);
+    Token token = await garageApi.getTokenLogin(garageLogin: garageLogin);
     GarageDB garageDB = GarageDB(
       id: 0,
       phone: phone,
-      //token: token.token,
+      token: token.token,
     );
     return garageDB;
   }
@@ -58,6 +70,11 @@ class GarageRepository {
 
   Future<bool> hasToken() async {
     bool result = await garageDao.checkGarage(0);
+    return result;
+  }
+
+  Future<GarageDB> getGarageToken() async {
+    GarageDB result = await garageDao.getGarageToken();
     return result;
   }
 }
