@@ -36,9 +36,7 @@ class _ListhistoryState extends State<Listhistory> {
         title: Text('ประวัติการใช้งาน'),
         iconTheme: IconThemeData(color: textColorBlack),
         titleTextStyle: TextStyle(
-            color: textColorBlack,
-            fontSize: fontSizeLarge,
-            fontFamily: 'Kanit'),
+            color: textColorBlack, fontSize: fontSizeXXl, fontFamily: 'Kanit'),
       ),
       body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
           listener: (context, state) {},
@@ -97,7 +95,7 @@ class _ListhistoryState extends State<Listhistory> {
                     maxLines: 1,
                     overflow: TextOverflow.fade,
                     style: new TextStyle(
-                        fontSize: fontSizeSemiLarge - 1,
+                        fontSize: fontSizeXl - 1,
                         fontWeight: FontWeight.bold,
                         color: textColorBlack),
                   ),
@@ -107,15 +105,15 @@ class _ListhistoryState extends State<Listhistory> {
                     maxLines: 1,
                     overflow: TextOverflow.fade,
                     style: new TextStyle(
-                        fontSize: fontSizeLow - 1,
+                        fontSize: fontSizeM - 1,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey),
                   ),
                   Text(
                     DateFormat('yyyy-MMM-dd  HH:MM น.').format(
                         DateTime.parse(requestService.createdAt.toString())),
-                    style: TextStyle(
-                        color: Colors.grey, fontSize: fontSizeLow - 2),
+                    style:
+                        TextStyle(color: Colors.grey, fontSize: fontSizeM - 2),
                   ),
                 ],
               )),

@@ -66,8 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text(
                         'รูปภาพ:',
                         style: TextStyle(
-                            fontSize: fontSizeMedium,
-                            fontWeight: FontWeight.w600),
+                            fontSize: fontSizeL, fontWeight: FontWeight.w600),
                       ),
                     ),
                     SizedBox(

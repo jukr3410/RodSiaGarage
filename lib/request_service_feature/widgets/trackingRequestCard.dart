@@ -33,10 +33,10 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
   }
 
   TextStyle _textStyleSmall = TextStyle(
-    fontSize: fontSizeLow,
+    fontSize: fontSizeM,
   );
   TextStyle _textStyleBig =
-      TextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: fontSizeXXl, fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                   text: 'BMW center',
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: fontSizeLarge,
+                                      fontSize: fontSizeXXl,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: 'Kanit'),
                                 )),

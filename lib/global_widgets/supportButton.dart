@@ -16,7 +16,10 @@ class _SupportButtonState extends State<SupportButton> {
     return GFButton(
       type: GFButtonType.transparent,
       textStyle: TextStyle(fontSize: 14, color: textColorBlack),
-      child: Text(tSupportThai,style: TextStyle(fontFamily: 'Kanit'),),
+      child: Text(
+        tSupportThai,
+        style: TextStyle(fontFamily: 'Kanit'),
+      ),
       onPressed: () {
         _navigateAndDisplaySelection(context);
       },
@@ -53,7 +56,7 @@ class _SupportButtonState extends State<SupportButton> {
                 child: Text(
                   'ติดต่อช่วยเหลือ:',
                   style: TextStyle(
-                      fontSize: fontSizeSemiLarge,
+                      fontSize: fontSizeXl,
                       fontWeight: FontWeight.bold,
                       color: textColorBlack),
                 ),
@@ -76,13 +79,12 @@ class _SupportButtonState extends State<SupportButton> {
                     children: [
                       Text('Email: ',
                           style: TextStyle(
-                              fontSize: fontSizeSemiLarge - 1,
-                              color: textColorBlack)),
+                              fontSize: fontSizeXl - 1, color: textColorBlack)),
                       Text(
                         'asdfoiahjsdf@mail.com',
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontSize: fontSizeLow,
+                          fontSize: fontSizeM,
                         ),
                       ),
                     ],
@@ -109,13 +111,12 @@ class _SupportButtonState extends State<SupportButton> {
                     children: [
                       Text('Phone: ',
                           style: TextStyle(
-                              fontSize: fontSizeSemiLarge - 1,
-                              color: textColorBlack)),
+                              fontSize: fontSizeXl - 1, color: textColorBlack)),
                       Text(
                         '546-46464565',
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontSize: fontSizeLow,
+                          fontSize: fontSizeM,
                         ),
                       ),
                     ],

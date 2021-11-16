@@ -58,7 +58,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         centerTitle: true,
         title: Text(
           tAddService,
-          style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
+          style: TextStyle(color: textColorBlack, fontSize: fontSizeXl),
         ),
       ),
       body: setBody(),
@@ -116,7 +116,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'เลือกประเภทของบริการ',
-                      style: TextStyle(fontSize: fontSizeMedium),
+                      style: TextStyle(fontSize: fontSizeL),
                     )),
                 SizedBox(
                   height: 10,
@@ -155,7 +155,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   scrollPadding: EdgeInsets.only(top: 10),
                   maxLines: 3,
                   style: const TextStyle(
-                      color: textColorBlack, fontSize: fontSizeLow),
+                      color: textColorBlack, fontSize: fontSizeM),
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -167,8 +167,8 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       alignLabelWithHint: true,
                       fillColor: Colors.red,
                       contentPadding: EdgeInsets.all(defualtPaddingLow),
-                      labelStyle: TextStyle(
-                          fontSize: fontSizeLow, color: textColorBlack),
+                      labelStyle:
+                          TextStyle(fontSize: fontSizeM, color: textColorBlack),
                       border: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: hexToColor('#C4C4C4'), width: 0),
@@ -243,7 +243,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   maxLines: 1,
                   softWrap: false,
                   style: new TextStyle(
-                      fontSize: fontSizeLow,
+                      fontSize: fontSizeM,
                       fontWeight: FontWeight.w600,
                       color: textColorBlack),
                 ),

@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _controller = TextEditingController();
   GlobalKey<FormState> _form = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
@@ -72,11 +73,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    margin: new EdgeInsets.only(top: 50),
                     decoration: BoxDecoration(
                         borderRadius: borderRadiusHight,
                         boxShadow: [boxShadow]),
                     child: ClipRRect(
-                      borderRadius: borderRadiusMedium,
+                      borderRadius: BorderRadius.circular(25),
                       child: Image.asset(
                         'assets/launcher/ic_launcher.png',
                         height: 150,
@@ -112,10 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: GoogleFonts.alata(
                                           textStyle: TextStyle(
                                               color: textColorBlack,
-                                              fontSize: 20.0)),
-                                      inputFormatters: [
-                                        MaskedInputFormatter('###-###-####')
-                                      ],
+                                              fontSize: fontSizeXl)),
+                                      // inputFormatters: [
+                                      //   MaskedInputFormatter('###-###-####')
+                                      // ],
                                       decoration: InputDecoration(
                                         // icon: Icon(Icons.phone_android),
                                         filled: true,
@@ -138,11 +140,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       controller: phoneController,
                                       validator: MultiValidator([
                                         RequiredValidator(
-                                            errorText:
-                                                "Please, input phone number."),
+                                            errorText: "โปรดระบุเบอร์โทร"),
                                         MinLengthValidator(10,
                                             errorText:
-                                                "Phone should be atleast 10 number."),
+                                                "โปรดระบุเบอร์ให้ครบ 10 ตัว"),
                                       ])),
                                   SizedBox(
                                     height: 10,
@@ -156,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: GoogleFonts.alata(
                                           textStyle: TextStyle(
                                               color: textColorBlack,
-                                              fontSize: 20.0)),
+                                              fontSize: fontSizeXl)),
                                       inputFormatters: [
                                         //MaskedInputFormatter('(###)-###-####')
                                       ],
@@ -181,11 +182,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       controller: passwordController,
                                       validator: MultiValidator([
                                         RequiredValidator(
-                                            errorText:
-                                                "Please, input password."),
+                                            errorText: "โปรดระบุรหัสผ่าน"),
                                         // MinLengthValidator(8,
                                         //     errorText:
-                                        //         "Please, input password aleast 8 charector."),
+                                        //         ""),
                                       ])),
                                   SizedBox(
                                     height: 30,
@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: GoogleFonts.alata(
                                 textStyle: TextStyle(
                               color: textColorBlack,
-                              fontSize: fontSizeLarge,
+                              fontSize: fontSizeL,
                               shadows: [
                                 Shadow(
                                   blurRadius: 15.0,
@@ -251,20 +251,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         //   height: 40,
                         // ),
 
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 40),
-                          child: Text(
-                              "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.alata(
-                                textStyle: TextStyle(
-                                  color: textColorBlack,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              )),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       vertical: 20, horizontal: 40),
+                        //   child: Text(
+                        //       "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
+                        //       textAlign: TextAlign.center,
+                        //       style: GoogleFonts.alata(
+                        //         textStyle: TextStyle(
+                        //           color: textColorBlack,
+                        //           fontSize: 12,
+                        //           fontWeight: FontWeight.normal,
+                        //         ),
+                        //       )),
+                        // )
                       ],
                     ),
                   )
@@ -290,5 +290,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void navigateToMain() {
     Navigator.pushReplacementNamed(context, MAIN_ROUTE);
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    _controller.dispose();
+    super.dispose();
   }
 }

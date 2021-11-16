@@ -18,7 +18,7 @@ class _NotifyPageState extends State<NotifyPage> {
         //   backgroundColor: primaryColor,
         //   title: Text(
         //     'การแจ้งเตือน',
-        //     style: TextStyle(color: textColorBlack, fontSize: fontSizeLarge),
+        //     style: TextStyle(color: textColorBlack, fontSize: fontSizeXXl),
         //   ),
         //   iconTheme: IconThemeData(color: textColorBlack),
         //   centerTitle: true,
@@ -72,7 +72,7 @@ class _NotifyPageState extends State<NotifyPage> {
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         style: new TextStyle(
-                            fontSize: fontSizeMedium - 1,
+                            fontSize: fontSizeL - 1,
                             fontWeight: FontWeight.bold,
                             color: textColorBlack),
                       ),
@@ -82,7 +82,7 @@ class _NotifyPageState extends State<NotifyPage> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: new TextStyle(
-                            fontSize: fontSizeLow - 1,
+                            fontSize: fontSizeM - 1,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey),
                       ),

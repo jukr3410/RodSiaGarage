@@ -31,8 +31,7 @@ class _AlertShowChangeStatusState extends State<AlertShowChangeStatus> {
               ),
               Text(
                 'คุณพึงเปลี่ยนสถานะของร้าน!',
-                style: TextStyle(
-                    color: textColorBlack, fontSize: fontSizeSemiLarge),
+                style: TextStyle(color: textColorBlack, fontSize: fontSizeXl),
               ),
               SizedBox(
                 height: 20,

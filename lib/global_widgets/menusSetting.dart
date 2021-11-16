@@ -69,7 +69,7 @@ class _MenusSettingState extends State<MenusSetting> {
                     Text(
                       // widget.user.name,
                       "หม่ำ",
-                      style: TextStyle(fontSize: fontSizeLarge),
+                      style: TextStyle(fontSize: fontSizeXXl),
                     ),
                     Expanded(
                       child: Padding(
@@ -149,7 +149,7 @@ class _MenusSettingState extends State<MenusSetting> {
             child: (Text(
               name,
               style: TextStyle(
-                fontSize: fontSizeMedium,
+                fontSize: fontSizeL,
                 color: textColorBlack,
               ),
             )),

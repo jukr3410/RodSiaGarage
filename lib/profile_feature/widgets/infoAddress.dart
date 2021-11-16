@@ -20,8 +20,7 @@ class _InfoAddressState extends State<InfoAddress> {
         children: [
           Text(
             tLocationThai,
-            style: TextStyle(
-                fontSize: fontSizeMedium, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: fontSizeL, fontWeight: FontWeight.w600),
           ),
           Text('123/456 ถนนพระราม2 แขวง เขต กทรุงเทพ 10150'),
           SizedBox(

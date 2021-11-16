@@ -4,7 +4,7 @@ import 'package:rodsiagarage/core/models/garage_model.dart';
 
 class buttonToEditProfile extends StatefulWidget {
   Garage garage;
-  buttonToEditProfile({Key? key,required this.garage}) : super(key: key);
+  buttonToEditProfile({Key? key, required this.garage}) : super(key: key);
 
   @override
   _buttonToEditProfileState createState() => _buttonToEditProfileState();
@@ -19,7 +19,7 @@ class _buttonToEditProfileState extends State<buttonToEditProfile> {
         },
         child: Text(
           tEdit,
-          style: TextStyle(fontSize: fontSizeMedium, color: Colors.white),
+          style: TextStyle(fontSize: fontSizeL, color: Colors.white),
         ));
   }
 

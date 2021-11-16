@@ -8,10 +8,10 @@ import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 
 //api base url
 //dev localhost api
-// final baseUrlConstant = "http://localhost:3000/api";
+final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
-final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
+//final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 // router path
 const LOGIN_ROUTE = "/login";
 const ADD_NUMBER_ROUTE = "/add_number";
@@ -34,10 +34,11 @@ const SETTING_ROUTE = '/setting-route';
 const NOTIFY_ROUTE = '/notify-route';
 
 // font size
-const fontSizeLarge = 20.0;
-const fontSizeSemiLarge = 18.0;
-const fontSizeMedium = 16.0;
-const fontSizeLow = 14.0;
+const fontSizeXXl = 20.0;
+const fontSizeXl = 18.0;
+const fontSizeL = 16.0;
+const fontSizeM = 14.0;
+const fontSizeS = 12.0;
 
 // color that use in app
 const textColorBlack = Color(0xff38454C);
@@ -166,6 +167,7 @@ const tDelete = 'ลบ';
 const tEmailThai = "อีเมล";
 const tEdit = 'แก้ไข';
 const tPassword = "Password";
+const tConfirmPassword = "ยืนยันรหัสผ่าน ";
 const tPasswordThai = "รหัสผ่าน";
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";

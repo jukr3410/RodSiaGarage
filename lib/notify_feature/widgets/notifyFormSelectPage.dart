@@ -22,7 +22,7 @@ class _NotifyFromSelectPageState extends State<NotifyFromSelectPage> {
           backgroundColor: primaryColor,
           title: Text(
             'การแจ้งเตือน',
-            style: TextStyle(color: textColorBlack, fontSize: fontSizeLarge),
+            style: TextStyle(color: textColorBlack, fontSize: fontSizeXXl),
           ),
           iconTheme: IconThemeData(color: textColorBlack),
           centerTitle: true,
@@ -44,7 +44,7 @@ class _NotifyFromSelectPageState extends State<NotifyFromSelectPage> {
                     ),
                     Text(
                       widget.notify.typeNotify,
-                      style: TextStyle(fontSize: fontSizeLow),
+                      style: TextStyle(fontSize: fontSizeM),
                     )
                   ],
                 )),
@@ -54,14 +54,13 @@ class _NotifyFromSelectPageState extends State<NotifyFromSelectPage> {
                 Text(
                   widget.notify.title,
                   style: TextStyle(
-                    fontSize: fontSizeLarge + 2,
+                    fontSize: fontSizeXXl + 2,
                   ),
                 ),
                 Text(
                   DateFormat('yyyy-MMM-dd  HH:MM น.').format(
                       DateTime.parse(widget.notify.startDate.toString())),
-                  style:
-                      TextStyle(color: Colors.grey, fontSize: fontSizeLow - 2),
+                  style: TextStyle(color: Colors.grey, fontSize: fontSizeM - 2),
                 ),
                 SizedBox(
                   height: 10,
@@ -93,8 +92,7 @@ class _NotifyFromSelectPageState extends State<NotifyFromSelectPage> {
                     }),
                 Text(
                   'เงื่อนไข:',
-                  style: TextStyle(
-                      color: primaryColor, fontSize: fontSizeSemiLarge),
+                  style: TextStyle(color: primaryColor, fontSize: fontSizeXl),
                 ),
                 ListView.builder(
                     shrinkWrap: true,
