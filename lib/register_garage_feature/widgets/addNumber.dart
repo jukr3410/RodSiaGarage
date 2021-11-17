@@ -27,6 +27,7 @@ class _AddNumberState extends State<AddNumber> {
   Garage _garage = Garage(
       address: Address(geoLocation: GeoLocation(), addressDesc: ""),
       images: [],
+      typeCarRepairs: [],
       id: "",
       name: "",
       phone: "",

@@ -205,7 +205,8 @@ Garage gargeMockup = Garage(
     password: '1234',
     validatePhone: true,
     address: Address(addressDesc: '', geoLocation: GeoLocation()),
-    images: []);
+    images: [],
+    typeCarRepairs: []);
 List<String> serviceType = [
   'fuel',
   'battery',

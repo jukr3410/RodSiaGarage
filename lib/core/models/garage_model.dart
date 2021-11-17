@@ -12,18 +12,18 @@ Garage garageFromJson(String str) => Garage.fromJson(json.decode(str));
 String garageToJson(Garage data) => json.encode(data.toJson());
 
 class Garage {
-  Garage({
-    required this.address,
-    this.openingHour,
-    required this.images,
-    required this.id,
-    required this.name,
-    required this.phone,
-    required this.email,
-    required this.password,
-    this.otp,
-    required this.validatePhone,
-  });
+  Garage(
+      {required this.address,
+      this.openingHour,
+      required this.images,
+      required this.id,
+      required this.name,
+      required this.phone,
+      required this.email,
+      required this.password,
+      this.otp,
+      required this.validatePhone,
+      required this.typeCarRepairs});
 
   Address address;
   OpeningHour? openingHour;
@@ -36,18 +36,21 @@ class Garage {
   String? otp;
   bool validatePhone;
   List<Service>? services;
+  List<String> typeCarRepairs;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
-      address: Address.fromJson(json["address"]),
-      openingHour: OpeningHour.fromJson(json["openingHour"]),
-      images: List<String>.from(json["images"].map((x) => x)),
-      id: json["_id"],
-      name: json["name"],
-      phone: json["phone"],
-      email: json["email"],
-      password: json["password"],
-      otp: json["otp"],
-      validatePhone: json["validatePhone"]);
+        address: Address.fromJson(json["address"]),
+        openingHour: OpeningHour.fromJson(json["openingHour"]),
+        images: List<String>.from(json["images"].map((x) => x)),
+        id: json["_id"],
+        name: json["name"],
+        phone: json["phone"],
+        email: json["email"],
+        password: json["password"],
+        otp: json["otp"],
+        validatePhone: json["validatePhone"],
+        typeCarRepairs: List<String>.from(json["typeCarRepairs"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
         "address": address.toJson(),
@@ -60,6 +63,7 @@ class Garage {
         "password": password,
         "otp": otp,
         "validatePhone": validatePhone,
+        "typeCarRepairs": List<dynamic>.from(typeCarRepairs.map((x) => x)),
       };
 }
 
