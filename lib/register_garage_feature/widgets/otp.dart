@@ -40,6 +40,7 @@ class _OtpState extends State<Otp> {
   Garage _garage = Garage(
       address: Address(geoLocation: GeoLocation(), addressDesc: ""),
       images: [],
+      typeCarRepairs: [],
       id: "",
       name: "",
       phone: "",
