@@ -111,7 +111,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'เลือกประเภทของบริการ',
-                        style: TextStyle(fontSize: fontSizeMedium),
+                        style: TextStyle(fontSize: fontSizeM),
                       )),
                   SizedBox(
                     height: 10,
@@ -169,7 +169,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                     scrollPadding: EdgeInsets.only(top: 10),
                     maxLines: 3,
                     style: const TextStyle(
-                        color: textColorBlack, fontSize: fontSizeLow),
+                        color: textColorBlack, fontSize: fontSizeS),
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -183,7 +183,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                         fillColor: Colors.red,
                         contentPadding: EdgeInsets.all(defualtPaddingLow),
                         labelStyle: TextStyle(
-                            fontSize: fontSizeLow, color: textColorBlack),
+                            fontSize: fontSizeS, color: textColorBlack),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: hexToColor('#C4C4C4'), width: 0),

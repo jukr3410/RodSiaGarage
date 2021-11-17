@@ -38,7 +38,7 @@ class ShowInfoService extends StatelessWidget {
               Text(
                 service.name,
                 style: TextStyle(
-                    fontSize: fontSizeLarge, fontWeight: FontWeight.w600),
+                    fontSize: fontSizeXl, fontWeight: FontWeight.w600),
                 softWrap: true,
                 maxLines: 1,
               ),

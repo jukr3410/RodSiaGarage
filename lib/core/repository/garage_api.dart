@@ -5,6 +5,7 @@ import 'package:rodsiagarage/core/dao/garage_dao.dart';
 import 'package:rodsiagarage/core/models/garage_login.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:rodsiagarage/core/models/garage_model_db.dart';
 
 import '../../main.dart';
 
@@ -25,7 +26,23 @@ class GarageApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    Garage garage = decodedJson;
+    Garage garage = Garage.fromJson(decodedJson);
+
+    return garage;
+  }
+
+  Future<Garage> getGaragePhone() async {
+    GarageDB userToken = await garageDao.getGarageToken();
+    final url = '$baseUrl/garages-phone/${userToken.phone}';
+    final response = await http.get(Uri.parse(url));
+    logger.d('${response.body}');
+
+    if (response.statusCode != 200) {
+      logger.e(response);
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJson = jsonDecode(response.body);
+    Garage garage = Garage.fromJson(decodedJson);
 
     return garage;
   }

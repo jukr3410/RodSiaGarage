@@ -16,6 +16,7 @@ import 'package:rodsiagarage/garage_manage_feature/widgets/serviceList.dart';
 import 'package:rodsiagarage/global_widgets/supportCenterPage.dart';
 import 'package:rodsiagarage/history_feature/widgets/historyInfoPage.dart';
 import 'package:rodsiagarage/history_feature/widgets/listHistory.dart';
+import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:rodsiagarage/global_widgets/invalidRoute.dart';
 import 'package:rodsiagarage/home/app.dart';
@@ -65,6 +66,9 @@ class AppRouter {
                     create: (BuildContext context) =>
                         ProfileBloc(garageRepository: GarageRepository()),
                   ),
+                  BlocProvider(
+                      create: (BuildContext context) =>
+                          GarageInfoBloc(garageRepository: GarageRepository()))
                 ], child: CustomAppBar()));
 
       case LOGIN_ROUTE:
@@ -115,8 +119,8 @@ class AppRouter {
                         ServiceBloc(serviceRepository: ServiceRepository()),
                   ),
                   BlocProvider(
-                    create: (BuildContext context) =>
-                        ServiceTypeBloc(serviceTypeRepository: ServiceTypeRepository()),
+                    create: (BuildContext context) => ServiceTypeBloc(
+                        serviceTypeRepository: ServiceTypeRepository()),
                   ),
                 ], child: ServiceListScreen()));
 
@@ -147,7 +151,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
 
       case HOMEPAGE_ROUTE:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    GarageInfoBloc(garageRepository: GarageRepository()),
+                child: HomePage()));
 
       case PROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;
