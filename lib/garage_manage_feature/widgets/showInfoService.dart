@@ -38,7 +38,7 @@ class ShowInfoService extends StatelessWidget {
               Text(
                 service.name,
                 style: TextStyle(
-                    fontSize: fontSizeLarge, fontWeight: FontWeight.w600),
+                    fontSize: fontSizeXl, fontWeight: FontWeight.w600),
                 softWrap: true,
                 maxLines: 1,
               ),
@@ -47,7 +47,7 @@ class ShowInfoService extends StatelessWidget {
               //   style: TextStyle(color: Colors.grey.shade600),
               // ),
               Text(
-                'ประเภท: '+service.serviceType.name,
+                'ประเภท: ' + service.serviceType.name,
                 style: TextStyle(color: Colors.grey.shade600),
               ),
               Text(
@@ -56,7 +56,7 @@ class ShowInfoService extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  '- '+service.description!,
+                  '- ' + service.description!,
                   softWrap: true,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

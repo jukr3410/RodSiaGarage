@@ -117,7 +117,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'เลือกประเภทของบริการ',
-                        style: TextStyle(fontSize: fontSizeMedium),
+                        style: TextStyle(fontSize: fontSizeL),
                       )),
                   SizedBox(
                     height: 10,
@@ -168,7 +168,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                     scrollPadding: EdgeInsets.only(top: 10),
                     maxLines: 3,
                     style: const TextStyle(
-                        color: textColorBlack, fontSize: fontSizeLow),
+                        color: textColorBlack, fontSize: fontSizeM),
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -181,7 +181,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                         fillColor: Colors.red,
                         contentPadding: EdgeInsets.all(defualtPaddingLow),
                         labelStyle: TextStyle(
-                            fontSize: fontSizeLow, color: textColorBlack),
+                            fontSize: fontSizeM, color: textColorBlack),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: hexToColor('#C4C4C4'), width: 0),
