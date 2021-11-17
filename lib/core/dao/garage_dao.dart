@@ -21,7 +21,7 @@ class GarageDao {
       if (garages.length > 0) {
         //garages.forEach((row) => logger.d('getGarageToken: ${row}'));
         garageDB = GarageDB.fromDatabaseJson(garages[0]);
-        logger.d('getGarageToken: ${garageDB}');
+        logger.d('getGarageToken: ${garageDB.phone}');
         return garageDB;
       } else {
         return null!;
