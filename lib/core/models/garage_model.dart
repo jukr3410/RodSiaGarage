@@ -15,33 +15,35 @@ class Garage {
   Garage(
       {required this.address,
       this.openingHour,
-      required this.images,
+      this.images,
       required this.id,
       required this.name,
       required this.phone,
       required this.email,
       required this.password,
       this.otp,
+      this.logoImage,
       required this.validatePhone,
       required this.typeCarRepairs});
 
   Address address;
   OpeningHour? openingHour;
-  List<String> images;
+  List<ImageGarage>? images;
   String id;
   String name;
   String phone;
   String email;
   String password;
+  String? logoImage;
   String? otp;
   bool validatePhone;
   List<Service>? services;
-  List<String> typeCarRepairs;
+  List<TypeCarRepairs> typeCarRepairs;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
         address: Address.fromJson(json["address"]),
         openingHour: OpeningHour.fromJson(json["openingHour"]),
-        images: List<String>.from(json["images"].map((x) => x)),
+        images: List<ImageGarage>.from(json["images"].map((x) => ImageGarage.fromJson(x))),
         id: json["_id"],
         name: json["name"],
         phone: json["phone"],
@@ -49,22 +51,25 @@ class Garage {
         password: json["password"],
         otp: json["otp"],
         validatePhone: json["validatePhone"],
-        typeCarRepairs: List<String>.from(json["typeCarRepairs"].map((x) => x)),
+        logoImage: json['logoImage'],
+        typeCarRepairs:
+            List<TypeCarRepairs>.from(json["typeCarRepairs"].map((x) => TypeCarRepairs.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "address": address.toJson(),
         "openingHour": openingHour!.toJson(),
-        "images": List<String>.from(images.map((x) => x)),
+        "images": List<ImageGarage>.from(images!.map((x) => x)),
         "_id": id,
         "name": name,
         "phone": phone,
         "email": email,
         "password": password,
         "otp": otp,
+        'logoImage': logoImage,
         "validatePhone": validatePhone,
-        "typeCarRepairs": List<dynamic>.from(typeCarRepairs.map((x) => x)),
-        "services": List<dynamic>.from(services!.map((x) => x))
+        "typeCarRepairs": List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
+        "services": List<Service>.from(services!.map((x) => x))
       };
 }
 
@@ -85,6 +90,34 @@ class Address {
   Map<String, dynamic> toJson() => {
         "geoLocation": geoLocation.toJson(),
         "addressDesc": addressDesc,
+      };
+}
+
+class TypeCarRepairs {
+  String type;
+
+  TypeCarRepairs({required this.type});
+
+  factory TypeCarRepairs.fromJson(Map<String, dynamic> json) => TypeCarRepairs(
+        type: json["type"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+      };
+}
+
+class ImageGarage {
+  String image;
+
+  ImageGarage({required this.image});
+
+  factory ImageGarage.fromJson(Map<String, dynamic> json) => ImageGarage(
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "image": image,
       };
 }
 

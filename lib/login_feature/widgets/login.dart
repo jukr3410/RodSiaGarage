@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rodsiagarage/login_feature/bloc/login_bloc.dart';
+import 'package:rodsiagarage/main.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -282,6 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
       phone: phoneController.text,
       password: passwordController.text,
     ));
+    logger.d(phoneController.text);
   }
 
   void navigateToAddNumber() {
