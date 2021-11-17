@@ -64,6 +64,7 @@ class Garage {
         "otp": otp,
         "validatePhone": validatePhone,
         "typeCarRepairs": List<dynamic>.from(typeCarRepairs.map((x) => x)),
+        "services": List<dynamic>.from(services!.map((x) => x))
       };
 }
 

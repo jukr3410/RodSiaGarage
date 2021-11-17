@@ -15,14 +15,14 @@ class Service {
   Service({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
     required this.serviceType,
     required this.garage,
   });
 
   String id;
   String name;
-  String description;
+  String? description;
   ServiceType serviceType;
   Garage garage;
 

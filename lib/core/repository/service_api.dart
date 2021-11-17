@@ -12,7 +12,8 @@ class ServiceApi {
     'Accept': 'application/json'
   };
 
-  Future<List<Service>> getServiceByGarage({required String garageId}) async {
+  Future<List<Service>> getServiceByGarage() async {
+    String garageId = '6129f2b0748ba19d14a2c1e3';
     List<Service> services = [];
     final url = '$baseUrl/garage/$garageId/services';
     final response = await http.get(Uri.parse(url));

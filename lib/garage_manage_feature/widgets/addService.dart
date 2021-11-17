@@ -8,6 +8,7 @@ import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
+import 'package:rodsiagarage/garage_manage_feature/bloc/service_type_bloc.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 import 'package:rodsiagarage/main.dart';
@@ -34,17 +35,21 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
       description: "",
       serviceType: mockupServiceType[1],
       garage: gargeMockup);
-  ServiceType _serviceType = ServiceType(id: '', name: '', description: '');
 
   int val = -1;
 
   late ServiceBloc _serviceBloc;
-  final _controller = TextEditingController();
+  late ServiceTypeBloc _serviceTypeBloc;
+  final _nameController = TextEditingController();
+  final _descController = TextEditingController();
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     _serviceBloc = BlocProvider.of<ServiceBloc>(context);
+    _serviceTypeBloc = BlocProvider.of<ServiceTypeBloc>(context)
+      ..add(ServiceTypeLoad());
+
     super.initState();
   }
 
@@ -71,9 +76,6 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         child:
             BlocConsumer<ServiceBloc, ServiceState>(listener: (context, state) {
       if (state is ServiceAdded) {
-        navigateToServiceList();
-        showTopSnackBar(
-            context, CustomSnackBar.success(message: mServiceAdded));
       } else if (state is ServicesError) {
         showTopSnackBar(
           context,
@@ -87,135 +89,152 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
           padding: EdgeInsets.all(defualtPaddingMedium),
           child: Form(
               key: _formKey,
-              child: Column(children: <Widget>[
-                Container(
-                    child: TextFormField(
-                  focusNode: myFocusNode,
-                  initialValue: '',
-                  cursorColor: textColorBlack,
-                  //style: Theme.of(context).textTheme.headline5,
-                  decoration: InputDecoration(
-                      hoverColor: primaryColor,
-                      hintText: 'ชื่อบริการ',
-                      labelText: 'ชื่อบริการ',
-                      labelStyle: TextStyle(
-                          color: myFocusNode.hasFocus
-                              ? textColorBlack
-                              : Colors.black)),
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'โปรระบุชื่อบริการ';
-                    }
-                  },
-                  onChanged: (value) => {_service.name = value},
-                )),
-                SizedBox(
-                  height: 20,
-                ),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'เลือกประเภทของบริการ',
-                      style: TextStyle(fontSize: fontSizeL),
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: mockupServiceType.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 3,
-                          // margin: new EdgeInsets.symmetric(vertical: 4.0),
-                          color: cardColor,
-                          child: ListTile(
-                            title: _makeCardWidget(
-                                mockupServiceType[index], index),
-                            trailing: Radio(
-                                activeColor: primaryColor,
-                                value: index,
-                                groupValue: val,
-                                onChanged: (int? value) {
-                                  setState(() {
-                                    val = value!;
-                                    _serviceType = mockupServiceType[index];
-                                    logger.d(_serviceType.name);
-                                  });
-                                }),
-                          ),
-                        );
-                      }),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  cursorColor: primaryColor,
-                  scrollPadding: EdgeInsets.only(top: 10),
-                  maxLines: 3,
-                  style: const TextStyle(
-                      color: textColorBlack, fontSize: fontSizeM),
-                  decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: primaryColor,
-                          width: 2,
-                        ),
-                      ),
-                      labelText: 'รายละเอียดเพื่มเติม',
-                      alignLabelWithHint: true,
-                      fillColor: Colors.red,
-                      contentPadding: EdgeInsets.all(defualtPaddingLow),
-                      labelStyle:
-                          TextStyle(fontSize: fontSizeM, color: textColorBlack),
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: hexToColor('#C4C4C4'), width: 0),
+              child: SingleChildScrollView(
+                child: Column(children: <Widget>[
+                  TextFormField(
+                    controller: _nameController,
+                    focusNode: myFocusNode,
+                    cursorColor: textColorBlack,
+                    //style: Theme.of(context).textTheme.headline5,
+                    decoration: InputDecoration(
+                        hoverColor: primaryColor,
+                        hintText: 'ชื่อบริการ',
+                        labelText: 'ชื่อบริการ',
+                        labelStyle: TextStyle(
+                            color: myFocusNode.hasFocus
+                                ? textColorBlack
+                                : Colors.black)),
+                    validator: (val) {
+                      if (val == null || val.trim().isEmpty) {
+                        return 'โปรระบุชื่อบริการ';
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'เลือกประเภทของบริการ',
+                        style: TextStyle(fontSize: fontSizeMedium),
                       )),
-                  onChanged: (val) {
-                    _service.description = val;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter some text';
+                  SizedBox(
+                    height: 10,
+                  ),
+                  BlocConsumer<ServiceTypeBloc, ServiceTypeState>(
+                      listener: (context, state) {
+                    return;
+                  }, builder: (context, state) {
+                    if (state is ServiceTypesLoadSuccess) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: mockupServiceType.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: 3,
+                              // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                              color: cardColor,
+                              child: ListTile(
+                                title: _makeCardWidget(
+                                    state.serviceTypes[index], index),
+                                trailing: Radio(
+                                    activeColor: primaryColor,
+                                    value: index,
+                                    groupValue: val,
+                                    onChanged: (int? value) {
+                                      setState(() {
+                                        val = value!;
+                                        _service.serviceType =
+                                            state.serviceTypes[val];
+                                        logger.d(_service.serviceType.name);
+                                      });
+                                    }),
+                              ),
+                            );
+                          });
                     }
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      height: buttonHeightSmall,
-                      width: buttonWidthSmall,
-                      decoration: BoxDecoration(
-                          borderRadius: borderRadiusMedium,
-                          color: primaryColor),
-                      child: TextButton(
-                        child: Text(
-                          tAddService,
-                          style: TextStyle(color: textColorBlack),
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    cursorColor: primaryColor,
+                    controller: _descController,
+                    scrollPadding: EdgeInsets.only(top: 10),
+                    maxLines: 3,
+                    style: const TextStyle(
+                        color: textColorBlack, fontSize: fontSizeLow),
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                            width: 2,
+                          ),
                         ),
-                        onPressed: () {
-                          _navigateAndDisplayAddSerivce(context);
-                        },
+                        labelText: 'รายละเอียดเพื่มเติม',
+                        alignLabelWithHint: true,
+                        fillColor: Colors.red,
+                        contentPadding: EdgeInsets.all(defualtPaddingLow),
+                        labelStyle: TextStyle(
+                            fontSize: fontSizeLow, color: textColorBlack),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: hexToColor('#C4C4C4'), width: 0),
+                        )),
+                    // onChanged: (val) {
+                    //   _service.description = val;
+                    // },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'โปรระบุรายละเอียด';
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: buttonHeightSmall,
+                        width: buttonWidthSmall,
+                        decoration: BoxDecoration(
+                            borderRadius: borderRadiusMedium,
+                            color: primaryColor),
+                        child: TextButton(
+                          child: Text(
+                            tAddService,
+                            style: TextStyle(color: textColorBlack),
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _service.name = _nameController.text;
+                              _service.description = _descController.text;
+                              _service.garage = gargeMockup;
+                              _navigateAndDisplayAddSerivce(context);
+                            }
+                          },
+                        ),
                       ),
-                    ),
-                    GFButton(
-                      onPressed: () {
-                        navigationToBack();
-                      },
-                      text: tCancleThai,
-                      textColor: textColorBlack,
-                      shape: GFButtonShape.pills,
-                      color: bgColor,
-                    ),
-                  ],
-                ),
-              ])));
+                      GFButton(
+                        onPressed: () {
+                          navigationToBack();
+                        },
+                        text: tCancleThai,
+                        textColor: textColorBlack,
+                        shape: GFButtonShape.pills,
+                        color: bgColor,
+                      ),
+                    ],
+                  ),
+                ]),
+              )));
     }));
   }
 
@@ -233,7 +252,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
           ),
           Flexible(
               child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -247,18 +266,15 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                       fontWeight: FontWeight.w600,
                       color: textColorBlack),
                 ),
-                Container(
-                  margin: new EdgeInsets.only(top: 0),
-                  child: Text(
-                    serviceT.description.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    softWrap: false,
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.normal,
-                        color: textColorBlack),
-                  ),
+                Text(
+                  serviceT.description.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.normal,
+                      color: textColorBlack),
                 )
               ],
             ),
@@ -272,15 +288,12 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     );
   }
 
-  void navigateToServiceList() {
-    Navigator.pop(context);
-  }
-
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
     // This also removes the _printLatestValue listener.
-    _controller.dispose();
+    _descController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -292,7 +305,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     if (result == 'Ok') {
       logger.d("${_service.name}");
       _serviceBloc.add(ServiceAdd(_service));
-      navigatorToAddSerivce();
+      navigatorToListSerivce();
     }
   }
 
@@ -312,10 +325,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     Navigator.pop(context);
   }
 
-  void navigatorToAddSerivce() {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (BuildContext context) => ProfilePage(user: widget.user)));
+  void navigatorToListSerivce() {
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
   }
 }

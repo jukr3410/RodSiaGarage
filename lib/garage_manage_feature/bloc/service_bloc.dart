@@ -45,9 +45,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
   Stream<ServiceState> _mapServiceLoadToState() async* {
     try {
-      final services = await this
-          .serviceRepository
-          .getServiceByGarage(garageId: this.mockGarageId);
+      final services = await this.serviceRepository.getServiceByGarage();
       yield ServicesLoadSuccess(services: services);
     } catch (e) {
       logger.e(e);
@@ -57,24 +55,6 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
   Stream<ServiceState> _mapServiceAddToState(ServiceAdd event) async* {
     try {
-      yield ServicesLoading();
-      event.service.serviceType = ServiceType(
-          id: "61265f79f7b19f6ca9064b7e",
-          name: "name",
-          description: "description");
-
-      event.service.garage = Garage(
-          address: Address(
-              addressDesc: '', geoLocation: GeoLocation(lat: '', long: '')),
-          images: [],
-          id: this.mockGarageId,
-          name: "",
-          phone: "",
-          email: "",
-          password: "",
-          otp: "",
-          validatePhone: true);
-
       await this.serviceRepository.addService(service: event.service);
       yield ServiceAdded();
     } catch (e) {

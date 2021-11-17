@@ -109,10 +109,16 @@ class AppRouter {
 
       case SERVICE_LIST_ROUTE:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) =>
-                    ServiceBloc(serviceRepository: ServiceRepository()),
-                child: ServiceListScreen()));
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(
+                    create: (BuildContext context) =>
+                        ServiceBloc(serviceRepository: ServiceRepository()),
+                  ),
+                  BlocProvider(
+                    create: (BuildContext context) =>
+                        ServiceTypeBloc(serviceTypeRepository: ServiceTypeRepository()),
+                  ),
+                ], child: ServiceListScreen()));
 
       case ADD_SERVICE_ROUTE:
         return MaterialPageRoute(
@@ -126,9 +132,7 @@ class AppRouter {
                 ], child: AddServiceScreen()));
 
       case EDIT_SERVICE_ROUTE:
-        final arg = settings.arguments as Map;
-        Service service = arg['service'];
-        logger.d('service Id: ' + service.id);
+        Service service = settings.arguments as Service;
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(providers: [
                   BlocProvider<ServiceBloc>(
