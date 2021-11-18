@@ -9,11 +9,12 @@ class GarageLogin {
 }
 
 class Token {
+  String garage_id;
   String token;
 
-  Token({required this.token});
+  Token({required this.token, required this.garage_id});
 
   factory Token.fromJson(Map<String, dynamic> json) {
-    return Token(token: json['token']);
+    return Token(token: json['token'], garage_id: json['garage_id']);
   }
 }

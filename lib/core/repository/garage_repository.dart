@@ -18,6 +18,7 @@ class GarageRepository {
   Future<Garage> getGarageInfo({required String id}) async {
     return await garageApi.getGarageInfo(id: id);
   }
+
   Future<Garage> getGarageInfoPhone() async {
     return await garageApi.getGaragePhone();
   }
@@ -56,6 +57,7 @@ class GarageRepository {
     Token token = await garageApi.getTokenLogin(garageLogin: garageLogin);
     GarageDB garageDB = GarageDB(
       id: 0,
+      garage_id: token.garage_id,
       phone: phone,
       token: token.token,
     );
