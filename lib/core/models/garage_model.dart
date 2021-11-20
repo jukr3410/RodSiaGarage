@@ -23,6 +23,7 @@ class Garage {
       required this.password,
       this.otp,
       this.logoImage,
+      this.services,
       required this.validatePhone,
       required this.typeCarRepairs});
 
@@ -43,7 +44,8 @@ class Garage {
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
         address: Address.fromJson(json["address"]),
         openingHour: OpeningHour.fromJson(json["openingHour"]),
-        images: List<ImageGarage>.from(json["images"].map((x) => ImageGarage.fromJson(x))),
+        images: List<ImageGarage>.from(
+            json["images"].map((x) => ImageGarage.fromJson(x))),
         id: json["_id"],
         name: json["name"],
         phone: json["phone"],
@@ -52,8 +54,8 @@ class Garage {
         otp: json["otp"],
         validatePhone: json["validatePhone"],
         logoImage: json['logoImage'],
-        typeCarRepairs:
-            List<TypeCarRepairs>.from(json["typeCarRepairs"].map((x) => TypeCarRepairs.fromJson(x))),
+        typeCarRepairs: List<TypeCarRepairs>.from(
+            json["typeCarRepairs"].map((x) => TypeCarRepairs.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,7 +70,8 @@ class Garage {
         "otp": otp,
         'logoImage': logoImage,
         "validatePhone": validatePhone,
-        "typeCarRepairs": List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
+        "typeCarRepairs":
+            List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
         "services": List<Service>.from(services!.map((x) => x))
       };
 }

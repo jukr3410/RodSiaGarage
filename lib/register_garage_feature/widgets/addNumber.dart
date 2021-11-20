@@ -25,6 +25,7 @@ class _AddNumberState extends State<AddNumber> {
   final phoneConTroller = TextEditingController();
 
   Garage _garage = Garage(
+      services: [],
       address: Address(geoLocation: GeoLocation(), addressDesc: ""),
       images: [],
       typeCarRepairs: [],
