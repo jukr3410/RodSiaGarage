@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_address_picker/map_address_picker.dart';
+import 'package:map_address_picker/models/location_result.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/locationPicker.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:map_pin_picker/map_pin_picker.dart';
 
 import 'otp.dart';
 
@@ -47,6 +53,12 @@ class _AddInfoState extends State<AddInfo> {
           su: Day(open: "", close: "")));
 
   late RegisterBloc _registerBloc;
+
+  CameraPosition cameraPosition = CameraPosition(
+    target: LatLng(31.2060916, 29.9187),
+    zoom: 14.4746,
+  );
+
   @override
   void initState() {
     _registerBloc = BlocProvider.of<RegisterBloc>(context);
@@ -305,47 +317,79 @@ class _AddInfoState extends State<AddInfo> {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    TextFormField(
-                                        // maxLength: 25,
-                                        maxLines: 1,
-                                        keyboardType: TextInputType.text,
-                                        autofocus: true,
-                                        obscureText: true,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: textColorBlack,
-                                            fontSize: 15),
-                                        inputFormatters: [
-                                          //MaskedInputFormatter('(###)-###-####')
-                                        ],
-                                        decoration: InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.all(defualtPaddingLow),
-                                          // icon: Icon(Icons.phone_android),
-                                          filled: true,
-                                          prefixIcon: Icon(
-                                            Icons.location_on,
-                                            color: textColorBlack,
-                                          ),
-                                          fillColor: Colors.white,
-                                          alignLabelWithHint: true,
-                                          border: OutlineInputBorder(
-                                              borderRadius: borderRadiusMedium,
-                                              borderSide: BorderSide.none),
-                                          hintText: tLocationThai,
+                                    // TextFormField(
+                                    //     // maxLength: 25,
+                                    //     maxLines: 1,
+                                    //     keyboardType: TextInputType.text,
+                                    //     autofocus: true,
+                                    //     obscureText: true,
+                                    //     textAlign: TextAlign.start,
+                                    //     style: TextStyle(
+                                    //         color: textColorBlack,
+                                    //         fontSize: 15),
+                                    //     inputFormatters: [
+                                    //       //MaskedInputFormatter('(###)-###-####')
+                                    //     ],
+                                    //     decoration: InputDecoration(
+                                    //       contentPadding:
+                                    //           EdgeInsets.all(defualtPaddingLow),
+                                    //       // icon: Icon(Icons.phone_android),
+                                    //       filled: true,
+                                    //       prefixIcon: Icon(
+                                    //         Icons.location_on,
+                                    //         color: textColorBlack,
+                                    //       ),
+                                    //       fillColor: Colors.white,
+                                    //       alignLabelWithHint: true,
+                                    //       border: OutlineInputBorder(
+                                    //           borderRadius: borderRadiusMedium,
+                                    //           borderSide: BorderSide.none),
+                                    //       hintText: tLocationThai,
 
-                                          hintStyle: TextStyle(
-                                              color: textColorBlack,
-                                              fontSize: 15),
-                                        ),
-                                        validator: MultiValidator([
-                                          RequiredValidator(
-                                              errorText:
-                                                  "Please, input password."),
-                                          MinLengthValidator(14,
-                                              errorText:
-                                                  "Phone should be atleast 10 number."),
-                                        ])),
+                                    //       hintStyle: TextStyle(
+                                    //           color: textColorBlack,
+                                    //           fontSize: 15),
+                                    //     ),
+                                    //     validator: MultiValidator([])),
+
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              GFButton(
+                                                  onPressed: () {
+                                                    navigateLocationPicker(
+                                                        context);
+                                                  },
+                                                  text: "แผนที่",
+                                                  icon: Icon(Icons.location_on),
+                                                  shape: GFButtonShape.pills,
+                                                  color: textColorWhite,
+                                                  textColor: textColorBlack),
+                                            ],
+                                          ),
+                                          // Text(
+                                          //   locationResult == null
+                                          //       ? "กดเพื่อเลือกตำแหน่ง"
+                                          //       : "${locationResult!.latLng!.latitude}\n${locationResult!.latLng!.longitude}",
+                                          //   style: const TextStyle(
+                                          //       color: textColorBlack,
+                                          //       fontSize: fontSizeM),
+                                          // ),
+                                          Text(
+                                            cameraPosition == null
+                                                ? "กดเพื่อเลือกตำแหน่ง"
+                                                : "${cameraPosition.target.latitude}\n${cameraPosition.target.longitude}",
+                                            style: const TextStyle(
+                                                color: textColorBlack,
+                                                fontSize: fontSizeM),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -425,6 +469,19 @@ class _AddInfoState extends State<AddInfo> {
         },
       ),
     );
+  }
+
+  void navigateLocationPicker(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LocationPicker()),
+    );
+
+    this.cameraPosition = result;
+    this._garage.address.geoLocation.lat =
+        this.cameraPosition.target.latitude.toString();
+    this._garage.address.geoLocation.long =
+        this.cameraPosition.target.longitude.toString();
   }
 
   void navigateBackToOtp() {

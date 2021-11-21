@@ -61,9 +61,9 @@ class _OtpState extends State<Otp> {
 
   @override
   void initState() {
-    _registerBloc = BlocProvider.of<RegisterBloc>(context);
     _garage = widget.garage;
-    _registerBloc.add(RegisterSendOtp(garage: _garage));
+    _registerBloc = BlocProvider.of<RegisterBloc>(context)
+      ..add(RegisterSendOtp(garage: widget.garage));
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
   }
