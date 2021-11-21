@@ -44,6 +44,7 @@ class DatabaseProvider {
   void initDB(Database database, int version) async {
     await database.execute("CREATE TABLE $garageTable ("
         "id INTEGER PRIMARY KEY, "
+        "garage_id TEXT,"
         "phone TEXT, "
         "token TEXT "
         ")");

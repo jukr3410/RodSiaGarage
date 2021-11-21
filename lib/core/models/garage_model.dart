@@ -72,7 +72,7 @@ class Garage {
         "validatePhone": validatePhone,
         "typeCarRepairs":
             List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
-        "services": List<Service>.from(services!.map((x) => x))
+        // "services": List<Service>.from(services!.map((x) => x))
       };
 }
 
