@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
-import 'package:rodsiagarage/core/services/geo_location_model.dart';
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -38,9 +37,12 @@ class _OtpState extends State<Otp> {
   late RegisterBloc _registerBloc;
 
   Garage _garage = Garage(
-      address: Address(geoLocation: GeoLocation(), addressDesc: ""),
+      services: [],
+      address:
+          Address(geoLocation: GeoLocation(lat: "", long: ""), addressDesc: ""),
       images: [],
       typeCarRepairs: [],
+      logoImage: "",
       id: "",
       name: "",
       phone: "",

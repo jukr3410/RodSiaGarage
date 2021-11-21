@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addNumber.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
@@ -18,6 +19,7 @@ class RodSiaGarageApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _checkPermission();
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Kanit'),
       debugShowCheckedModeBanner: false,
@@ -56,3 +58,22 @@ class GarageBlocObserver extends BlocObserver {
 var logger = Logger(
   printer: PrettyPrinter(),
 );
+
+Future<void> _checkPermission() async {
+  final serviceStatus = await Permission.locationWhenInUse.serviceStatus;
+  final isGpsOn = serviceStatus == ServiceStatus.enabled;
+  if (!isGpsOn) {
+    print('Turn on location services before requesting permission.');
+    return;
+  }
+
+  final status = await Permission.locationWhenInUse.request();
+  if (status == PermissionStatus.granted) {
+    print('Permission granted');
+  } else if (status == PermissionStatus.denied) {
+    print('Permission denied. Show a dialog and again ask for the permission');
+  } else if (status == PermissionStatus.permanentlyDenied) {
+    print('Take the user to the settings page.');
+    await openAppSettings();
+  }
+}

@@ -3,11 +3,9 @@
 //     final requestService = requestServiceFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:rodsiagarage/core/services/geo_location_model.dart';
-
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'car_model.dart';
-import '../services/geo_location_model.dart';
+import 'geo_location_model.dart';
 import 'service_model.dart';
 import 'user_model.dart';
 

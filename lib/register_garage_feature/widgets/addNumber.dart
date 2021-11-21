@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
-import 'package:rodsiagarage/core/services/geo_location_model.dart';
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -26,9 +25,11 @@ class _AddNumberState extends State<AddNumber> {
 
   Garage _garage = Garage(
       services: [],
-      address: Address(geoLocation: GeoLocation(), addressDesc: ""),
+      address:
+          Address(geoLocation: GeoLocation(lat: "", long: ""), addressDesc: ""),
       images: [],
       typeCarRepairs: [],
+      logoImage: "",
       id: "",
       name: "",
       phone: "",

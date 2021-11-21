@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:rodsiagarage/core/models/service_model.dart';
-import 'package:rodsiagarage/core/services/geo_location_model.dart';
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 
 Garage garageFromJson(String str) => Garage.fromJson(json.decode(str));
 
