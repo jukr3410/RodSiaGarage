@@ -70,13 +70,13 @@ class _HomePageState extends State<HomePage> {
                               tPhone + ': ',
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             ),
                             Text(
                               state.garage.phone,
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             )
                           ],
                         ),
@@ -86,13 +86,13 @@ class _HomePageState extends State<HomePage> {
                               tEmailThai + ': ',
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             ),
                             Text(
                               state.garage.email,
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             )
                           ],
                         ),

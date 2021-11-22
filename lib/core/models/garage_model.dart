@@ -15,6 +15,7 @@ class Garage {
   Garage(
       {required this.address,
       this.openingHour,
+      this.openingDayOfWeek,
       this.images,
       required this.id,
       required this.name,
@@ -29,6 +30,7 @@ class Garage {
 
   Address address;
   OpeningHour? openingHour;
+  OpeningDayOfWeek? openingDayOfWeek;
   List<ImageGarage>? images;
   String id;
   String name;
@@ -44,6 +46,7 @@ class Garage {
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
         address: Address.fromJson(json["address"]),
         openingHour: OpeningHour.fromJson(json["openingHour"]),
+        openingDayOfWeek: OpeningDayOfWeek.fromJson(json["openingDayOfWeek"]),
         images: List<ImageGarage>.from(
             json["images"].map((x) => ImageGarage.fromJson(x))),
         id: json["_id"],
@@ -61,6 +64,7 @@ class Garage {
   Map<String, dynamic> toJson() => {
         "address": address.toJson(),
         "openingHour": openingHour!.toJson(),
+        "openingDayOfWeek": openingDayOfWeek!.toJson(),
         "images": List<ImageGarage>.from(images!.map((x) => x)),
         "_id": id,
         "name": name,
@@ -124,8 +128,8 @@ class ImageGarage {
       };
 }
 
-class OpeningHour {
-  OpeningHour({
+class OpeningDayOfWeek {
+  OpeningDayOfWeek({
     required this.mo,
     required this.tu,
     required this.we,
@@ -135,37 +139,38 @@ class OpeningHour {
     required this.su,
   });
 
-  Day mo;
-  Day tu;
-  Day we;
-  Day th;
-  Day fr;
-  Day sa;
-  Day su;
+  bool mo;
+  bool tu;
+  bool we;
+  bool th;
+  bool fr;
+  bool sa;
+  bool su;
 
-  factory OpeningHour.fromJson(Map<String, dynamic> json) => OpeningHour(
-        mo: Day.fromJson(json["mo"]),
-        tu: Day.fromJson(json["tu"]),
-        we: Day.fromJson(json["we"]),
-        th: Day.fromJson(json["th"]),
-        fr: Day.fromJson(json["fr"]),
-        sa: Day.fromJson(json["sa"]),
-        su: Day.fromJson(json["su"]),
+  factory OpeningDayOfWeek.fromJson(Map<String, dynamic> json) =>
+      OpeningDayOfWeek(
+        mo: json["mo"],
+        tu: json["tu"],
+        we: json["we"],
+        th: json["th"],
+        fr: json["fr"],
+        sa: json["sa"],
+        su: json["su"],
       );
 
   Map<String, dynamic> toJson() => {
-        "mo": mo.toJson(),
-        "tu": tu.toJson(),
-        "we": we.toJson(),
-        "th": th.toJson(),
-        "fr": fr.toJson(),
-        "sa": sa.toJson(),
-        "su": su.toJson(),
+        "mo": mo,
+        "tu": tu,
+        "we": we,
+        "th": th,
+        "fr": fr,
+        "sa": sa,
+        "su": su,
       };
 }
 
-class Day {
-  Day({
+class OpeningHour {
+  OpeningHour({
     required this.open,
     required this.close,
   });
@@ -173,7 +178,7 @@ class Day {
   String open;
   String close;
 
-  factory Day.fromJson(Map<String, dynamic> json) => Day(
+  factory OpeningHour.fromJson(Map<String, dynamic> json) => OpeningHour(
         open: json["open"],
         close: json["close"],
       );

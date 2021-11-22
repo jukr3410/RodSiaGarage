@@ -16,10 +16,13 @@ class ServiceApi {
   };
   final garageDao = GarageDao();
 
-  Future<List<Service>> getServiceByGarageId({required String garageId}) async {
-    logger.d(garageId);
+  final garageDao = GarageDao();
+
+  Future<List<Service>> getServiceByGarage() async {
+    GarageDB garageToken = await garageDao.getGarageToken();
+
     List<Service> services = [];
-    final url = '$baseUrl/garage/$garageId/services';
+    final url = '$baseUrl/garage/${garageToken.garage_id}/services';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       logger.e(response);

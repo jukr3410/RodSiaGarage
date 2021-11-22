@@ -17,6 +17,16 @@ class CarouselImage extends StatefulWidget {
 class CarouselImageState extends State<CarouselImage> {
   int currentPos = 0;
 
+  List imgList = [];
+
+  @override
+  void initState() {
+    widget.images.forEach((img) {
+      imgList.add(img.image);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
