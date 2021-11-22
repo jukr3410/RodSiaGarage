@@ -24,27 +24,29 @@ class _AddNumberState extends State<AddNumber> {
   final phoneConTroller = TextEditingController();
 
   Garage _garage = Garage(
-      services: [],
-      address:
-          Address(geoLocation: GeoLocation(lat: "", long: ""), addressDesc: ""),
-      images: [],
-      typeCarRepairs: [],
-      logoImage: "",
-      id: "",
-      name: "",
-      phone: "",
-      email: "",
-      otp: "",
-      password: "",
-      validatePhone: true,
-      openingHour: OpeningHour(
-          mo: Day(open: "", close: ""),
-          tu: Day(open: "", close: ""),
-          we: Day(open: "", close: ""),
-          th: Day(open: "", close: ""),
-          fr: Day(open: "", close: ""),
-          sa: Day(open: "", close: ""),
-          su: Day(open: "", close: "")));
+    services: [],
+    address:
+        Address(geoLocation: GeoLocation(lat: "", long: ""), addressDesc: ""),
+    images: [],
+    typeCarRepairs: [],
+    logoImage: "",
+    id: "",
+    name: "",
+    phone: "",
+    email: "",
+    otp: "",
+    password: "",
+    validatePhone: true,
+    openingHour: OpeningHour(open: "", close: ""),
+    openingDayOfWeek: OpeningDayOfWeek(
+        mo: false,
+        tu: false,
+        we: false,
+        th: false,
+        fr: false,
+        sa: false,
+        su: false),
+  );
 
   late RegisterBloc _registerBloc;
   @override

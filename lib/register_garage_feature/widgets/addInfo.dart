@@ -33,27 +33,38 @@ class _AddInfoState extends State<AddInfo> {
   var confirmPass;
 
   Garage _garage = Garage(
-      services: [],
-      address:
-          Address(geoLocation: GeoLocation(lat: "", long: ""), addressDesc: ""),
-      images: [],
-      typeCarRepairs: [],
-      logoImage: "",
-      id: "",
-      name: "",
-      phone: "",
-      email: "",
-      otp: "",
-      password: "",
-      validatePhone: true,
-      openingHour: OpeningHour(
-          mo: Day(open: "", close: ""),
-          tu: Day(open: "", close: ""),
-          we: Day(open: "", close: ""),
-          th: Day(open: "", close: ""),
-          fr: Day(open: "", close: ""),
-          sa: Day(open: "", close: ""),
-          su: Day(open: "", close: "")));
+    services: [],
+    address:
+        Address(geoLocation: GeoLocation(lat: "", long: ""), addressDesc: ""),
+    images: [],
+    typeCarRepairs: [],
+    logoImage: "",
+    id: "",
+    name: "",
+    phone: "",
+    email: "",
+    otp: "",
+    password: "",
+    validatePhone: true,
+    openingHour: OpeningHour(open: "", close: ""),
+    openingDayOfWeek: OpeningDayOfWeek(
+        mo: false,
+        tu: false,
+        we: false,
+        th: false,
+        fr: false,
+        sa: false,
+        su: false),
+  );
+
+  OpeningDayOfWeek _openingDayOfWeek = OpeningDayOfWeek(
+      mo: false,
+      tu: false,
+      we: false,
+      th: false,
+      fr: false,
+      sa: false,
+      su: false);
 
   late RegisterBloc _registerBloc;
 
@@ -557,84 +568,32 @@ class _AddInfoState extends State<AddInfo> {
   }
 
   void setOpeningTime() {
-    logger.d(
-        "start: ${timeRange!.startTime.hour}.${timeRange!.startTime.minute}, end: ${timeRange!.endTime.hour}.${timeRange!.endTime.minute}");
-    setState(() {
-      this.openingTime =
-          "เปิด: ${timeRange!.startTime.hour}.${timeRange!.startTime.minute} - ปิด: ${timeRange!.endTime.hour}.${timeRange!.endTime.minute}";
-    });
-    setTimeOfDay();
+    if (timeRange != null) {
+      logger.d(
+          "start: ${timeRange!.startTime.hour}.${timeRange!.startTime.minute}, end: ${timeRange!.endTime.hour}.${timeRange!.endTime.minute}");
+      setState(() {
+        this.openingTime =
+            "เปิด: ${timeRange!.startTime.hour}.${timeRange!.startTime.minute} - ปิด: ${timeRange!.endTime.hour}.${timeRange!.endTime.minute}";
+      });
+      _garage.openingHour!.open =
+          '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
+      _garage.openingHour!.close =
+          '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
+    }
   }
 
   void setTimeOfDay() {
-    if (timeRange != null) {
-      if (values[0]) {
-        _garage.openingHour!.su.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.su.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.su.open = '';
-        _garage.openingHour!.su.close = '';
-      }
-      if (values[1]) {
-        _garage.openingHour!.mo.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.mo.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.mo.open = '';
-        _garage.openingHour!.mo.close = '';
-      }
-      if (values[2]) {
-        _garage.openingHour!.tu.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.tu.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.tu.open = '';
-        _garage.openingHour!.tu.close = '';
-      }
-      if (values[3]) {
-        _garage.openingHour!.we.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.we.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.we.open = '';
-        _garage.openingHour!.we.close = '';
-      }
-      if (values[4]) {
-        _garage.openingHour!.th.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.th.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.th.open = '';
-        _garage.openingHour!.th.close = '';
-      }
-      if (values[5]) {
-        _garage.openingHour!.fr.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.fr.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.fr.open = '';
-        _garage.openingHour!.fr.close = '';
-      }
-      if (values[6]) {
-        _garage.openingHour!.sa.open =
-            '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        _garage.openingHour!.sa.close =
-            '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
-      } else {
-        _garage.openingHour!.sa.open = '';
-        _garage.openingHour!.sa.close = '';
-      }
-      logger.d("openingHour: ${_garage.openingHour!.toJson()}");
-    } else {
-      logger.d('โปรดเลือกเวลา');
-    }
+    _openingDayOfWeek.su = values[0];
+    _openingDayOfWeek.mo = values[1];
+    _openingDayOfWeek.tu = values[2];
+    _openingDayOfWeek.we = values[3];
+    _openingDayOfWeek.th = values[4];
+    _openingDayOfWeek.fr = values[5];
+    _openingDayOfWeek.sa = values[6];
+    logger.d("openingDayOfWeek: ${_openingDayOfWeek.toJson()}");
+    setState(() {
+      _garage.openingDayOfWeek = _openingDayOfWeek;
+    });
   }
 
   void navigateLocationPicker(BuildContext context) async {
