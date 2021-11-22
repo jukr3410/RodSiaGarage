@@ -99,7 +99,7 @@ class _AddNumberState extends State<AddNumber> {
               onPressed: () => navigateBackToLogin(),
             ),
           ),
-          backgroundColor: primaryColor,
+          backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: false,
           body: Container(
             width: double.infinity,
@@ -157,10 +157,10 @@ class _AddNumberState extends State<AddNumber> {
                                 maxLength: 10,
                                 onChanged: (value) => {_garage.phone = value},
                                 keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.start,
                                 style: GoogleFonts.alata(
                                     textStyle: TextStyle(
-                                        color: textColorBlack, fontSize: 20)),
+                                        color: textColorBlack, fontSize: fontSizeL)),
                                 // inputFormatters: [
                                 //   MaskedInputFormatter('###-###-####'),
                                 // ]

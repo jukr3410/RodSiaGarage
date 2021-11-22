@@ -46,7 +46,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   Stream<ServiceState> _mapServiceLoadToState(String garageId) async* {
     try {
       final services =
-          await this.serviceRepository.getServiceByGarage(garageId);
+          await this.serviceRepository.getServiceByGarage();
       yield ServicesLoadSuccess(services: services);
     } catch (e) {
       logger.e(e);

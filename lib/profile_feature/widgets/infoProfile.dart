@@ -55,7 +55,7 @@ class _InfoProfileState extends State<InfoProfile> {
                   widget.garage.email,
                 )
               ],
-            )
+            ),
           ],
         )
       ],

@@ -32,7 +32,8 @@ const EDITPROFILE_ROUTE = '/edit-profile';
 const SUPPORT_CENTER_ROUTE = '/support-center';
 const SETTING_ROUTE = '/setting';
 const NOTIFY_ROUTE = '/notify';
-const EDIT_PASSWOED_ROUTE = '/edit-profile-password';
+const EDIT_PASSWOED_ROUTE = '/edit_profile_password';
+const EDIR_IMAGES_ROUTE = '/edit_images';
 
 // font size
 const fontSizeXXl = 20.0;

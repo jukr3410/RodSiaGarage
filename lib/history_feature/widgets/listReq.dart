@@ -4,18 +4,17 @@ import 'package:intl/intl.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
-import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart';
 
-class Listhistory extends StatefulWidget {
+class ListReq extends StatefulWidget {
   final Garage garage;
-  const Listhistory({Key? key, required this.garage}) : super(key: key);
+  ListReq({Key? key, required this.garage}) : super(key: key);
 
   @override
-  _ListhistoryState createState() => _ListhistoryState();
+  _ListReqState createState() => _ListReqState();
 }
 
-class _ListhistoryState extends State<Listhistory> {
+class _ListReqState extends State<ListReq> {
   late RequestServiceBloc _requestServiceBloc;
   List<RequestService> _reqServices = [];
   Widget _widget = Center(
@@ -46,7 +45,7 @@ class _ListhistoryState extends State<Listhistory> {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
               for (var i = 0; i < state.requestServices.length; i++) {
-                if (state.requestServices[i].status != 'รอการตอบรับ') {
+                if (state.requestServices[i].status == 'รอการตอบรับ') {
                   _reqServices.add(state.requestServices[i]);
                 }
                 _widget = ListView.builder(
@@ -58,7 +57,7 @@ class _ListhistoryState extends State<Listhistory> {
                     });
               }
             } else if (state is RequestServicesError) {
-              _widget = Center(child: Text('ไม่มีประวัติการใข้งาน!'));
+              _widget = Center(child: Text('ยังไม่มีการขอใข้บริการ!'));
             }
             return _widget;
           }),
@@ -66,32 +65,30 @@ class _ListhistoryState extends State<Listhistory> {
   }
 
   Widget cardNotify(RequestService requestService) {
-    return GestureDetector(
-      child: Card(
-        // shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
-        elevation: 2,
-        margin: new EdgeInsets.symmetric(
-            horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
-        color: cardColor,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              Image.asset(
-                tImageAsset(requestService.service.serviceType.name),
-                width: 35,
-                height: 35,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Flexible(
-                  child: Column(
+    return Card(
+      elevation: 2,
+      margin: new EdgeInsets.symmetric(
+          horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
+      color: cardColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 10,
+            ),
+            Image.asset(
+              tImageAsset(requestService.service.serviceType.name),
+              width: 35,
+              height: 35,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              flex: 7,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -122,15 +119,37 @@ class _ListhistoryState extends State<Listhistory> {
                         TextStyle(color: Colors.grey, fontSize: fontSizeM - 2),
                   ),
                 ],
-              )),
-            ],
-          ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Row(
+                children: [
+                  Container(
+                      height: buttonHeightLarge + 10,
+                      width: buttonHeightSmall,
+                      decoration: BoxDecoration(
+                          color: redStatus, borderRadius: borderRadiusLow),
+                      child: IconButton(
+                          onPressed: () {}, icon: Icon(Icons.cancel))),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                      height: buttonHeightLarge + 10,
+                      width: buttonHeightSmall,
+                      decoration: BoxDecoration(
+                          color: primaryColor, borderRadius: borderRadiusLow),
+                      child: IconButton(
+                          onPressed: () {}, icon: Icon(Icons.forward))),
+                ],
+              ),
+            )
+
+            // )
+          ],
         ),
       ),
-      onTap: () {
-        Navigator.pushNamed(context, HISTORY_INFO_ROUTE,
-            arguments: requestService);
-      },
     );
   }
 }

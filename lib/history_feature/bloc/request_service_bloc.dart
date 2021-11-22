@@ -11,13 +11,15 @@ import 'package:rodsiagarage/request_service_feature/bloc/request_service_bloc.d
 part 'request_service_event.dart';
 part 'request_service_state.dart';
 
-class RequestServiceBloc extends Bloc<RequestServiceEvent, RequestServiceState> {
+class RequestServiceBloc
+    extends Bloc<RequestServiceEvent, RequestServiceState> {
   final RequestServiceRepository requestServiceRepository;
   StreamSubscription? _servicesSubscription;
 
   RequestServiceApi serviceApi = RequestServiceApi();
 
-  RequestServiceBloc({required this.requestServiceRepository}) : super(RequestServiceInitial());
+  RequestServiceBloc({required this.requestServiceRepository})
+      : super(RequestServiceInitial());
 
   String mockGarageId = "6129f310748ba19d14a2c1ea";
 
@@ -26,17 +28,18 @@ class RequestServiceBloc extends Bloc<RequestServiceEvent, RequestServiceState> 
     RequestServiceEvent event,
   ) async* {
     if (event is RequestServiceLoad) {
-      yield* _mapRequestServiceLoadToState();
+      yield* _mapRequestServiceLoadToState(event.garageId);
     } else if (event is RequestServiceInitializeEvent) {
       yield RequestServiceInitial();
     }
   }
 
-  Stream<RequestServiceState> _mapRequestServiceLoadToState() async* {
+  Stream<RequestServiceState> _mapRequestServiceLoadToState(
+      String garageId) async* {
     try {
       final requestServices = await this
           .requestServiceRepository
-          .getRequestServiceByGarageId(id: mockGarageId);
+          .getRequestServiceByGarageId(id: garageId);
       yield RequestServicesLoadSuccess(requestServices: requestServices);
     } catch (e) {
       logger.e(e);

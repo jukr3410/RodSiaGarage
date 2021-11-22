@@ -29,6 +29,7 @@ import 'package:rodsiagarage/notify_feature/widgets/notifyFormSelectPage.dart';
 import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
+import 'package:rodsiagarage/profile_feature/widgets/editImageGarage.dart';
 import 'package:rodsiagarage/profile_feature/widgets/editPassword.dart';
 import 'package:rodsiagarage/profile_feature/widgets/editProfile.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
@@ -198,6 +199,11 @@ class AppRouter {
                   garage: garage,
                 )));
 
+      case EDIR_IMAGES_ROUTE:
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(
+            builder: (_) => EditImageGarage(garage: garage));
+
       case SUPPORT_CENTER_ROUTE:
         return MaterialPageRoute(builder: (_) => SupportCenterPage());
 
@@ -207,12 +213,15 @@ class AppRouter {
             builder: (_) => NotifyFromSelectPage(notify: notify));
 
       case HISTORY_ROUTE:
+        Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
                     historyBloc.RequestServiceBloc(
                         requestServiceRepository: RequestServiceRepository()),
-                child: Listhistory()));
+                child: Listhistory(
+                  garage: garage,
+                )));
 
       case HISTORY_INFO_ROUTE:
         RequestService requestService = settings.arguments as RequestService;
