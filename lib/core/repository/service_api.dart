@@ -16,8 +16,6 @@ class ServiceApi {
   };
   final garageDao = GarageDao();
 
-  final garageDao = GarageDao();
-
   Future<List<Service>> getServiceByGarage() async {
     GarageDB garageToken = await garageDao.getGarageToken();
 

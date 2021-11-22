@@ -12,7 +12,7 @@ class ServiceRepository {
   }
 
   Future<List<Service>> getServiceByGarage(String garageId) async {
-    return await serviceApi.getServiceByGarageId(garageId: garageId);
+    return await serviceApi.getServiceByGarage();
   }
 
   Future<bool> addService({required Service service}) async {
