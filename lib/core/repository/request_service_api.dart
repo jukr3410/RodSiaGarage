@@ -102,19 +102,4 @@ class RequestServiceApi {
 
     return requestServicesFormGarageId;
   }
-
-  // ไปทำเส้น api ก่อน
-  // Future<bool> updateGeoLocation(
-  //     {required String requestId, required GeoLocation geoLocation}) async {
-  //   final url = '$baseUrl';
-  //   final msg = jsonEncode({'geoLocationGarage': geoLocation});
-  //   final response =
-  //       await http.patch(Uri.parse(url), body: msg, headers: headers);
-  //   if (response.statusCode != 200) {
-  //     logger.e(response);
-  //     return false;
-  //     //throw new Exception('There was a problem ${response.statusCode}');
-  //   }
-  //   return true;
-  // }
 }

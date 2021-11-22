@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   late GarageInfoBloc _garageInfoBloc;
   @override
   void initState() {
-    _garageInfoBloc = BlocProvider. of<GarageInfoBloc>(context)
+    _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad());
     super.initState();
   }
@@ -44,7 +44,8 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.transparent,
                       radius: 40,
                       child: ClipOval(
-                          child: _profileImage(state.garage.images.toString())),
+                          child:
+                              _profileImage(state.garage.logoImage.toString())),
                     ),
                     SizedBox(
                       width: 20,
@@ -67,13 +68,13 @@ class _HomePageState extends State<HomePage> {
                               tPhone + ': ',
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             ),
                             Text(
                               state.garage.phone,
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             )
                           ],
                         ),
@@ -83,13 +84,13 @@ class _HomePageState extends State<HomePage> {
                               tEmail + ': ',
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             ),
                             Text(
                               state.garage.email,
                               style: TextStyle(
                                   color: Colors.grey.shade700,
-                                  fontSize: fontSizeM - 2),
+                                  fontSize: fontSizeM),
                             )
                           ],
                         ),
@@ -100,7 +101,9 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                CarouselImage(),
+                CarouselImage(
+                  images: state.garage.images!.toList(),
+                ),
                 SizedBox(
                   height: 10,
                 ),

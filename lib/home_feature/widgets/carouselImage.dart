@@ -2,8 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 
 class CarouselImage extends StatefulWidget {
+  List<ImageGarage> images;
+  CarouselImage({Key? key, required this.images}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return CarouselImageState();
@@ -13,12 +16,15 @@ class CarouselImage extends StatefulWidget {
 class CarouselImageState extends State<CarouselImage> {
   int currentPos = 0;
 
-  List imgList = [
-    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-  ];
+  List imgList = [];
+
+  @override
+  void initState() {
+    widget.images.forEach((img) {
+      imgList.add(img.image);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -17,6 +17,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: primaryColor,
           resizeToAvoidBottomInset: false,
           bottomNavigationBar: BottomNavigrationBar(),
           body: Center(

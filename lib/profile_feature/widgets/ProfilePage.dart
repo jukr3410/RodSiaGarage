@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    CarouselImage(),
+                    // CarouselImage(images: widget.garage.images!.toList()),
                     SizedBox(
                       height: 20,
                     ),

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/dao/garage_dao.dart';
+import 'package:rodsiagarage/core/models/garage_model_db.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/main.dart';
 
@@ -12,10 +14,13 @@ class ServiceApi {
     'Accept': 'application/json'
   };
 
+  final garageDao = GarageDao();
+
   Future<List<Service>> getServiceByGarage() async {
-    String garageId = '6129f2b0748ba19d14a2c1e3';
+    GarageDB garageToken = await garageDao.getGarageToken();
+
     List<Service> services = [];
-    final url = '$baseUrl/garage/$garageId/services';
+    final url = '$baseUrl/garage/${garageToken.garage_id}/services';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       logger.e(response);
