@@ -9,17 +9,7 @@ abstract class ProfileEvent extends Equatable {
 
 class ProfileLoad extends ProfileEvent {}
 
-class CarUpdate extends ProfileEvent {
-  final User user;
-
-  const CarUpdate(this.user);
-
-  @override
-  List<Object> get props => [user];
-
-  @override
-  String toString() => 'CarUpdate {user: $user}';
-}
+class ProfileLoadFormPhone extends ProfileEvent {}
 
 class GarageUpdate extends ProfileEvent {
   final Garage garage;
@@ -31,4 +21,33 @@ class GarageUpdate extends ProfileEvent {
 
   @override
   String toString() => 'UserUpdate {user: $garage}';
+}
+
+class GarageUpdateNoPassword extends ProfileEvent {
+  final Garage garage;
+
+  const GarageUpdateNoPassword(this.garage);
+
+  @override
+  List<Object> get props => [garage];
+
+  @override
+  String toString() => 'UserUpdate {user: $garage}';
+}
+
+class GarageUpdatePassword extends ProfileEvent {
+  final Garage garage;
+
+  const GarageUpdatePassword(this.garage);
+
+  @override
+  List<Object> get props => [garage];
+
+  @override
+  String toString() => 'UserUpdate {user: $garage}';
+}
+
+class CheckPassword extends ProfileEvent {
+  final GarageLogin garageLogin;
+  const CheckPassword({required this.garageLogin});
 }

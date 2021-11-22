@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
@@ -55,21 +56,21 @@ class _MenusSettingState extends State<MenusSetting> {
                       backgroundColor: Colors.transparent,
                       radius: 70,
                       child: ClipOval(
-                        child: Image.asset(
-                          tImageAsset('profile-homePage'),
-                          height: 130,
-                          width: 130,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                          child: _profileImage(
+                              widget.garage.logoImage.toString())),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      // widget.user.name,
-                      "หม่ำ",
-                      style: TextStyle(fontSize: fontSizeXXl),
+                    Container(
+                      width: 130,
+                      child: Text(
+                        widget.garage.name,
+                        style: TextStyle(fontSize: fontSizeXXl),
+                        softWrap: true,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Expanded(
                       child: Padding(
@@ -132,34 +133,26 @@ class _MenusSettingState extends State<MenusSetting> {
     );
   }
 
-  Widget _TextButtonManus(String name, String route) {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          height: 35,
-          child: TextButton(
-            onPressed: () {
-              if (name == menusSetting[3]) {
-                _authenticationBloc.add(LoggedOut());
-              } else {
-                navigator(route);
-              }
-            },
-            child: (Text(
-              name,
-              style: TextStyle(
-                fontSize: fontSizeL,
-                color: textColorBlack,
-              ),
-            )),
-          ),
+  _profileImage(String image) {
+    if (image == '') {
+      return Image.asset(
+        tImageAsset('profile'),
+        fit: BoxFit.cover,
+        width: 130,
+        height: 130,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: image,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
         ),
-        Divider(
-          color: Colors.grey,
-        ),
-      ],
-    );
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        width: 130,
+        height: 130,
+      );
+    }
   }
 
   void navigator(String route) {

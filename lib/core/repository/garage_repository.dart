@@ -43,10 +43,23 @@ class GarageRepository {
     return await garageApi.updateGarage(garage);
   }
 
+  Future<bool> updateGarageNoPassword({required Garage garage}) async {
+    return await garageApi.updateGarageNoPassword(garage: garage);
+  }
+
+  Future<bool> updateGaragePassword({required Garage garage}) async {
+    return await garageApi.updateGaragePassword(garage: garage);
+  }
+
   Future<bool> updateOpenStatusGarage(
       {required Garage garage, required bool openStatus}) async {
     return await garageApi.updateOpenStatusGarage(
         garage: garage, openStatus: openStatus);
+  }
+
+  Future<bool> checkPassword({required GarageLogin garageLogin}) async {
+    bool result = await garageApi.checkPassword(garageLogin: garageLogin);
+    return result;
   }
 
   Future<GarageDB> authenticate({

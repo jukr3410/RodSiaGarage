@@ -8,10 +8,10 @@ import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 
 //api base url
 //dev localhost api
-final baseUrlConstant = "http://localhost:3000/api";
+// final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
-//final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
+final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 // router path
 const LOGIN_ROUTE = "/login";
 const ADD_NUMBER_ROUTE = "/add_number";
@@ -29,9 +29,10 @@ const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
 const RECAP_DETAIL_REQUREST_ROUTE = '/recap_detail_request';
 const EDITPROFILE_ROUTE = '/edit-profile';
-const SUPPORT_CENTER_ROUTE = '/support-center-route';
-const SETTING_ROUTE = '/setting-route';
-const NOTIFY_ROUTE = '/notify-route';
+const SUPPORT_CENTER_ROUTE = '/support-center';
+const SETTING_ROUTE = '/setting';
+const NOTIFY_ROUTE = '/notify';
+const EDIT_PASSWOED_ROUTE = '/edit-profile-password';
 
 // font size
 const fontSizeXXl = 20.0;

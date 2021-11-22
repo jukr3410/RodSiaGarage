@@ -60,6 +60,32 @@ class GarageApi {
     return true;
   }
 
+  Future<bool> updateGarageNoPassword({required Garage garage}) async {
+    final url = '$baseUrl/garages-no-password';
+    final msg = jsonEncode(garage.toJson());
+    final response =
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+
+  Future<bool> updateGaragePassword({required Garage garage}) async {
+    final url = '$baseUrl/garages-password';
+    final msg = jsonEncode(garage.toJson());
+    final response =
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+
   Future<bool> updateOpenStatusGarage(
       {required Garage garage, required bool openStatus}) async {
     final url = '$baseUrl/garages/${garage.id}/open-status';
@@ -165,5 +191,19 @@ class GarageApi {
     Token token = Token.fromJson(decodedJson);
     logger.d("$token");
     return token;
+  }
+
+  Future<bool> checkPassword({required GarageLogin garageLogin}) async {
+    final url = '$baseUrl/auth/loginGarage';
+    final msg = jsonEncode(garageLogin.toJson());
+    final response =
+        await http.post(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      // final decodedJson = jsonDecode(response.body);
+      // logger.d("$decodedJson");
+
+      return false;
+    }
+    return true;
   }
 }

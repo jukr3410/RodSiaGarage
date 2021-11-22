@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rodsiagarage/core/models/garage_login.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/user_model.dart';
 import 'package:rodsiagarage/core/repository/garage_repository.dart';
@@ -23,7 +24,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> mapEventToState(
     ProfileEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is ProfileLoadFormPhone) {
+      yield* _mapGarageFormPhoneLoadToState();
+    } else if (event is CheckPassword) {
+      yield* _checkPasswordToState(event.garageLogin);
+    } else if (event is GarageUpdateNoPassword) {
+      yield* _mapGarageUpdateNoPasswordToState(event.garage);
+    } else if (event is GarageUpdatePassword) {
+      yield* _mapGarageUpdatePasswordToState(event.garage);
+    }
   }
 
   Stream<ProfileState> _mapServiceLoadToState() async* {
@@ -36,11 +45,58 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Stream<ProfileState> _mapUserUpdateToState(GarageUpdate event) async* {
+  Stream<ProfileState> _mapGarageFormPhoneLoadToState() async* {
+    try {
+      final garage = await this.garageRepository.getGarageInfoPhone();
+      yield GarageLoadSuccess(garage: garage);
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _mapGarageUpdateToState(Garage garage) async* {
     try {
       yield ProfileUpdating();
-      final res = await this.garageRepository.updateGarage(garage: event.garage);
+      final res = await this.garageRepository.updateGarage(garage: garage);
       yield ProfileUpdated();
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _mapGarageUpdateNoPasswordToState(Garage garage) async* {
+    try {
+      yield ProfileUpdating();
+      await this.garageRepository.updateGarageNoPassword(garage: garage);
+      yield ProfileUpdated();
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _mapGarageUpdatePasswordToState(Garage garage) async* {
+    try {
+      yield ProfileUpdating();
+      await this.garageRepository.updateGaragePassword(garage: garage);
+      yield ProfileUpdated();
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _checkPasswordToState(GarageLogin garageLogin) async* {
+    try {
+      bool status =
+          await this.garageRepository.checkPassword(garageLogin: garageLogin);
+      if (status == true) {
+        yield CheckPasswordSuccesss(status: status);
+      } else {
+        yield CheckPasswordError(status: status);
+      }
     } catch (e) {
       logger.e(e);
       yield ProfileError();

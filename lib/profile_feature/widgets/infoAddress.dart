@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 
 class InfoAddress extends StatefulWidget {
-  InfoAddress({Key? key}) : super(key: key);
+  final Garage garage;
+  InfoAddress({Key? key, required this.garage}) : super(key: key);
 
   @override
   _InfoAddressState createState() => _InfoAddressState();
@@ -20,15 +22,15 @@ class _InfoAddressState extends State<InfoAddress> {
         children: [
           Text(
             tLocationThai,
-            style: TextStyle(fontSize: fontSizeL, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: fontSizeM, fontWeight: FontWeight.w600),
           ),
-          Text('123/456 ถนนพระราม2 แขวง เขต กทรุงเทพ 10150'),
+          Text(widget.garage.address.addressDesc),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Container(
             height: 140,
-            width: MediaQuery.of(context).size.width,
+            width: double.infinity,
             child: FittedBox(
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
@@ -38,8 +40,6 @@ class _InfoAddressState extends State<InfoAddress> {
                 ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
-              // Image.network(
-              //     'https://i.stack.imgur.com/chfhv.png'),
             ),
           )
         ],

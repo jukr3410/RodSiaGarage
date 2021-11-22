@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
@@ -19,8 +20,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 @immutable
 class EditServiceScreen extends StatefulWidget {
-  Service service;
-  EditServiceScreen({Key? key, required this.service}) : super(key: key);
+  final EditService editService;
+  EditServiceScreen({Key? key, required this.editService}) : super(key: key);
 
   @override
   _EditServiceScreenState createState() => _EditServiceScreenState();
@@ -69,7 +70,8 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     return Center(
         child:
             BlocConsumer<ServiceBloc, ServiceState>(listener: (context, state) {
-      if (state is ServiceAdded) {
+      if (state is ServiceEdited) {
+        navigatorToListSerivce();
       } else if (state is ServicesError) {
         showTopSnackBar(
           context,
@@ -92,7 +94,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                     //style: Theme.of(context).textTheme.headline5,
                     decoration: InputDecoration(
                         hoverColor: primaryColor,
-                        hintText: widget.service.name,
+                        hintText: widget.editService.service.name,
                         labelText: 'ชื่อบริการ',
                         labelStyle: TextStyle(
                             color: myFocusNode.hasFocus
@@ -123,7 +125,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                     if (state is ServiceTypesLoadSuccess) {
                       for (var i = 0; i < state.serviceTypes.length; i++) {
                         if (state.serviceTypes[i].name ==
-                            widget.service.serviceType.name) {
+                            widget.editService.service.serviceType.name) {
                           val = i;
                         }
                       }
@@ -146,10 +148,10 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                                     onChanged: (int? value) {
                                       setState(() {
                                         val = value!;
-                                        widget.service.serviceType =
+                                        widget.editService.service.serviceType =
                                             state.serviceTypes[val];
-                                        logger
-                                            .d(widget.service.serviceType.name);
+                                        logger.d(widget.editService.service
+                                            .serviceType.name);
                                       });
                                     }),
                               ),
@@ -178,7 +180,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                           ),
                         ),
                         labelText: 'รายละเอียดเพื่มเติม',
-                        hintText: widget.service.description,
+                        hintText: widget.editService.service.description,
                         alignLabelWithHint: true,
                         fillColor: Colors.red,
                         contentPadding: EdgeInsets.all(defualtPaddingLow),
@@ -216,8 +218,10 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              widget.service.name = _nameController.text;
-                              widget.service.description = _descController.text;
+                              widget.editService.service.name =
+                                  _nameController.text;
+                              widget.editService.service.description =
+                                  _descController.text;
                               _navigateAndDisplayEdit(context);
                             }
                           },
@@ -292,19 +296,14 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     );
   }
 
-  void navigateToServiceList() {
-    Navigator.pop(context);
-  }
-
   void _navigateAndDisplayEdit(BuildContext context) async {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: 'คุณต้องการแก้ไขบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
-      _serviceBloc.add(ServiceUpdate(widget.service));
-      logger.d('${widget.service}');
-      navigatorToListSerivce();
+      _serviceBloc.add(ServiceUpdate(widget.editService.service));
+      logger.d('${widget.editService.service}');
     }
   }
 
@@ -313,7 +312,8 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
   }
 
   void navigatorToListSerivce() {
-    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE,
+        arguments: widget.editService.garage);
   }
 
   @override
@@ -324,4 +324,10 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     _nameController.dispose();
     super.dispose();
   }
+}
+
+class EditService {
+  Garage garage;
+  Service service;
+  EditService({required this.garage, required this.service});
 }

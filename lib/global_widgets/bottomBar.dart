@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fswitch/fswitch.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/global_widgets/InboxPage.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiagarage/global_widgets/alertShowChangeStatus.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 import 'package:rodsiagarage/global_widgets/menusSetting.dart';
+import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
-  BottomNavigrationBar({Key? key}) : super(key: key);
+  final Garage garage;
+  BottomNavigrationBar({Key? key, required this.garage}) : super(key: key);
 
   @override
   _BottomNavigrationBarState createState() => _BottomNavigrationBarState();
@@ -21,6 +25,14 @@ class BottomNavigrationBar extends StatefulWidget {
 class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   int _selectedIndex = 0;
   bool status = true;
+
+  late GarageInfoBloc _garageInfoBloc;
+  @override
+  void initState() {
+    _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
+      ..add(GarageInfoLoad());
+    super.initState();
+  }
 
   // List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
   //   BottomNavigationBarItem(
@@ -60,14 +72,13 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     });
   }
 
-  List<Widget> _pageWidget = <Widget>[
-    HomePage(),
-    NotifyPage(),
-    MenusSetting(garage: gargeMockup),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<Widget> _pageWidget = <Widget>[
+      HomePage(),
+      NotifyPage(),
+      MenusSetting(garage: widget.garage),
+    ];
     return SafeArea(
       child: Scaffold(
           appBar: setAppBar(),
@@ -80,14 +91,13 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
           bottomNavigationBar: Container(
             height: 60,
             child: FancyBottomNavigation(
-              tabs: _menuBarTest,
-              onTabChangedListener: _onItemTapped,
-              barBackgroundColor: primaryColor,
-              initialSelection: 0,
-              inactiveIconColor: textColorBlack,
-              circleColor: textColorBlack,
-              textColor: textColorBlack,
-            ),
+                tabs: _menuBarTest,
+                onTabChangedListener: _onItemTapped,
+                barBackgroundColor: primaryColor,
+                initialSelection: 0,
+                inactiveIconColor: textColorBlack,
+                circleColor: textColorBlack,
+                textColor: textColorBlack),
           )
           // BottomNavigationBar(
           //   items: _menuBar,

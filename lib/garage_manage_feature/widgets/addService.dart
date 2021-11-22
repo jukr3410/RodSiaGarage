@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/service_type_model.dart';
@@ -18,7 +19,8 @@ import 'package:direct_select/direct_select.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AddServiceScreen extends StatefulWidget {
-  AddServiceScreen({Key? key}) : super(key: key);
+  final Garage garage;
+  AddServiceScreen({Key? key, required this.garage}) : super(key: key);
 
   @override
   _AddServiceScreenState createState() => _AddServiceScreenState();
@@ -76,6 +78,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         child:
             BlocConsumer<ServiceBloc, ServiceState>(listener: (context, state) {
       if (state is ServiceAdded) {
+        navigatorToListSerivce(widget.garage);
       } else if (state is ServicesError) {
         showTopSnackBar(
           context,
@@ -123,42 +126,41 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                     height: 10,
                   ),
                   BlocConsumer<ServiceTypeBloc, ServiceTypeState>(
-                      listener: (context, state) {
-                    return;
-                  }, builder: (context, state) {
-                    if (state is ServiceTypesLoadSuccess) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: mockupServiceType.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 3,
-                              // margin: new EdgeInsets.symmetric(vertical: 4.0),
-                              color: cardColor,
-                              child: ListTile(
-                                title: _makeCardWidget(
-                                    state.serviceTypes[index], index),
-                                trailing: Radio(
-                                    activeColor: primaryColor,
-                                    value: index,
-                                    groupValue: val,
-                                    onChanged: (int? value) {
-                                      setState(() {
-                                        val = value!;
-                                        _service.serviceType =
-                                            state.serviceTypes[val];
-                                        logger.d(_service.serviceType.name);
-                                      });
-                                    }),
-                              ),
-                            );
-                          });
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }),
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        if (state is ServiceTypesLoadSuccess) {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: mockupServiceType.length,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  elevation: 3,
+                                  // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                                  color: cardColor,
+                                  child: ListTile(
+                                    title: _makeCardWidget(
+                                        state.serviceTypes[index], index),
+                                    trailing: Radio(
+                                        activeColor: primaryColor,
+                                        value: index,
+                                        groupValue: val,
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            val = value!;
+                                            _service.serviceType =
+                                                state.serviceTypes[val];
+                                            logger.d(_service.serviceType.name);
+                                          });
+                                        }),
+                                  ),
+                                );
+                              });
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }),
                   SizedBox(
                     height: 20,
                   ),
@@ -304,20 +306,8 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
             AlertPopupYesNo(title: 'คุณต้องการเพิ่มบริการนี้ใช้ไหม'));
     if (result == 'Ok') {
       logger.d("${_service.name}");
+      _service.garage = widget.garage;
       _serviceBloc.add(ServiceAdd(_service));
-      navigatorToListSerivce();
-    }
-  }
-
-  void _navigateAndDisplayEdit(BuildContext context, int index) async {
-    final result = await showDialog<String>(
-        context: context,
-        builder: (BuildContext context) =>
-            AlertPopupYesNo(title: 'คุณต้องกาแก้ไขบริการนี้ใช้ไหม'));
-    if (result == 'Ok') {
-      // Navigator.pushNamed(context, EDITCAR_CARTYPE_ROUTE,
-      //     arguments: EditCarNoNewCar(
-      //         carOld: widget.user.cars[index], index: index + 1));
     }
   }
 
@@ -325,7 +315,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     Navigator.pop(context);
   }
 
-  void navigatorToListSerivce() {
-    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
+  void navigatorToListSerivce(Garage garage) {
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE, arguments: garage);
   }
 }

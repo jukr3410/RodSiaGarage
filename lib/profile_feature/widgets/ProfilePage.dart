@@ -46,37 +46,33 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(defualtPaddingLow),
+            padding: const EdgeInsets.all(defualtPaddingMedium),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InfoProfile(
                   garage: widget.garage,
                 ),
                 SizedBox(
-                  height: 10,
-                ),
-                InfoAddress(),
-                SizedBox(
                   height: 20,
                 ),
-                Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'รูปภาพ:',
-                        style: TextStyle(
-                            fontSize: fontSizeL, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CarouselImage(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                Text(
+                  'รูปภาพเพิ่มเติม:',
+                  style: TextStyle(
+                      fontSize: fontSizeM, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                CarouselImage(images: widget.garage.images!),
+                SizedBox(
+                  height: 10,
+                ),
+                InfoAddress(
+                  garage: widget.garage,
+                ),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             ),
@@ -84,5 +80,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  navigatorToMenuPage() {
+    Navigator.pushNamed(context, MAIN_ROUTE);
   }
 }

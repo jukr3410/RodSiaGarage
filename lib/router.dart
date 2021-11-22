@@ -29,6 +29,7 @@ import 'package:rodsiagarage/notify_feature/widgets/notifyFormSelectPage.dart';
 import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
+import 'package:rodsiagarage/profile_feature/widgets/editPassword.dart';
 import 'package:rodsiagarage/profile_feature/widgets/editProfile.dart';
 import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
@@ -112,31 +113,41 @@ class AppRouter {
             builder: (_) => Center(child: Text("Edit garage info")));
 
       case SERVICE_LIST_ROUTE:
+        Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
-                  BlocProvider(
-                    create: (BuildContext context) =>
-                        ServiceBloc(serviceRepository: ServiceRepository()),
-                  ),
-                  BlocProvider(
-                    create: (BuildContext context) => ServiceTypeBloc(
-                        serviceTypeRepository: ServiceTypeRepository()),
-                  ),
-                ], child: ServiceListScreen()));
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (BuildContext context) =>
+                            ServiceBloc(serviceRepository: ServiceRepository()),
+                      ),
+                      BlocProvider(
+                        create: (BuildContext context) => ServiceTypeBloc(
+                            serviceTypeRepository: ServiceTypeRepository()),
+                      ),
+                    ],
+                    child: ServiceListScreen(
+                      garage: garage,
+                    )));
 
       case ADD_SERVICE_ROUTE:
+        Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
-                  BlocProvider<ServiceBloc>(
-                      create: (BuildContext context) =>
-                          ServiceBloc(serviceRepository: ServiceRepository())),
-                  BlocProvider<ServiceTypeBloc>(
-                      create: (BuildContext context) => ServiceTypeBloc(
-                          serviceTypeRepository: ServiceTypeRepository())),
-                ], child: AddServiceScreen()));
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider<ServiceBloc>(
+                          create: (BuildContext context) => ServiceBloc(
+                              serviceRepository: ServiceRepository())),
+                      BlocProvider<ServiceTypeBloc>(
+                          create: (BuildContext context) => ServiceTypeBloc(
+                              serviceTypeRepository: ServiceTypeRepository())),
+                    ],
+                    child: AddServiceScreen(
+                      garage: garage,
+                    )));
 
       case EDIT_SERVICE_ROUTE:
-        Service service = settings.arguments as Service;
+        EditService editService = settings.arguments as EditService;
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(providers: [
                   BlocProvider<ServiceBloc>(
@@ -145,7 +156,7 @@ class AppRouter {
                   BlocProvider<ServiceTypeBloc>(
                       create: (BuildContext context) => ServiceTypeBloc(
                           serviceTypeRepository: ServiceTypeRepository())),
-                ], child: EditServiceScreen(service: service)));
+                ], child: EditServiceScreen(editService: editService)));
 
       case TRACKING_REQUEST_ROUTE:
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
@@ -171,9 +182,21 @@ class AppRouter {
       case EDITPROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
-            builder: (_) => EditProfile(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(garageRepository: GarageRepository()),
+                child: EditProfile(
                   garage: garage,
-                ));
+                )));
+      case EDIT_PASSWOED_ROUTE:
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(garageRepository: GarageRepository()),
+                child: EditPassword(
+                  garage: garage,
+                )));
 
       case SUPPORT_CENTER_ROUTE:
         return MaterialPageRoute(builder: (_) => SupportCenterPage());

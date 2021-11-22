@@ -31,7 +31,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
     ServiceEvent event,
   ) async* {
     if (event is ServiceLoad) {
-      yield* _mapServiceLoadToState();
+      yield* _mapServiceLoadToState(event.garageId);
     } else if (event is ServiceAdd) {
       yield* _mapServiceAddToState(event);
     } else if (event is ServiceUpdate) {
@@ -43,9 +43,10 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
     }
   }
 
-  Stream<ServiceState> _mapServiceLoadToState() async* {
+  Stream<ServiceState> _mapServiceLoadToState(String garageId) async* {
     try {
-      final services = await this.serviceRepository.getServiceByGarage();
+      final services =
+          await this.serviceRepository.getServiceByGarage(garageId);
       yield ServicesLoadSuccess(services: services);
     } catch (e) {
       logger.e(e);
@@ -64,7 +65,13 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   }
 
   Stream<ServiceState> _mapServiceUpdateToState(ServiceUpdate event) async* {
-    serviceRepository.updateService(service: event.service);
+    try {
+      await this.serviceRepository.updateService(service: event.service);
+      yield ServiceEdited();
+    } catch (e) {
+      logger.e(e);
+      yield ServicesError();
+    }
   }
 
   Stream<ServiceState> _mapServiceDeleteToState(ServiceDelete event) async* {

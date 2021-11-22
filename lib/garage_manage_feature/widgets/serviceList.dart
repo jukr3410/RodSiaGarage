@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:ui';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:rodsiagarage/garage_manage_feature/widgets/editService.dart';
 import 'package:rodsiagarage/garage_manage_feature/widgets/showInfoService.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 
 class ServiceListScreen extends StatefulWidget {
+  final Garage garage;
+
+  ServiceListScreen({required this.garage});
   @override
   _ServiceListScreenState createState() => _ServiceListScreenState();
 }
@@ -21,7 +26,8 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   @override
   void initState() {
-    _serviceBloc = BlocProvider.of<ServiceBloc>(context)..add(ServiceLoad());
+    _serviceBloc = BlocProvider.of<ServiceBloc>(context)
+      ..add(ServiceLoad(garageId: widget.garage.id));
     super.initState();
   }
 
@@ -71,7 +77,8 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      _serviceBloc..add(ServiceLoad());
+                      _serviceBloc
+                        ..add(ServiceLoad(garageId: widget.garage.id));
                     },
                     icon: Icon(Icons.refresh),
                   ),
@@ -116,7 +123,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          navigateToAddService();
+          navigateToAddService(widget.garage);
         },
         backgroundColor: primaryColor,
         icon: Icon(
@@ -230,13 +237,11 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   }
 
   void navigatorToListSerivce() {
-    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE,arguments: widget.garage);
   }
 
-  Future<void> navigateToAddService() async {
-    await Navigator.pushNamed(context, ADD_SERVICE_ROUTE);
-    this._services = [];
-    _serviceBloc..add(ServiceLoad());
+  Future<void> navigateToAddService(Garage garage) async {
+    await Navigator.pushNamed(context, ADD_SERVICE_ROUTE, arguments: garage);
   }
 
   void _navigateAndDisplayDelete(BuildContext context, Service service) async {
@@ -253,8 +258,8 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     }
   }
 
-  void _navigateToShowInfoService(BuildContext context, Service service) async {
-    final result = await showDialog<String>(
+  void _navigateToShowInfoService(BuildContext context, Service service) {
+    showDialog<String>(
         context: context,
         builder: (BuildContext context) => ShowInfoService(service: service));
   }
@@ -277,7 +282,8 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   }
 
   void navigateToServiceEdit(Service service) async {
-    await Navigator.pushNamed(context, EDIT_SERVICE_ROUTE, arguments: service);
+    await Navigator.pushNamed(context, EDIT_SERVICE_ROUTE,
+        arguments: EditService(garage: widget.garage, service: service));
     // this._services = [];
     // _serviceBloc..add(ServiceLoad());
   }

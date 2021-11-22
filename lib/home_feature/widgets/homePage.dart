@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/dao/garage_dao.dart';
+import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
 
@@ -17,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   late GarageInfoBloc _garageInfoBloc;
   @override
   void initState() {
-    _garageInfoBloc = BlocProvider. of<GarageInfoBloc>(context)
+    _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad());
     super.initState();
   }
@@ -44,7 +46,8 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.transparent,
                       radius: 40,
                       child: ClipOval(
-                          child: _profileImage(state.garage.images.toString())),
+                          child:
+                              _profileImage(state.garage.logoImage.toString())),
                     ),
                     SizedBox(
                       width: 20,
@@ -80,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                         Row(
                           children: [
                             Text(
-                              tEmail + ': ',
+                              tEmailThai + ': ',
                               style: TextStyle(
                                   color: Colors.grey.shade700,
                                   fontSize: fontSizeM - 2),
@@ -100,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 20,
                 ),
-                CarouselImage(),
+                CarouselImage(images: state.garage.images!),
                 SizedBox(
                   height: 10,
                 ),
@@ -117,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               iconSize: 100,
                               onPressed: () {
-                                navigateToService();
+                                navigateToService(state.garage);
                               }),
                         ),
                         Text(tServiceThai)
@@ -185,8 +188,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void navigateToService() {
-    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
+  void navigateToService(Garage garage) {
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE, arguments: garage);
   }
 
   void navigatorTosupportCenter() {

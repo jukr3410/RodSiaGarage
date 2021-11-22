@@ -10,7 +10,8 @@ abstract class ServiceEvent extends Equatable {
 class ServiceInitializeEvent extends ServiceEvent {}
 
 class ServiceLoad extends ServiceEvent {
-  const ServiceLoad();
+  final String garageId;
+  const ServiceLoad({required this.garageId});
 }
 
 class ServiceAdd extends ServiceEvent {

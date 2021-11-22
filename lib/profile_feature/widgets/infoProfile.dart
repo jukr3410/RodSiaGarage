@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
@@ -14,87 +15,69 @@ class InfoProfile extends StatefulWidget {
 class _InfoProfileState extends State<InfoProfile> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: defualtPaddingMedium,
-        right: defualtPaddingMedium,
-      ),
-      child: Row(
-        children: [
-          Flexible(
-            flex: 4,
-            child: Column(
+    return Row(
+      children: [
+        Flexible(
+          flex: 4,
+          child: Column(
+            children: [
+              ClipOval(
+                  child: _proFileImage(widget.garage.logoImage.toString())),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.garage.name,
+              style:
+                  TextStyle(fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
+              softWrap: true,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Row(
               children: [
-                Stack(
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 70,
-                      child: ClipOval(
-                        child: Image.asset(
-                          tImageAsset('profile-homePage'),
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    // Positioned(
-                    //     bottom: 7,
-                    //     right: 18,
-                    //     child: Container(
-                    //       height: 35,
-                    //       width: 35,
-                    //       child: IconButton(
-                    //         icon: Icon(
-                    //           Icons.add_a_photo,
-                    //           size: 18,
-                    //           color: Colors.white,
-                    //         ),
-                    //         onPressed: () {},
-                    //       ),
-                    //       decoration: BoxDecoration(
-                    //           color: textColorBlack,
-                    //           borderRadius: borderRadiusHight),
-                    //     )),
-                  ],
-                ),
+                Text(tPhone + ': '),
+                Text(
+                  widget.garage.phone,
+                )
               ],
             ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.garage.name,
-                style: TextStyle(
-                    fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
-                softWrap: true,
-                maxLines: 1,
-              ),
-              Row(
-                children: [
-                  Text(tPhone + ': '),
-                  Text(
-                    widget.garage.phone,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text(tEmail + ': '),
-                  Text(
-                    widget.garage.email,
-                  )
-                ],
-              )
-            ],
-          )
-        ],
-      ),
+            Row(
+              children: [
+                Text(tEmailThai + ': '),
+                Text(
+                  widget.garage.email,
+                )
+              ],
+            )
+          ],
+        )
+      ],
     );
+  }
+
+  _proFileImage(String profileImage) {
+    if (profileImage == '') {
+      return Image.asset(
+        tImageAsset('profile-homePage'),
+        width: 120,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: profileImage,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        width: 120,
+      );
+    }
   }
 }

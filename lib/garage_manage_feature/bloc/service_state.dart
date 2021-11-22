@@ -34,3 +34,4 @@ class AddServiceError extends ServiceState {
 class AddingService extends ServiceState {}
 
 class ServiceAdded extends ServiceState {}
+class ServiceEdited extends ServiceState {}
