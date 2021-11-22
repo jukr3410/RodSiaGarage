@@ -109,6 +109,7 @@ class _LocationPickerState extends State<LocationPicker> {
 
   void navigateBackToAddInfo() {
     logger.d(cameraPosition);
-    Navigator.pop(context, cameraPosition);
+    Navigator.pop(context,
+        {"cameraPosition": cameraPosition, "address": textController.text});
   }
 }
