@@ -36,6 +36,7 @@ import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addNumber.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
+import 'package:rodsiagarage/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart'
@@ -160,7 +161,14 @@ class AppRouter {
                 ], child: EditServiceScreen(editService: editService)));
 
       case TRACKING_REQUEST_ROUTE:
-        return MaterialPageRoute(builder: (_) => TrackingRequestPage());
+        RequestService requestService = settings.arguments as RequestService;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RequestServiceBloc(
+                    requestServiceRepository: RequestServiceRepository()),
+                child: TrackingRequestPage(
+                  requestService: requestService,
+                )));
 
       case RECAP_DETAIL_REQUREST_ROUTE:
         RequestService requestService = settings.arguments as RequestService;

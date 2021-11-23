@@ -12,16 +12,18 @@ class RequestServiceInitial extends RequestServiceState {}
 class RequestServiceLoading extends RequestServiceState {}
 
 class RequestServiceLoadSuccess extends RequestServiceState {
-  final RequestServiceAdd requestServiceAdd;
+  final RequestService requestService;
+  final DistanceMatrix? distanceMatrix;
 
-  const RequestServiceLoadSuccess({required this.requestServiceAdd});
+  const RequestServiceLoadSuccess(
+      {required this.requestService, this.distanceMatrix});
 
   @override
-  List<Object> get props => [requestServiceAdd];
+  List<Object> get props => [requestService];
 
   @override
   String toString() =>
-      'RequestServiceLoadSuccess { requestService: ${requestServiceAdd} }';
+      'RequestServiceLoadSuccess { requestService: ${requestService} }';
 }
 
 class RequestServiceError extends RequestServiceState {}

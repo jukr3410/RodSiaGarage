@@ -21,16 +21,17 @@ class RequestServiceApi {
 
   final garageDao = GarageDao();
 
-  Future<RequestServiceAdd> getRequestService({required String id}) async {
+  Future<RequestService> getRequestService({required String id}) async {
     final url = '$baseUrl/request-services/$id';
-    final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
       logger.e(response);
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    RequestServiceAdd requestService = decodedJson;
-
+    logger.d(decodedJson);
+    RequestService requestService = RequestService.fromJson(decodedJson);
+    logger.d(requestService);
     return requestService;
   }
 

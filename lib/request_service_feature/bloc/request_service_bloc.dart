@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rodsiagarage/core/models/distance_matrix.dart';
 import 'package:rodsiagarage/core/models/request_service_add_model.dart';
+import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/repository/request_service_api.dart';
 import 'package:rodsiagarage/core/repository/request_service_repository.dart';
 import 'package:rodsiagarage/core/services/geo_location_service.dart';
@@ -45,7 +47,8 @@ class RequestServiceBloc
           .requestServiceRepository
           .getRequestService(id: event.requestServiceId);
       logger.d("GarageConfirm: ${requestService.confirmRequest}");
-      yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
+      yield RequestServiceLoadSuccess(requestService: requestService);
+      yield RequestServiceInService();
     } catch (e) {
       yield RequestServiceError();
     }
@@ -55,9 +58,10 @@ class RequestServiceBloc
       UpdateRequestService event) async* {
     try {
       yield UpdatingRequestService();
-      final requestService = await this
+      final isUpdated = await this
           .requestServiceRepository
           .updateRequestStatus(requestServiceAdd: event.requestServiceAdd);
+
       yield UpdatedRequestService();
     } catch (e) {
       yield RequestServiceError();
