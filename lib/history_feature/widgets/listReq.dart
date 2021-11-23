@@ -65,91 +65,96 @@ class _ListReqState extends State<ListReq> {
   }
 
   Widget cardNotify(RequestService requestService) {
-    return Card(
-      elevation: 2,
-      margin: new EdgeInsets.symmetric(
-          horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
-      color: cardColor,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 10,
-            ),
-            Image.asset(
-              tImageAsset(requestService.service.serviceType.name),
-              width: 35,
-              height: 35,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              flex: 7,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    requestService.user.name,
-                    softWrap: true,
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                    style: new TextStyle(
-                        fontSize: fontSizeXl - 1,
-                        fontWeight: FontWeight.bold,
-                        color: textColorBlack),
-                  ),
-                  Text(
-                    requestService.service.name,
-                    softWrap: true,
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                    style: new TextStyle(
-                        fontSize: fontSizeM - 1,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey),
-                  ),
-                  Text(
-                    DateFormat('yyyy-MMM-dd  HH:MM น.').format(
-                        DateTime.parse(requestService.createdAt.toString())),
-                    style:
-                        TextStyle(color: Colors.grey, fontSize: fontSizeM - 2),
-                  ),
-                ],
+    return GestureDetector(
+      child: Card(
+        elevation: 2,
+        margin: new EdgeInsets.symmetric(
+            horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
+        color: cardColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 10,
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  Container(
-                      height: buttonHeightLarge + 10,
-                      width: buttonHeightSmall,
-                      decoration: BoxDecoration(
-                          color: redStatus, borderRadius: borderRadiusLow),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.cancel))),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                      height: buttonHeightLarge + 10,
-                      width: buttonHeightSmall,
-                      decoration: BoxDecoration(
-                          color: primaryColor, borderRadius: borderRadiusLow),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.forward))),
-                ],
+              Image.asset(
+                tImageAsset(requestService.service.serviceType.name),
+                width: 35,
+                height: 35,
+                fit: BoxFit.cover,
               ),
-            )
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                flex: 12,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      requestService.service.name,
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      style: new TextStyle(
+                          fontSize: fontSizeXl - 1,
+                          fontWeight: FontWeight.bold,
+                          color: textColorBlack),
+                    ),
+                    Text(
+                      requestService.user.name,
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      style: new TextStyle(
+                          fontSize: fontSizeM - 1,
+                          fontWeight: FontWeight.bold,
+                          color: textColorBlack),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          DateFormat('dd-MMM-yyyy | HH:MM น.').format(
+                              DateTime.parse(
+                                  requestService.createdAt.toString())),
+                          style: TextStyle(
+                              color: textColorBlack, fontSize: fontSizeM - 2),
+                        ),
+                        Text(" ~ "),
+                        Text(
+                          "12 กก.",
+                          style: TextStyle(
+                            color: textColorBlack,
+                            fontSize: fontSizeM - 2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Icon(
+                  Icons.navigate_next,
+                  size: 40,
+                ),
+              )
 
-            // )
-          ],
+              // )
+            ],
+          ),
         ),
       ),
+      onTap: () {
+        navigatorToShowDetailReq(requestService);
+      },
     );
+  }
+
+  navigatorToShowDetailReq(RequestService req) {
+    Navigator.pushNamed(context, SHOWINFO_DETAILREQ_ROUTE, arguments: req);
   }
 }

@@ -34,9 +34,9 @@ class RequestService {
   User user;
   Service service;
   Car car;
+  String addressUser;
   bool confirmRequest;
   String status;
-  String addressUser;
   GeoLocation geoLocationUser;
   GeoLocation geoLocationGarage;
   String? image;
@@ -69,6 +69,7 @@ class RequestService {
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
         "image": image,
-        "createdAt": createdAt
+        "createdAt": createdAt,
+        "addressUser": addressUser
       };
 }

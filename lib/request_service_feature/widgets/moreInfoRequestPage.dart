@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/global_widgets/buttonAcceptAndDecline.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class MoreInfoRequestPage extends StatefulWidget {
-  final Garage garage;
-  MoreInfoRequestPage({Key? key, required this.garage}) : super(key: key);
+  final RequestService req;
+  MoreInfoRequestPage({Key? key, required this.req}) : super(key: key);
 
   @override
   _MoreInfoRequestPageState createState() => _MoreInfoRequestPageState();
@@ -16,104 +20,214 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Text(
+            'ข้อมูลขอใช้บริการ',
+            style: TextStyle(color: textColorBlack),
+          ),
+          centerTitle: true,
           backgroundColor: primaryColor,
         ),
         body: Column(
           children: [
             Center(
-              child: Container(
-                width: cardWidthLarge,
-                decoration: BoxDecoration(
-                  borderRadius: borderRadiusMedium,
-                  boxShadow: [boxShadow],
-                  color: bgColor,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: defualtPaddingMedium,
-                      left: defualtPaddingMedium,
-                      right: defualtPaddingMedium),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 6,
-                            child: Container(
-                              child: Column(
+              child: Padding(
+                padding: const EdgeInsets.all(defualtPaddingLow),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: borderRadiusMedium,
+                    boxShadow: [boxShadow],
+                    color: bgColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(defualtPaddingMedium),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
+                                  Text(
+                                    'บริการ: ',
+                                    style: TextStyle(
+                                        fontSize: fontSizeXl,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    widget.req.service.name,
+                                    style: TextStyle(
+                                        fontSize: fontSizeXl,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    tImageAsset('car'),
+                                    width: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'บริการ: ',
-                                        style: _textStyleBig,
+                                      Row(
+                                        children: [
+                                          Text('รุ่น: '),
+                                          Text(
+                                            widget.req.car.brand,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            widget.req.car.model,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            widget.req.car.year,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        'แบตเตอรี่',
-                                        style: _textStyleBig,
+                                      Row(
+                                        children: [
+                                          Text('ป้ายทะเบียน: '),
+                                          Text(
+                                            widget.req.car.regisNumber,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('ชนิด: '),
+                                          Text(
+                                            widget.req.car.type,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: defualtPaddingLow,
-                                  ),
-                                  _textInfo('Honda civic 1.6L',
-                                      'assets/images/icon-car.png'),
-                                  _textInfo('2.5 กิโลเมตร',
-                                      'assets/images/icon-distance.png'),
-                                  _textInfo('ถนนพระราม 2 ซอยท่าข้าม 20',
-                                      'assets/images/icon-location2.png'),
-                                  _textInfo(
-                                      'ตอนนี้รถเป็นอะไรก็ไม่รู้ สตาร์ทไม่ติด',
-                                      'assets/images/icon-desc.png'),
-                                  SizedBox(
-                                    height: defualtPaddingLow,
-                                  ),
                                 ],
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Container(
-                              child: Column(
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
                                 children: [
                                   Image.asset(
-                                      'assets/images/icon-profile2.png'),
-                                  SizedBox(
-                                    height: 5,
+                                    tImageAsset('distance'),
+                                    width: 20,
                                   ),
-                                  Text("Wt.fluke")
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '~ 12 กิโลเมตร.',
+                                    softWrap: true,
+                                    style: _textStyleSmall,
+                                  ),
                                 ],
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              icon: ImageIcon(
-                                  AssetImage('assets/images/icon-call.png')),
-                              onPressed: () {}),
-                          SizedBox(
-                            width: 100,
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    tImageAsset('location2'),
+                                    width: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    child: Text(
+                                      widget.req.addressUser,
+                                      softWrap: true,
+                                      style: _textStyleSmall,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    tImageAsset('desc'),
+                                    width: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    child: Text(
+                                      widget.req.problemDesc,
+                                      softWrap: true,
+                                      style: _textStyleSmall,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          IconButton(
-                              icon: ImageIcon(
-                                  AssetImage('assets/images/icon-message.png')),
-                              onPressed: () {})
-                        ],
-                      )
-                    ],
+                        ),
+                        Expanded(
+                            child: Column(
+                          children: [
+                            Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: textColorBlack),
+                                child: IconButton(
+                                  icon: Icon(Icons.call),
+                                  onPressed: () {
+                                    UrlLauncher.launch(
+                                        'tel://${widget.req.user.phone}');
+                                  },
+                                  color: primaryColor,
+                                )),
+                            Text(
+                              'โทรสอบถาม',
+                              style: TextStyle(fontSize: fontSizeS),
+                            )
+                          ],
+                        ))
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: defualtPaddingMedium,
+              height: 5,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -127,50 +241,19 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
                     style: flatButtonStyle(primaryColor, textColorBlack),
                   ),
                 ),
-                SizedBox(
-                  width: 30,
-                ),
-                Container(
-                  width: buttonWidthSmall,
-                  height: buttonHeightSmall,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(tDeclineThai),
-                    style: flatButtonStyle(primaryColor, textColorBlack),
-                  ),
-                ),
+                GFButton(
+                  onPressed: () {},
+                  text: tDeclineThai,
+                  textColor: textColorBlack,
+                  type: GFButtonType.transparent,
+                )
               ],
             )
           ],
         ));
   }
 
-  Widget _textInfo(String desc, String image) {
-    return Row(
-      children: [
-        Image.asset(
-          image,
-          width: 20,
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Flexible(
-            child: Text(
-          desc,
-          softWrap: true,
-          style: _textStyleSmall,
-        )),
-        SizedBox(
-          height: 7,
-        ),
-      ],
-    );
-  }
-
   TextStyle _textStyleSmall = TextStyle(
     fontSize: fontSizeM,
   );
-  TextStyle _textStyleBig =
-      TextStyle(fontSize: fontSizeXXl, fontWeight: FontWeight.bold);
 }
