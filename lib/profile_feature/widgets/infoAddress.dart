@@ -25,23 +25,6 @@ class _InfoAddressState extends State<InfoAddress> {
             style: TextStyle(fontSize: fontSizeM, fontWeight: FontWeight.w600),
           ),
           Text(widget.garage.address.addressDesc),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            height: 140,
-            width: double.infinity,
-            child: FittedBox(
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: 'https://i.stack.imgur.com/chfhv.png',
-                placeholder: (context, url) => CircularProgressIndicator(
-                  color: textColorBlack,
-                ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
-            ),
-          )
         ],
       ),
     );

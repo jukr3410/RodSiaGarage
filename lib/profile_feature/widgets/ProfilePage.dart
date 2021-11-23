@@ -57,6 +57,23 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 20,
                 ),
                 Text(
+                  'วันเวลาเปิด-ปิด:',
+                  style: TextStyle(
+                      fontSize: fontSizeM, fontWeight: FontWeight.w600),
+                ),
+                Text(_showOpenDate()),
+                Text(
+                    '${widget.garage.openingHour!.open.toString()} - ${widget.garage.openingHour!.close.toString()} น.'),
+                SizedBox(
+                  height: 10,
+                ),
+                InfoAddress(
+                  garage: widget.garage,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
                   'รูปภาพเพิ่มเติม:',
                   style: TextStyle(
                       fontSize: fontSizeM, fontWeight: FontWeight.w600),
@@ -68,12 +85,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(
                   height: 10,
                 ),
-                InfoAddress(
-                  garage: widget.garage,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                Align(
+                  child: Column(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: textColorBlack),
+                          child: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              navigatorToEditImages();
+                            },
+                            color: primaryColor,
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text('แก้ไขรูปภาพ')
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -82,7 +113,24 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  String _showOpenDate() {
+    String sun = widget.garage.openingDayOfWeek!.su == true ? 'Sun, ' : '';
+    String mon = widget.garage.openingDayOfWeek!.mo == true ? 'Mon, ' : '';
+    String tue = widget.garage.openingDayOfWeek!.tu == true ? 'Tue, ' : '';
+    String wed = widget.garage.openingDayOfWeek!.we == true ? 'Wed, ' : '';
+    String thu = widget.garage.openingDayOfWeek!.th == true ? 'Thu, ' : '';
+    String fri = widget.garage.openingDayOfWeek!.fr == true ? 'Fri, ' : '';
+    String sat = widget.garage.openingDayOfWeek!.sa == true ? 'Sat, ' : '';
+
+    String opentime = "$sun$mon$tue$wed$thu$fri$sat";
+    return opentime;
+  }
+
   navigatorToMenuPage() {
     Navigator.pushNamed(context, MAIN_ROUTE);
+  }
+
+  navigatorToEditImages() {
+    Navigator.pushNamed(context, EDIR_IMAGES_ROUTE, arguments: widget.garage);
   }
 }

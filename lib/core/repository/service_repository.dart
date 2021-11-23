@@ -11,7 +11,7 @@ class ServiceRepository {
     return _serviceRepository;
   }
 
-  Future<List<Service>> getServiceByGarage(String garageId) async {
+  Future<List<Service>> getServiceByGarage() async {
     return await serviceApi.getServiceByGarage();
   }
 

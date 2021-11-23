@@ -8,6 +8,7 @@ import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiagarage/global_widgets/alertShowChangeStatus.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 import 'package:rodsiagarage/global_widgets/menusSetting.dart';
+import 'package:rodsiagarage/history_feature/widgets/viewbar.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
@@ -62,7 +63,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
 
   List<TabData> _menuBarTest = <TabData>[
     TabData(iconData: Icons.home, title: "หน้าหลัก"),
-    TabData(iconData: Icons.notifications, title: "แจ้งเตือน"),
+    TabData(iconData: Icons.history, title: "การใช้บริการ"),
     TabData(iconData: Icons.format_align_left, title: "เพิ่มเติม"),
   ];
 
@@ -76,7 +77,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   Widget build(BuildContext context) {
     List<Widget> _pageWidget = <Widget>[
       HomePage(),
-      NotifyPage(),
+      ViewBars(garage: widget.garage),
       MenusSetting(garage: widget.garage),
     ];
     return SafeArea(
@@ -97,7 +98,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
                 initialSelection: 0,
                 inactiveIconColor: textColorBlack,
                 circleColor: textColorBlack,
-                textColor: textColorBlack),
+                textColor: Colors.transparent),
           )
           // BottomNavigationBar(
           //   items: _menuBar,

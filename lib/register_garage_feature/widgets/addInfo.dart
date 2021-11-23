@@ -118,14 +118,14 @@ class _AddInfoState extends State<AddInfo> {
                 ])),
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: primaryColor,
+                backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
                   onPressed: () => navigateBackToOtp(),
                 ),
               ),
-              backgroundColor: primaryColor,
+              backgroundColor: Colors.transparent,
               resizeToAvoidBottomInset: false,
               body: Center(
                 child: Column(
@@ -234,7 +234,7 @@ class _AddInfoState extends State<AddInfo> {
                                           border: OutlineInputBorder(
                                               borderRadius: borderRadiusMedium,
                                               borderSide: BorderSide.none),
-                                          hintText: tEmail + " (ไม่จำเป็น)",
+                                          hintText: tEmailThai + " (ไม่จำเป็น)",
                                           hintStyle: TextStyle(
                                               color: textColorBlack,
                                               fontSize: 15),
@@ -373,51 +373,51 @@ class _AddInfoState extends State<AddInfo> {
                                     //     ),
                                     //     validator: MultiValidator([])),
 
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              GFButton(
-                                                  onPressed: () {
-                                                    navigateLocationPicker(
-                                                        context);
-                                                  },
-                                                  text: "แผนที่",
-                                                  icon: Icon(Icons.location_on),
-                                                  shape: GFButtonShape.pills,
-                                                  color: textColorWhite,
-                                                  textColor: textColorBlack),
-                                            ],
-                                          ),
-                                          // Text(
-                                          //   locationResult == null
-                                          //       ? "กดเพื่อเลือกตำแหน่ง"
-                                          //       : "${locationResult!.latLng!.latitude}\n${locationResult!.latLng!.longitude}",
-                                          //   style: const TextStyle(
-                                          //       color: textColorBlack,
-                                          //       fontSize: fontSizeM),
-                                          // ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  address.isEmpty
-                                                      ? "กดเพื่อเลือกตำแหน่ง"
-                                                      : "${address}",
-                                                  style: const TextStyle(
-                                                      color: textColorBlack,
-                                                      fontSize: fontSizeM),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 2),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            GFButton(
+                                                shape: GFButtonShape.pills,
+                                                onPressed: () {
+                                                  navigateLocationPicker(
+                                                      context);
+                                                },
+                                                text: "แผนที่",
+                                                icon: Icon(
+                                                  Icons.location_on,
+                                                  color: textColorBlack,
+                                                ),
+                                                color: textColorWhite,
+                                                textColor: textColorBlack),
+                                          ],
+                                        ),
+                                        // Text(
+                                        //   locationResult == null
+                                        //       ? "กดเพื่อเลือกตำแหน่ง"
+                                        //       : "${locationResult!.latLng!.latitude}\n${locationResult!.latLng!.longitude}",
+                                        //   style: const TextStyle(
+                                        //       color: textColorBlack,
+                                        //       fontSize: fontSizeM),
+                                        // ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: 200,
+                                          child: Text(
+                                              address.isEmpty
+                                                  ? "กดเพื่อเลือกตำแหน่ง"
+                                                  : "${address}",
+                                              style: const TextStyle(
+                                                  color: textColorBlack,
+                                                  fontSize: fontSizeM),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2),
+                                        )
+                                      ],
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -485,22 +485,18 @@ class _AddInfoState extends State<AddInfo> {
                                                   textColor: textColorBlack),
                                             ],
                                           ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  openingTime.isEmpty
-                                                      ? "กดเลือกเวลาเปิด - ปิด"
-                                                      : "${openingTime}",
-                                                  style: const TextStyle(
-                                                      color: textColorBlack,
-                                                      fontSize: fontSizeXl),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 2),
-                                            ),
-                                          )
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                              openingTime.isEmpty
+                                                  ? "กดเลือกเวลาเปิด - ปิด"
+                                                  : "${openingTime}",
+                                              style: const TextStyle(
+                                                  color: textColorBlack,
+                                                  fontSize: fontSizeM),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2)
                                         ],
                                       ),
                                     ),
@@ -508,6 +504,16 @@ class _AddInfoState extends State<AddInfo> {
                                       height: 10,
                                     ),
                                     WeekdaySelector(
+                                      firstDayOfWeek: DateTime.sunday,
+                                      shortWeekdays: [
+                                        'Sun',
+                                        'Mon',
+                                        'Tue',
+                                        'Wed',
+                                        'Thu',
+                                        'Fri',
+                                        'Sat',
+                                      ],
                                       selectedFillColor: textColorBlack,
                                       onChanged: (int day) {
                                         setState(() {
