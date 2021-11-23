@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:rodsiagarage/core/dao/garage_dao.dart';
 import 'package:rodsiagarage/core/models/garage_login.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
@@ -94,5 +96,9 @@ class GarageRepository {
   Future<GarageDB> getGarageToken() async {
     GarageDB result = await garageDao.getGarageToken();
     return result;
+  }
+
+  Future<bool> updateUserImage({required File image}) async {
+    return await garageApi.updateGarageImage(image: image);
   }
 }

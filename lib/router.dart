@@ -163,6 +163,13 @@ class AppRouter {
       case TRACKING_REQUEST_ROUTE:
         return MaterialPageRoute(builder: (_) => TrackingRequestPage());
 
+      case RECAP_DETAIL_REQUREST_ROUTE:
+        RequestService requestService = settings.arguments as RequestService;
+        return MaterialPageRoute(
+            builder: (_) => DetailAndGiveStarPage(
+                  requestService: requestService,
+                ));
+
       case HOMEPAGE_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -173,13 +180,6 @@ class AppRouter {
       case PROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(builder: (_) => ProfilePage(garage: garage));
-
-      case RECAP_DETAIL_REQUREST_ROUTE:
-        RequestService requestService = settings.arguments as RequestService;
-        return MaterialPageRoute(
-            builder: (_) => DetailAndGiveStarPage(
-                  requestService: requestService,
-                ));
 
       case EDITPROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;

@@ -10,6 +10,5 @@ abstract class RequestServiceEvent extends Equatable {
 class RequestServiceInitializeEvent extends RequestServiceEvent {}
 
 class RequestServiceLoad extends RequestServiceEvent {
-  final String garageId;
-  const RequestServiceLoad({required this.garageId});
+  const RequestServiceLoad();
 }

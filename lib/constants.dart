@@ -8,7 +8,7 @@ import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 
 //api base url
 //dev localhost api
-// final baseUrlConstant = "http://localhost:3000/api";
+//final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
 final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
@@ -189,6 +189,15 @@ const tHistory = 'ประวัติ';
 const tSupportCenter = 'ศูนย์ช่วยเหลือ';
 const tLogin = 'เข้าสู่ระบบ';
 
+//Confirm Request
+const waitingForConfirm = "รอยืนยัน";
+const cancelRequestService = "ยกเลิกคำขอ";
+const denyRequestService = "ปฏิเสธ";
+const confirmedRequestService = "ยืนยันแล้ว";
+const prepareRequestService = "กำลังเตรียมของ";
+const drivingRequestService = "กำลังเดินทาง";
+const arrivedRequestService = "ถึงที่หมายแล้ว";
+const completeRequestService = "งานเสร็จแล้ว";
 //Tracking Status
 const trackingStatus = [
   'กำลังเตรียมของ',
