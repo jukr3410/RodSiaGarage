@@ -33,8 +33,8 @@ class GarageApi {
   }
 
   Future<Garage> getGaragePhone() async {
-    GarageDB userToken = await garageDao.getGarageToken();
-    final url = '$baseUrl/garages-phone/${userToken.phone}';
+    GarageDB garageToken = await garageDao.getGarageToken();
+    final url = '$baseUrl/garages-phone/${garageToken.phone}';
     final response = await http.get(Uri.parse(url));
     logger.d('${response.body}');
 

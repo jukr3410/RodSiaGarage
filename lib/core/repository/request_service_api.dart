@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiagarage/constants.dart';
+import 'package:rodsiagarage/core/dao/garage_dao.dart';
+import 'package:rodsiagarage/core/models/garage_model_db.dart';
 import 'package:rodsiagarage/core/models/request_service_add_model.dart';
 import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/repository/request_service_repository.dart';
@@ -17,6 +19,8 @@ class RequestServiceApi {
     'Accept': 'application/json'
   };
 
+  final garageDao = GarageDao();
+
   Future<RequestServiceAdd> getRequestService({required String id}) async {
     final url = '$baseUrl/request-services/$id';
     final response = await http.get(Uri.parse(url));
@@ -30,18 +34,25 @@ class RequestServiceApi {
     return requestService;
   }
 
-  Future<RequestServiceAdd> getNewRequestService(
-      {required String garageId}) async {
-    final url = '$baseUrl/request-services/garage/$garageId';
+  Future<List<RequestService>> getRequestServiceListWithStatus(
+      {required String status}) async {
+    GarageDB garageToken = await garageDao.getGarageToken();
+    List<RequestService> requestServices = [];
+    final url =
+        '$baseUrl/request-services/garage/${garageToken.garage_id}?status=$status';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       logger.e(response);
       throw new Exception('There was a problem ${response.statusCode}');
     }
-    final decodedJson = jsonDecode(response.body);
-    RequestServiceAdd requestService = decodedJson;
-    logger.d(requestService);
-    return requestService;
+
+    final decodedJson = jsonDecode(response.body) as List;
+    requestServices = decodedJson
+        .map((decodedJson) => RequestService.fromJson(decodedJson))
+        .toList();
+
+    logger.d(requestServices);
+    return requestServices;
   }
 
   Future<bool> updateRequestStatus(
