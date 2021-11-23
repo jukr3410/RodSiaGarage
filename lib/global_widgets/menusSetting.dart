@@ -36,15 +36,16 @@ class _MenusSettingState extends State<MenusSetting> {
         return BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             return Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                    Colors.yellow.shade800,
-                    Colors.yellow.shade400,
-                    Colors.yellow.shade50
-                  ])),
+              decoration: BoxDecoration(color: textColorBlack
+                  // gradient: LinearGradient(
+                  //     begin: Alignment.topLeft,
+                  //     end: Alignment.bottomRight,
+                  //     colors: [
+                  //   Colors.black87,
+                  //   Colors.black54,
+                  //   Colors.black45
+                  // ])
+                  ),
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 body: Column(
@@ -66,7 +67,8 @@ class _MenusSettingState extends State<MenusSetting> {
                       width: 130,
                       child: Text(
                         widget.garage.name,
-                        style: TextStyle(fontSize: fontSizeXXl),
+                        style: TextStyle(
+                            fontSize: fontSizeXXl, color: primaryColor),
                         softWrap: true,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

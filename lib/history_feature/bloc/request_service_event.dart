@@ -12,3 +12,8 @@ class RequestServiceInitializeEvent extends RequestServiceEvent {}
 class RequestServiceLoad extends RequestServiceEvent {
   const RequestServiceLoad();
 }
+
+class RequestServiceLoadWithStatus extends RequestServiceEvent {
+  final String status;
+  const RequestServiceLoadWithStatus({required this.status});
+}

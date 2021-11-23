@@ -73,8 +73,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                       children: [
                         Text(
                           'บริการที่ใช้:',
-                          style: TextStyle(
-                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "- " + widget.requestService.service.serviceType.name,
@@ -91,8 +90,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                           'รถที่ใช้บริการ:',
                           softWrap: true,
                           maxLines: 3,
-                          style: TextStyle(
-                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Row(
                           children: [
@@ -104,17 +102,22 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                               width: 5,
                             ),
                             Text(
-                              "- " + widget.requestService.car.model,
+                              widget.requestService.car.model,
                               style: TextStyle(color: Colors.grey.shade600),
                             ),
                             SizedBox(
                               width: 5,
                             ),
                             Text(
-                              "- " + widget.requestService.car.year,
+                              widget.requestService.car.year,
                               style: TextStyle(color: Colors.grey.shade600),
                             ),
                           ],
+                        ),
+                        Text(
+                          "- ป้ายทะเบียน: " +
+                              widget.requestService.car.regisNumber,
+                          style: TextStyle(color: Colors.grey.shade600),
                         ),
                         SizedBox(
                           height: 5,
@@ -123,8 +126,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                           tMoreInfoThai,
                           softWrap: true,
                           maxLines: 3,
-                          style: TextStyle(
-                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "- " + widget.requestService.problemDesc,
@@ -135,8 +137,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                         ),
                         Text(
                           'วันที่-เวลา',
-                          style: TextStyle(
-                              fontSize: fontSizeL, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           DateFormat('yyyy-MMM-dd  HH:MM น.').format(
@@ -147,22 +148,28 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                         SizedBox(
                           height: 5,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'สถานที่: ',
-                              style: TextStyle(
-                                  fontSize: fontSizeL,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '23456 แขวงนู่น เขตนี่',
-                              softWrap: true,
-                              maxLines: 3,
-                              style: TextStyle(color: Colors.grey.shade600),
-                            )
-                          ],
+                        Text(
+                          'ระยะทาง: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '12 กิโลเมตร',
+                          softWrap: true,
+                          maxLines: 3,
+                          style: TextStyle(color: Colors.grey.shade600),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'สถานที่: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '23456 แขวงนู่น เขตนี่',
+                          softWrap: true,
+                          maxLines: 3,
+                          style: TextStyle(color: Colors.grey.shade600),
                         )
                       ],
                     )),

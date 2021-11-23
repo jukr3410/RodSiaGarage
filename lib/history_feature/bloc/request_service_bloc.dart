@@ -31,6 +31,8 @@ class RequestServiceBloc
       yield* _mapRequestServiceLoadToState();
     } else if (event is RequestServiceInitializeEvent) {
       yield RequestServiceInitial();
+    } else if (event is RequestServiceLoadWithStatus) {
+      yield* _mapRequestServiceLoadWithStatusToState(event.status);
     }
   }
 
@@ -38,6 +40,19 @@ class RequestServiceBloc
     try {
       final requestServices =
           await this.requestServiceRepository.getRequestServiceByGarageId();
+      yield RequestServicesLoadSuccess(requestServices: requestServices);
+    } catch (e) {
+      logger.e(e);
+      yield RequestServicesError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapRequestServiceLoadWithStatusToState(
+      String status) async* {
+    try {
+      final requestServices = await this
+          .requestServiceRepository
+          .getRequestServiceListWithStatus(status: status);
       yield RequestServicesLoadSuccess(requestServices: requestServices);
     } catch (e) {
       logger.e(e);

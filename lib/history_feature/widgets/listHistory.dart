@@ -25,7 +25,7 @@ class _ListhistoryState extends State<Listhistory> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoad());
+      ..add(RequestServiceLoadWithStatus(status: 'เสร็จสิ้น'));
     super.initState();
   }
 
@@ -45,18 +45,15 @@ class _ListhistoryState extends State<Listhistory> {
           builder: (context, state) {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
-              for (var i = 0; i < state.requestServices.length; i++) {
-                if (state.requestServices[i].status != 'รอการตอบรับ') {
-                  _reqServices.add(state.requestServices[i]);
-                }
-                _widget = ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: _reqServices.length,
-                    itemBuilder: (context, index) {
-                      return cardNotify(_reqServices[index]);
-                    });
-              }
+              _reqServices.addAll(state.requestServices);
+
+              _widget = ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: _reqServices.length,
+                  itemBuilder: (context, index) {
+                    return cardNotify(_reqServices[index]);
+                  });
             } else if (state is RequestServicesError) {
               _widget = Center(child: Text('ไม่มีประวัติการใข้งาน!'));
             }
@@ -68,7 +65,6 @@ class _ListhistoryState extends State<Listhistory> {
   Widget cardNotify(RequestService requestService) {
     return GestureDetector(
       child: Card(
-        // shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
         elevation: 2,
         margin: new EdgeInsets.symmetric(
             horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
@@ -76,7 +72,6 @@ class _ListhistoryState extends State<Listhistory> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 10,
@@ -90,13 +85,12 @@ class _ListhistoryState extends State<Listhistory> {
               SizedBox(
                 width: 20,
               ),
-              Flexible(
-                  child: Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    requestService.user.name,
+                    requestService.service.name,
                     softWrap: true,
                     maxLines: 1,
                     overflow: TextOverflow.fade,
@@ -106,31 +100,49 @@ class _ListhistoryState extends State<Listhistory> {
                         color: textColorBlack),
                   ),
                   Text(
-                    requestService.service.name,
+                    requestService.user.name,
                     softWrap: true,
                     maxLines: 1,
                     overflow: TextOverflow.fade,
                     style: new TextStyle(
                         fontSize: fontSizeM - 1,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey),
+                        color: textColorBlack),
                   ),
-                  Text(
-                    DateFormat('yyyy-MMM-dd  HH:MM น.').format(
-                        DateTime.parse(requestService.createdAt.toString())),
-                    style:
-                        TextStyle(color: Colors.grey, fontSize: fontSizeM - 2),
+                  Row(
+                    children: [
+                      Text(
+                        DateFormat('dd-MMM-yyyy | HH:MM น.').format(
+                            DateTime.parse(
+                                requestService.createdAt.toString())),
+                        style: TextStyle(
+                            color: textColorBlack, fontSize: fontSizeM - 2),
+                      ),
+                      Text(" ~ "),
+                      Text(
+                        "12 กก.",
+                        style: TextStyle(
+                          color: textColorBlack,
+                          fontSize: fontSizeM - 2,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              )),
+              ),
+
+              // )
             ],
           ),
         ),
       ),
       onTap: () {
-        Navigator.pushNamed(context, HISTORY_INFO_ROUTE,
-            arguments: requestService);
+        _navigatorToHistory(requestService);
       },
     );
+  }
+
+  _navigatorToHistory(RequestService req) {
+    Navigator.pushNamed(context, HISTORY_INFO_ROUTE, arguments: req);
   }
 }
