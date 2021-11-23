@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/profile_feature/widgets/buttonToEditProfile.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 
 class EditImageGarage extends StatefulWidget {
   final Garage garage;
@@ -13,6 +14,8 @@ class EditImageGarage extends StatefulWidget {
 }
 
 class _EditImageGarageState extends State<EditImageGarage> {
+  List<Asset> images = <Asset>[];
+  String _error = 'No Error Dectected';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,7 +54,7 @@ class _EditImageGarageState extends State<EditImageGarage> {
                           child: IconButton(
                             icon: Icon(Icons.add),
                             onPressed: () {
-                              // navigatorToEditImages();
+                              loadAssets();
                             },
                             color: primaryColor,
                           )),
@@ -101,5 +104,42 @@ class _EditImageGarageState extends State<EditImageGarage> {
         ],
       ),
     );
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    String error = 'No Error Detected';
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 10,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(
+          takePhotoIcon: "chat",
+          doneButtonTitle: "Fatto",
+        ),
+        materialOptions: MaterialOptions(
+          statusBarColor: '#808080',
+          actionBarColor: '#38454C',
+          actionBarTitle: "เลือกรูปภาพ",
+          allViewTitle: "รูปทั้งหมด",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#FECE2F",
+        ),
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      _error = error;
+    });
   }
 }

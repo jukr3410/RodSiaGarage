@@ -15,50 +15,59 @@ class InfoProfile extends StatefulWidget {
 class _InfoProfileState extends State<InfoProfile> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-          flex: 4,
-          child: Column(
-            children: [
-              ClipOval(
-                  child: _proFileImage(widget.garage.logoImage.toString())),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      decoration: BoxDecoration(
+          boxShadow: [boxShadow],
+          borderRadius: borderRadiusMedium,
+          color: bgColor),
+      child: Padding(
+        padding: const EdgeInsets.all(defualtPaddingLow),
+        child: Row(
           children: [
-            Text(
-              widget.garage.name,
-              style:
-                  TextStyle(fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
-              softWrap: true,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            Flexible(
+              flex: 4,
+              child: Column(
+                children: [
+                  ClipOval(
+                      child: _proFileImage(widget.garage.logoImage.toString())),
+                ],
+              ),
             ),
-            Row(
+            SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(tPhone + ': '),
                 Text(
-                  widget.garage.phone,
-                )
+                  widget.garage.name,
+                  style: TextStyle(
+                      fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
+                  softWrap: true,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Row(
+                  children: [
+                    Text(tPhone + ': '),
+                    Text(
+                      widget.garage.phone,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(tEmailThai + ': '),
+                    Text(
+                      widget.garage.email,
+                    )
+                  ],
+                ),
               ],
-            ),
-            Row(
-              children: [
-                Text(tEmailThai + ': '),
-                Text(
-                  widget.garage.email,
-                )
-              ],
-            ),
+            )
           ],
-        )
-      ],
+        ),
+      ),
     );
   }
 
@@ -66,7 +75,7 @@ class _InfoProfileState extends State<InfoProfile> {
     if (profileImage == '') {
       return Image.asset(
         tImageAsset('profile-homePage'),
-        width: 120,
+        width: 100,
       );
     } else {
       return CachedNetworkImage(
@@ -76,7 +85,7 @@ class _InfoProfileState extends State<InfoProfile> {
         ),
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
-        width: 120,
+        width: 100,
       );
     }
   }

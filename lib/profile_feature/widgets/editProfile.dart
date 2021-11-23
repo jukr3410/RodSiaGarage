@@ -11,6 +11,7 @@ import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/user_model.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
+import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -105,11 +106,16 @@ class _EditProfileState extends State<EditProfile> {
         resizeToAvoidBottomInset: false,
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
-            if (state is ProfileUpdated) {
-              navigatorToProfilePage(widget.garage);
+            if (state is ProfileUpdated || state is UploadImageSuccess) {
+              _profileBloc.add(ProfileLoadFormPhone());
+            }
+            if (state is GarageLoadSuccess) {
+              navigatorToProfilePage(state.garage);
             }
           },
           builder: (context, state) {
+            imageProfile = widget.garage.logoImage.toString();
+
             return SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -118,34 +124,7 @@ class _EditProfileState extends State<EditProfile> {
                     SizedBox(
                       height: 20,
                     ),
-                    Stack(
-                      children: <Widget>[
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 80,
-                          child: ClipOval(
-                              child: _proFileImage(
-                                  widget.garage.logoImage.toString())),
-                        ),
-                        Positioned(
-                            bottom: 15,
-                            right: 25,
-                            child: Container(
-                              height: 35,
-                              width: 35,
-                              child: FloatingActionButton(
-                                backgroundColor: textColorBlack,
-                                mini: true,
-                                onPressed: getImage,
-                                tooltip: 'Pick Image',
-                                child: new Icon(
-                                  Icons.add_a_photo,
-                                  size: 20,
-                                ),
-                              ),
-                            )),
-                      ],
-                    ),
+                    _showImageProfile(imageProfile),
                     SizedBox(
                       height: 10,
                     ),
@@ -474,6 +453,9 @@ class _EditProfileState extends State<EditProfile> {
       } else {
         widget.garage.openingDayOfWeek = _openingDayOfWeek;
       }
+      if (addImageProfile == true) {
+        _profileBloc.add(UploadImage(image: File(_image!.path)));
+      }
       logger.d(widget.garage.toJson());
       _profileBloc.add(GarageUpdateNoPassword(widget.garage));
     }
@@ -584,6 +566,67 @@ class _EditProfileState extends State<EditProfile> {
         fit: BoxFit.cover,
         height: 120,
         width: 120,
+      );
+    }
+  }
+
+  _showImageProfile(String profileImage) {
+    if (profileImage == '' && addImageProfile == false) {
+      return Stack(
+        children: <Widget>[
+          CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 80,
+            child: ClipOval(child: _proFileImage(profileImage)),
+          ),
+          Positioned(
+              bottom: 15,
+              right: 25,
+              child: Container(
+                height: 35,
+                width: 35,
+                child: FloatingActionButton(
+                  backgroundColor: textColorBlack,
+                  mini: true,
+                  onPressed: getImage,
+                  tooltip: 'Pick Image',
+                  child: new Icon(
+                    Icons.add_a_photo,
+                    size: 20,
+                  ),
+                ),
+              )),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Stack(
+            children: [
+              ClipOval(child: _proFileImage(profileImage)),
+              Positioned(
+                  right: -3,
+                  child: FloatingActionButton(
+                    backgroundColor: redStatus,
+                    mini: true,
+                    onPressed: () {
+                      setState(() {
+                        imageProfile = '';
+                        addImageProfile = false;
+                      });
+                    },
+                    tooltip: 'Pick Image',
+                    child: Icon(Icons.delete),
+                  )),
+            ],
+          ),
+          GFButton(
+            onPressed: getImage,
+            child: Text('เปลี่ยนรูปภาพ'),
+            textStyle: TextStyle(color: textColorBlack, fontSize: fontSizeS),
+            type: GFButtonType.transparent,
+          )
+        ],
       );
     }
   }

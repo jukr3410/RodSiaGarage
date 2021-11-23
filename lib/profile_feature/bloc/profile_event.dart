@@ -51,3 +51,8 @@ class CheckPassword extends ProfileEvent {
   final GarageLogin garageLogin;
   const CheckPassword({required this.garageLogin});
 }
+
+class UploadImage extends ProfileEvent {
+  final File image;
+  const UploadImage({required this.image});
+}

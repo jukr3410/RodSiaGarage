@@ -23,15 +23,16 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-            Colors.yellow.shade800,
-            Colors.yellow.shade400,
-            Colors.yellow.shade50
-          ])),
+      decoration: BoxDecoration(color: bgColor
+          // gradient: LinearGradient(
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight,
+          //     colors: [
+          //   Colors.yellow.shade800,
+          //   Colors.yellow.shade400,
+          //   Colors.yellow.shade50
+          // ])
+          ),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(

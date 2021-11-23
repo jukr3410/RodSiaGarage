@@ -98,7 +98,7 @@ class GarageRepository {
     return result;
   }
 
-  Future<bool> updateUserImage({required File image}) async {
+  Future<bool> updateGarageImage({required File image}) async {
     return await garageApi.updateGarageImage(image: image);
   }
 }

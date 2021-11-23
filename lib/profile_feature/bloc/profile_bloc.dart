@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -32,6 +33,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield* _mapGarageUpdateNoPasswordToState(event.garage);
     } else if (event is GarageUpdatePassword) {
       yield* _mapGarageUpdatePasswordToState(event.garage);
+    } else if (event is UploadImage) {
+      yield* _uploadImageToState(event.image);
     }
   }
 
@@ -96,6 +99,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         yield CheckPasswordSuccesss(status: status);
       } else {
         yield CheckPasswordError(status: status);
+      }
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _uploadImageToState(File image) async* {
+    try {
+      bool status = await this.garageRepository.updateGarageImage(image: image);
+      if (status == true) {
+        yield UploadImageSuccess();
       }
     } catch (e) {
       logger.e(e);

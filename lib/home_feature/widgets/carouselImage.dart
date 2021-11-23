@@ -41,7 +41,7 @@ class CarouselImageState extends State<CarouselImage> {
                   });
                 }),
             itemBuilder: (context, index, realIndex) =>
-                MyImageView(widget.images[index].image)),
+                showImage(widget.images[index].image)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: widget.images.map((url) {
@@ -62,31 +62,20 @@ class CarouselImageState extends State<CarouselImage> {
       ]),
     );
   }
-}
 
-class MyImageView extends StatelessWidget {
-  String imgPath;
-
-  MyImageView(this.imgPath);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget showImage(String imgPath) {
     return Container(
+        decoration: BoxDecoration(borderRadius: borderRadiusLow),
         height: 500,
         width: 300,
-        color: primaryColor,
         margin: EdgeInsets.symmetric(horizontal: 5),
-        child: FittedBox(
-          fit: BoxFit.fill,
-          child: CachedNetworkImage(
-            imageUrl: imgPath,
-            placeholder: (context, url) => CircularProgressIndicator(
-              color: textColorBlack,
-            ),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+        child: CachedNetworkImage(
+          fit: BoxFit.cover,
+          imageUrl: imgPath,
+          placeholder: (context, url) => CircularProgressIndicator(
+            color: textColorBlack,
           ),
-          // Image.asset(imgPath)
-          // Image.network(imgPath),
+          errorWidget: (context, url, error) => Icon(Icons.error),
         ));
   }
 }
