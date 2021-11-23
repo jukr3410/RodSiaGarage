@@ -54,7 +54,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
       decoration: BoxDecoration(
         borderRadius: borderRadiusMedium,
         boxShadow: [boxShadow],
-        color: bgColor,
+        color: cardColor,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
