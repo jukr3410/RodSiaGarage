@@ -77,7 +77,7 @@ class _AddInfoState extends State<AddInfo> {
   String openingTime = '';
   TimeRange? timeRange;
 
-  // We start with all days selected.
+  // start with all days selected.
   final values = List.filled(7, false);
 
   @override
@@ -456,6 +456,9 @@ class _AddInfoState extends State<AddInfo> {
                                     //     }
                                     //   },
                                     // ),
+                                    //
+
+                                    // time pick
                                     Container(
                                       child: Row(
                                         children: [
