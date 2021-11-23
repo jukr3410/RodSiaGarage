@@ -13,7 +13,7 @@ class RequestServiceRepository {
     return _requestServiceRepository;
   }
 
-  Future<RequestServiceAdd> getRequestService({required String id}) async {
+  Future<RequestService> getRequestService({required String id}) async {
     return await requestServiceApi.getRequestService(id: id);
   }
 

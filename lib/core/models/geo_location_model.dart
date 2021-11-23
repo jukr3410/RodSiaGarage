@@ -11,12 +11,12 @@ String geoLocationToJson(GeoLocation data) => json.encode(data.toJson());
 
 class GeoLocation {
   GeoLocation({
-    this.lat,
-    this.long,
+    required this.lat,
+    required this.long,
   });
 
-  String? lat;
-  String? long;
+  String lat;
+  String long;
 
   factory GeoLocation.fromJson(Map<String, dynamic> json) => GeoLocation(
         lat: json["lat"],

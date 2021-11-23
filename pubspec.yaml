@@ -63,6 +63,7 @@ dependencies:
   
 
   slider_button: ^1.0.0
+  slide_to_confirm: ^1.1.0
   fancy_bottom_navigation: ^0.3.3
   carousel_slider: ^4.0.0
   dot_pagination_swiper: ^0.1.1
@@ -133,6 +134,8 @@ flutter:
     - assets/images/icon-serviceOfGarage.png
     - assets/images/icon-supportCenter.png
     - assets/launcher/ic_launcher.png
+    - assets/images/car-repair.png
+    - assets/images/tow-truck.png
     - assets/images/icon-location-requestCard.png
     - assets/images/icon-break.png
     - assets/images/icon-fuel.png

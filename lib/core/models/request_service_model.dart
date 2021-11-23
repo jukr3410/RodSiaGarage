@@ -23,9 +23,9 @@ class RequestService {
       required this.car,
       required this.confirmRequest,
       required this.status,
+      required this.addressUser,
       required this.geoLocationUser,
       required this.geoLocationGarage,
-      required this.addressUser,
       this.image,
       required this.createdAt});
 
@@ -43,18 +43,19 @@ class RequestService {
   DateTime createdAt;
 
   factory RequestService.fromJson(Map<String, dynamic> json) => RequestService(
-      id: json["_id"],
-      problemDesc: json["problemDesc"],
-      user: User.fromJson(json["user"]),
-      service: Service.fromJson(json["service"]),
-      car: Car.fromJson(json["car"]),
-      confirmRequest: json["confirmRequest"],
-      status: json["status"],
-      geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
-      geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
-      image: json["image"],
-      addressUser: json['addressUser'],
-      createdAt: DateTime.parse(json["createdAt"]));
+        id: json["_id"],
+        problemDesc: json["problemDesc"],
+        user: User.fromJson(json["user"]),
+        service: Service.fromJson(json["service"]),
+        car: Car.fromJson(json["car"]),
+        confirmRequest: json["confirmRequest"],
+        status: json["status"],
+        addressUser: json['addressUser'],
+        geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
+        geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
+        image: json["image"],
+        createdAt: DateTime.parse(json["createdAt"]),
+      );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
@@ -64,6 +65,7 @@ class RequestService {
         "car": car.toJson(),
         "confirmRequest": confirmRequest,
         "status": status,
+        "addressUser": addressUser,
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
         "image": image,
