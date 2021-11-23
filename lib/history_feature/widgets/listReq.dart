@@ -24,7 +24,7 @@ class _ListReqState extends State<ListReq> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoad(garageId: widget.garage.id));
+      ..add(RequestServiceLoad());
     super.initState();
   }
 

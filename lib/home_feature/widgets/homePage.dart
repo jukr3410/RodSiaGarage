@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               iconSize: 100,
                               onPressed: () {
-                                navigatorTosupportCenter();
+                                trackingRequestService();
                               }),
                         ),
                         Text(tSupportCenter)
@@ -198,5 +198,10 @@ class _HomePageState extends State<HomePage> {
 
   void navigatorToHistory() {
     Navigator.pushNamed(context, HISTORY_ROUTE);
+  }
+
+  // test navigate
+  void trackingRequestService() {
+    Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE);
   }
 }

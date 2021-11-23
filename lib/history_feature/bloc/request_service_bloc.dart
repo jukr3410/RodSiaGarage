@@ -28,18 +28,16 @@ class RequestServiceBloc
     RequestServiceEvent event,
   ) async* {
     if (event is RequestServiceLoad) {
-      yield* _mapRequestServiceLoadToState(event.garageId);
+      yield* _mapRequestServiceLoadToState();
     } else if (event is RequestServiceInitializeEvent) {
       yield RequestServiceInitial();
     }
   }
 
-  Stream<RequestServiceState> _mapRequestServiceLoadToState(
-      String garageId) async* {
+  Stream<RequestServiceState> _mapRequestServiceLoadToState() async* {
     try {
-      final requestServices = await this
-          .requestServiceRepository
-          .getRequestServiceByGarageId(id: garageId);
+      final requestServices =
+          await this.requestServiceRepository.getRequestServiceByGarageId();
       yield RequestServicesLoadSuccess(requestServices: requestServices);
     } catch (e) {
       logger.e(e);

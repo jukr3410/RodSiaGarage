@@ -69,8 +69,8 @@ class RequestServiceApi {
     return true;
   }
 
-  Future<List<RequestService>> getRequestServiceByGarageId(
-      {required String id}) async {
+  Future<List<RequestService>> getRequestServiceByGarageId() async {
+    GarageDB garageToken = await garageDao.getGarageToken();
     List<RequestService> requestServices = [];
     List<RequestService> requestServicesFormGarageId = [];
 
@@ -105,7 +105,7 @@ class RequestServiceApi {
     }
 
     for (var i = 0; i < requestServices.length; i++) {
-      if (requestServices[i].service.garage.id == id) {
+      if (requestServices[i].service.garage.id == garageToken.garage_id) {
         requestServicesFormGarageId.add(requestServices[i]);
       }
     }
