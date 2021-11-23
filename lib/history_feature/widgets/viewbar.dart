@@ -42,7 +42,7 @@ class _ViewBarsState extends State<ViewBars>
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.only(
-                        bottom: 14, top: 10, right: 20, left: 20),
+                        bottom: 10, top: 10, right: 20, left: 20),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: borderRadiusHight,

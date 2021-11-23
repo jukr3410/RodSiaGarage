@@ -34,6 +34,7 @@ const SETTING_ROUTE = '/setting';
 const NOTIFY_ROUTE = '/notify';
 const EDIT_PASSWOED_ROUTE = '/edit_profile_password';
 const EDIR_IMAGES_ROUTE = '/edit_images';
+const SHOWINFO_DETAILREQ_ROUTE = '/showinfo_detailReq';
 
 // font size
 const fontSizeXXl = 20.0;

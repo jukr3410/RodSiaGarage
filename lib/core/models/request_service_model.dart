@@ -25,6 +25,7 @@ class RequestService {
       required this.status,
       required this.geoLocationUser,
       required this.geoLocationGarage,
+      required this.addressUser,
       this.image,
       required this.createdAt});
 
@@ -33,6 +34,7 @@ class RequestService {
   User user;
   Service service;
   Car car;
+  String addressUser;
   bool confirmRequest;
   String status;
   GeoLocation geoLocationUser;
@@ -51,6 +53,7 @@ class RequestService {
       geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
       geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
       image: json["image"],
+      addressUser: json['addressUser'],
       createdAt: DateTime.parse(json["createdAt"]));
 
   Map<String, dynamic> toJson() => {
@@ -64,6 +67,7 @@ class RequestService {
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
         "image": image,
-        "createdAt": createdAt
+        "createdAt": createdAt,
+        "addressUser": addressUser
       };
 }
