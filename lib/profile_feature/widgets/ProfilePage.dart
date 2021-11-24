@@ -36,13 +36,14 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: textColorBlack),
           title: Align(
             alignment: Alignment.centerRight,
             child: buttonToEditProfile(
               garage: widget.garage,
             ),
           ),
-          backgroundColor: textColorBlack,
+          backgroundColor: primaryColor,
         ),
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(

@@ -38,6 +38,7 @@ class _EditProfileState extends State<EditProfile> {
   String email = '';
   String imageProfile = '';
   bool addImageProfile = false;
+  bool deleteImageProfile = false;
 
   final ImagePicker _picker = ImagePicker();
   Future getImage() async {
@@ -81,6 +82,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    imageProfile = widget.garage.logoImage.toString();
+
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -106,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
         resizeToAvoidBottomInset: false,
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
-            if (state is ProfileUpdated || state is UploadImageSuccess) {
+            if (state is ProfileUpdated) {
               _profileBloc.add(ProfileLoadFormPhone());
             }
             if (state is GarageLoadSuccess) {
@@ -114,8 +117,6 @@ class _EditProfileState extends State<EditProfile> {
             }
           },
           builder: (context, state) {
-            imageProfile = widget.garage.logoImage.toString();
-
             return SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -453,11 +454,9 @@ class _EditProfileState extends State<EditProfile> {
       } else {
         widget.garage.openingDayOfWeek = _openingDayOfWeek;
       }
-      if (addImageProfile == true) {
-        _profileBloc.add(UploadImage(image: File(_image!.path)));
-      }
       logger.d(widget.garage.toJson());
-      _profileBloc.add(GarageUpdateNoPassword(widget.garage));
+      _profileBloc.add(GarageUpdateNoPassword(
+          garage: widget.garage, image: File(_image!.path)));
     }
   }
 
@@ -472,15 +471,6 @@ class _EditProfileState extends State<EditProfile> {
               title: 'คุณต้องใล่ข้อมูล',
             ));
     if (result == 'Ok') {}
-  }
-
-  void _navigateToErrorPassword(BuildContext context) async {
-    final result = await showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => _AlertErrorPinPassword());
-    if (result == 'Ok') {
-      _navigateAndDisplayEdit(context);
-    }
   }
 
   Widget _AlertErrorPinPassword() {
@@ -542,19 +532,20 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   _proFileImage(String profileImage) {
-    if (profileImage == '' && addImageProfile == false) {
+    if (profileImage == '' && addImageProfile == false ||
+        deleteImageProfile == true && addImageProfile == false) {
       return Image.asset(
-        tImageAsset('profile'),
+        tImageAsset('profile-homePage'),
         fit: BoxFit.cover,
-        width: 130,
-        height: 130,
+        width: 120,
+        height: 120,
       );
     } else if (addImageProfile == true) {
       return Image.file(
         File(_image!.path),
         fit: BoxFit.cover,
-        width: 130,
-        height: 130,
+        width: 120,
+        height: 120,
       );
     } else {
       return CachedNetworkImage(
@@ -571,7 +562,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   _showImageProfile(String profileImage) {
-    if (profileImage == '' && addImageProfile == false) {
+    if (deleteImageProfile == true && addImageProfile == false) {
       return Stack(
         children: <Widget>[
           CircleAvatar(
@@ -580,20 +571,22 @@ class _EditProfileState extends State<EditProfile> {
             child: ClipOval(child: _proFileImage(profileImage)),
           ),
           Positioned(
-              bottom: 15,
-              right: 25,
+              bottom: 20,
+              right: 30,
               child: Container(
-                height: 35,
-                width: 35,
-                child: FloatingActionButton(
-                  backgroundColor: textColorBlack,
-                  mini: true,
-                  onPressed: getImage,
-                  tooltip: 'Pick Image',
-                  child: new Icon(
-                    Icons.add_a_photo,
-                    size: 20,
-                  ),
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: textColorBlack),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: new IconButton(
+                      onPressed: getImage,
+                      icon: Icon(
+                        Icons.add_a_photo,
+                        color: bgColor,
+                        size: 15,
+                      )),
                 ),
               )),
         ],
@@ -605,25 +598,31 @@ class _EditProfileState extends State<EditProfile> {
             children: [
               ClipOval(child: _proFileImage(profileImage)),
               Positioned(
-                  right: -3,
-                  child: FloatingActionButton(
-                    backgroundColor: redStatus,
-                    mini: true,
-                    onPressed: () {
-                      setState(() {
-                        imageProfile = '';
-                        addImageProfile = false;
-                      });
-                    },
-                    tooltip: 'Pick Image',
-                    child: Icon(Icons.delete),
+                  right: 10,
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration:
+                        BoxDecoration(shape: BoxShape.circle, color: redStatus),
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            addImageProfile = false;
+                            deleteImageProfile = true;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: bgColor,
+                          size: 15,
+                        )),
                   )),
             ],
           ),
           GFButton(
             onPressed: getImage,
             child: Text('เปลี่ยนรูปภาพ'),
-            textStyle: TextStyle(color: textColorBlack, fontSize: fontSizeS),
+            textStyle: TextStyle(color: textColorBlack, fontSize: fontSizeM),
             type: GFButtonType.transparent,
           )
         ],

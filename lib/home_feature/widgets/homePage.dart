@@ -184,6 +184,8 @@ class _HomePageState extends State<HomePage> {
         ),
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
+        width: 100,
+        height: 100,
       );
     }
   }
