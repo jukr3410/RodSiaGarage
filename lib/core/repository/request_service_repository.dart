@@ -18,9 +18,9 @@ class RequestServiceRepository {
   }
 
   Future<bool> updateRequestStatus(
-      {required RequestServiceAdd requestServiceAdd}) async {
+      {required RequestService requestService}) async {
     return await requestServiceApi.updateRequestStatus(
-        requestServiceAdd: requestServiceAdd);
+        requestService: requestService);
   }
 
   Future<List<RequestService>> getRequestServiceByGarageId() async {

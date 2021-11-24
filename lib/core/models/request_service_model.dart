@@ -62,8 +62,8 @@ class RequestService {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "problemDesc": problemDesc,
-        "user": user.toJson(),
-        "service": service.toJson(),
+        "user": user.id,
+        "service": service.id,
         "car": car.toJson(),
         "confirmRequest": confirmRequest,
         "status": status,

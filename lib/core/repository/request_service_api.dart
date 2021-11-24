@@ -58,9 +58,9 @@ class RequestServiceApi {
   }
 
   Future<bool> updateRequestStatus(
-      {required RequestServiceAdd requestServiceAdd}) async {
-    final url = '$baseUrl/request-services/${requestServiceAdd.id}';
-    final msg = jsonEncode(requestServiceAdd.toJson());
+      {required RequestService requestService}) async {
+    final url = '$baseUrl/request-services/${requestService.id}';
+    final msg = jsonEncode(requestService.toJson());
     final response =
         await http.patch(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
