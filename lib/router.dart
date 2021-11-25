@@ -245,7 +245,13 @@ class AppRouter {
       case SHOWINFO_DETAILREQ_ROUTE:
         RequestService requestService = settings.arguments as RequestService;
         return MaterialPageRoute(
-            builder: (_) => MoreInfoRequestPage(req: requestService));
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RequestServiceBloc(
+                        requestServiceRepository: RequestServiceRepository()),
+                child: MoreInfoRequestPage(
+                  req: requestService,
+                )));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

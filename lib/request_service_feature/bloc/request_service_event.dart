@@ -25,7 +25,27 @@ class UpdateRequestService extends RequestServiceEvent {
 
   @override
   String toString() =>
-      'UpdateRequestService requestService: ${requestService.toJson()}';
+      'UpdateRequestService {requestService: ${requestService.toJson()}}';
+}
+
+class UpdateRequestServiceAccept extends RequestServiceEvent {
+  final RequestService requestService;
+
+  const UpdateRequestServiceAccept({required this.requestService});
+
+  @override
+  String toString() =>
+      'UpdateRequestService {requestService: ${requestService.toJson()}}';
+}
+
+class UpdateRequestServiceCancle extends RequestServiceEvent {
+  final RequestService requestService;
+
+  const UpdateRequestServiceCancle({required this.requestService});
+
+  @override
+  String toString() =>
+      'UpdateRequestService {requestService: ${requestService.toJson()}}';
 }
 
 class UpdateTrackingRequestService extends RequestServiceEvent {

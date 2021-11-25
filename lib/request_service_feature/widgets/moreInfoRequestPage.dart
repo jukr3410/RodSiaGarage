@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
@@ -11,6 +12,8 @@ import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiagarage/global_widgets/buttonAcceptAndDecline.dart';
 import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
 import 'package:rodsiagarage/main.dart';
+import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
+import 'package:rodsiagarage/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class MoreInfoRequestPage extends StatefulWidget {
@@ -33,6 +36,14 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
 
   PolylinePoints polylinePoints = PolylinePoints();
   List<Polyline> polyline = [];
+  late RequestServiceBloc _requestServiceBloc;
+
+  @override
+  void initState() {
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,392 +67,420 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
           centerTitle: true,
           backgroundColor: primaryColor,
         ),
-        body: Stack(
-          children: [
-            GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: currentPosition, zoom: 14.0),
-              myLocationEnabled: true,
-              myLocationButtonEnabled: false,
-              compassEnabled: true,
-              scrollGesturesEnabled: true,
-              mapType: MapType.normal,
-              //myLocationButtonEnabled: false,
-              zoomGesturesEnabled: true,
-              polylines: Set<Polyline>.of(polyline),
-              markers: Set<Marker>.of(markers),
-              onMapCreated: (GoogleMapController controller) {
-                _mapController = controller;
-              },
-            ),
-            // Show current location button
-            SafeArea(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 20.0),
-                  child: ClipOval(
-                    child: Material(
-                      color: primaryColor,
-                      child: InkWell(
-                        splashColor: primaryColor, // inkwell color
-                        child: SizedBox(
-                          width: 56,
-                          height: 56,
-                          child: Icon(Icons.my_location),
-                        ),
-                        onTap: () {
-                          _mapController.animateCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: currentPosition,
-                                zoom: 14.0,
-                              ),
+        body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
+          listener: (context, state) {
+            if (state is UpdatedRequestServiceAccept) {
+              _requestServiceBloc
+                  .add(LoadRequestService(requestServiceId: widget.req.id));
+            }
+            if (state is UpdatedRequestServiceCancle) {
+              navigatorToHomePage();
+            }
+            if (state is RequestServiceLoadSuccess) {
+              navigatorToTrackingPage(state.requestService);
+              logger.d(state.requestService.toJson());
+            }
+          },
+          builder: (context, state) {
+            return Stack(
+              children: [
+                GoogleMap(
+                  initialCameraPosition:
+                      CameraPosition(target: currentPosition, zoom: 14.0),
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  compassEnabled: true,
+                  scrollGesturesEnabled: true,
+                  mapType: MapType.normal,
+                  //myLocationButtonEnabled: false,
+                  zoomGesturesEnabled: true,
+                  polylines: Set<Polyline>.of(polyline),
+                  markers: Set<Marker>.of(markers),
+                  onMapCreated: (GoogleMapController controller) {
+                    _mapController = controller;
+                  },
+                ),
+                // Show current location button
+                SafeArea(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0, top: 20.0),
+                      child: ClipOval(
+                        child: Material(
+                          color: primaryColor,
+                          child: InkWell(
+                            splashColor: primaryColor, // inkwell color
+                            child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: Icon(Icons.my_location),
                             ),
-                          );
-                        },
+                            onTap: () {
+                              _mapController.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: currentPosition,
+                                    zoom: 14.0,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(defualtPaddingLow),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: borderRadiusMedium,
-                        boxShadow: [boxShadow],
-                        color: bgColor,
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: borderRadiusMediumOnlyTop,
-                              color: primaryColor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(defualtPaddingLow),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    flex: 7,
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: Image.asset(
-                                            tImageAsset(widget
-                                                .req.service.serviceType.name),
-                                            width: 27,
-                                          ),
-                                        ),
-                                        Flexible(
-                                          child: RichText(
-                                              overflow: TextOverflow.ellipsis,
-                                              strutStyle: StrutStyle(
-                                                fontSize: 5,
-                                              ),
-                                              text: TextSpan(
-                                                text: widget.req.service.name,
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: fontSizeXl,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'Kanit'),
-                                              )),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(defualtPaddingLow),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: borderRadiusMedium,
+                            boxShadow: [boxShadow],
+                            color: bgColor,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                right: defualtPaddingMedium,
-                                left: defualtPaddingMedium,
-                                top: defualtPaddingLow,
-                                bottom: defualtPaddingLow),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 4,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
+                          child: Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: borderRadiusMediumOnlyTop,
+                                  color: primaryColor,
+                                ),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.all(defualtPaddingLow),
+                                  child: Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.supervised_user_circle,
-                                            color: textColorBlack,
-                                            size: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            widget.req.user.name,
-                                            softWrap: true,
-                                            style: _textStyleSmall,
-                                          ),
-                                        ],
+                                      Flexible(
+                                        flex: 7,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 15),
+                                              child: Image.asset(
+                                                tImageAsset(widget.req.service
+                                                    .serviceType.name),
+                                                width: 27,
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: RichText(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  strutStyle: StrutStyle(
+                                                    fontSize: 5,
+                                                  ),
+                                                  text: TextSpan(
+                                                    text:
+                                                        widget.req.service.name,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: fontSizeXl,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontFamily: 'Kanit'),
+                                                  )),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: defualtPaddingMedium,
+                                    left: defualtPaddingMedium,
+                                    top: defualtPaddingLow,
+                                    bottom: defualtPaddingLow),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Image.asset(
-                                            tImageAsset(widget.req.car.type),
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
                                           Row(
                                             children: [
-                                              Text('รุ่น: '),
-                                              Text(
-                                                widget.req.car.brand,
-                                                softWrap: true,
-                                                style: _textStyleSmall,
+                                              Icon(
+                                                Icons.supervised_user_circle,
+                                                color: textColorBlack,
+                                                size: 20,
                                               ),
                                               SizedBox(
-                                                width: 5,
+                                                width: 10,
                                               ),
                                               Text(
-                                                widget.req.car.model,
-                                                softWrap: true,
-                                                style: _textStyleSmall,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                widget.req.car.year,
-                                                softWrap: true,
-                                                style: _textStyleSmall,
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                widget.req.car.regisNumber,
+                                                widget.req.user.name,
                                                 softWrap: true,
                                                 style: _textStyleSmall,
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            tImageAsset('distance'),
-                                            width: 20,
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                tImageAsset(
+                                                    widget.req.car.type),
+                                                width: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text('รุ่น: '),
+                                                  Text(
+                                                    widget.req.car.brand,
+                                                    softWrap: true,
+                                                    style: _textStyleSmall,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    widget.req.car.model,
+                                                    softWrap: true,
+                                                    style: _textStyleSmall,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    widget.req.car.year,
+                                                    softWrap: true,
+                                                    style: _textStyleSmall,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    widget.req.car.regisNumber,
+                                                    softWrap: true,
+                                                    style: _textStyleSmall,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(
-                                            width: 10,
+                                            height: 5,
                                           ),
-                                          Text(
-                                            '~ 12 กิโลเมตร.',
-                                            softWrap: true,
-                                            style: _textStyleSmall,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            tImageAsset('location2'),
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            width: 200,
-                                            child: Text(
-                                              widget.req.addressUser,
-                                              softWrap: true,
-                                              style: _textStyleSmall,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            tImageAsset('desc'),
-                                            width: 20,
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                tImageAsset('distance'),
+                                                width: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                '~ 12 กิโลเมตร.',
+                                                softWrap: true,
+                                                style: _textStyleSmall,
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(
-                                            width: 10,
+                                            height: 5,
                                           ),
-                                          Container(
-                                            width: 200,
-                                            child: Text(
-                                              widget.req.problemDesc,
-                                              softWrap: true,
-                                              style: _textStyleSmall,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.image,
-                                            color: textColorBlack,
-                                            size: 20,
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                tImageAsset('location2'),
+                                                width: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: 200,
+                                                child: Text(
+                                                  widget.req.addressUser,
+                                                  softWrap: true,
+                                                  style: _textStyleSmall,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(
-                                            width: 10,
+                                            height: 5,
                                           ),
-                                          Container(
-                                              height: 40,
-                                              child: ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  shrinkWrap: true,
-                                                  itemCount:
-                                                      widget.req.images!.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Row(
-                                                      children: [
-                                                        GestureDetector(
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            width: 40,
-                                                            height: 40,
-                                                            fit: BoxFit.cover,
-                                                            imageUrl: widget
-                                                                .req
-                                                                .images![index]
-                                                                .image,
-                                                            placeholder: (context,
-                                                                    url) =>
-                                                                CircularProgressIndicator(
-                                                              color:
-                                                                  textColorBlack,
-                                                            ),
-                                                            errorWidget:
-                                                                (context, url,
-                                                                        error) =>
-                                                                    Icon(Icons
-                                                                        .error),
-                                                          ),
-                                                          onTap: () {
-                                                            _navigateAndDisplayImage(
-                                                                context,
-                                                                widget
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                tImageAsset('desc'),
+                                                width: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: 200,
+                                                child: Text(
+                                                  widget.req.problemDesc,
+                                                  softWrap: true,
+                                                  style: _textStyleSmall,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.image,
+                                                color: textColorBlack,
+                                                size: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                  height: 40,
+                                                  child: ListView.builder(
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      shrinkWrap: true,
+                                                      itemCount: widget
+                                                          .req.images!.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Row(
+                                                          children: [
+                                                            GestureDetector(
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                width: 40,
+                                                                height: 40,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                imageUrl: widget
                                                                     .req
                                                                     .images![
                                                                         index]
-                                                                    .image);
-                                                          },
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5,
-                                                        )
-                                                      ],
-                                                    );
-                                                  })),
+                                                                    .image,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    CircularProgressIndicator(
+                                                                  color:
+                                                                      textColorBlack,
+                                                                ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error),
+                                                              ),
+                                                              onTap: () {
+                                                                _navigateAndDisplayImage(
+                                                                    context,
+                                                                    widget
+                                                                        .req
+                                                                        .images![
+                                                                            index]
+                                                                        .image);
+                                                              },
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            )
+                                                          ],
+                                                        );
+                                                      })),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Column(
-                                  children: [
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: textColorBlack),
-                                        child: IconButton(
-                                          icon: Icon(Icons.call),
-                                          onPressed: () {
-                                            UrlLauncher.launch(
-                                                'tel://${widget.req.user.phone}');
-                                          },
-                                          color: primaryColor,
-                                        )),
-                                    Text(
-                                      'โทรสอบถาม',
-                                      style: TextStyle(fontSize: fontSizeS),
-                                    )
+                                    ),
+                                    Expanded(
+                                        child: Column(
+                                      children: [
+                                        Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: textColorBlack),
+                                            child: IconButton(
+                                              icon: Icon(Icons.call),
+                                              onPressed: () {
+                                                UrlLauncher.launch(
+                                                    'tel://${widget.req.user.phone}');
+                                              },
+                                              color: primaryColor,
+                                            )),
+                                        Text(
+                                          'โทรสอบถาม',
+                                          style: TextStyle(fontSize: fontSizeS),
+                                        )
+                                      ],
+                                    ))
                                   ],
-                                ))
-                              ],
-                            ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: buttonWidthSmall,
-                      height: buttonHeightSmall,
-                      child: TextButton(
-                        onPressed: () {
-                          _navigateAccept(context);
-                        },
-                        child: Text(tOKThai),
-                        style: flatButtonStyle(primaryColor, textColorBlack),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: buttonWidthSmall,
+                          height: buttonHeightSmall,
+                          child: TextButton(
+                            onPressed: () {
+                              _navigateAccept(context);
+                            },
+                            child: Text(tOKThai),
+                            style:
+                                flatButtonStyle(primaryColor, textColorBlack),
+                          ),
+                        ),
+                        GFButton(
+                          onPressed: () {
+                            _navigateCancle(context);
+                          },
+                          text: tDeclineThai,
+                          textColor: textColorBlack,
+                          type: GFButtonType.transparent,
+                        )
+                      ],
                     ),
-                    GFButton(
-                      onPressed: () {
-                        _navigateCancle(context);
-                      },
-                      text: tDeclineThai,
-                      textColor: textColorBlack,
-                      type: GFButtonType.transparent,
-                    )
+                    SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
               ],
-            ),
-          ],
+            );
+          },
         ));
   }
 
@@ -533,7 +572,9 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
             AlertPopupYesNo(title: 'คุณต้องการปฎิเสธใช้ไหม'));
     if (result == 'Ok') {
       widget.req.status = 'ปฏิเสธ';
-      navigatorToHomePage();
+      logger.d(widget.req.id);
+      _requestServiceBloc
+          .add(UpdateRequestServiceCancle(requestService: widget.req));
     }
   }
 
@@ -545,7 +586,9 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
             ));
     if (result == 'Ok') {
       widget.req.status = 'ยืนยันแล้ว';
-      navigatorToTrackingPage();
+      logger.d(widget.req.id);
+      _requestServiceBloc
+          .add(UpdateRequestServiceAccept(requestService: widget.req));
     }
   }
 
@@ -553,8 +596,8 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
     fontSize: fontSizeM,
   );
 
-  navigatorToTrackingPage() {
-    Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE, arguments: widget.req);
+  navigatorToTrackingPage(RequestService req) {
+    Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE, arguments: req);
   }
 
   navigatorToHomePage() {

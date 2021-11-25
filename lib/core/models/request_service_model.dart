@@ -70,8 +70,7 @@ class RequestService {
         "addressUser": addressUser,
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
-        "image": List<ImageGarage>.from(images!.map((x) => x)),
-        "createdAt": createdAt,
-        "addressUser": addressUser
+        "images": List<ImageGarage>.from(images!.map((x) => x)),
+        "createdAt": createdAt.toIso8601String(),
       };
 }

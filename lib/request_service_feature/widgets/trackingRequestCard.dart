@@ -75,53 +75,53 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                       padding: const EdgeInsets.all(defualtPaddingLow),
                       child: Row(
                         children: [
-                          Flexible(
-                            flex: 7,
+                          Expanded(
+                            flex: 8,
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
+                                  padding: const EdgeInsets.symmetric(horizontal: defualtPaddingLow),
                                   child: Image.asset(
                                     tImageAsset(
                                         widget.req.service.serviceType.name),
                                     width: 27,
                                   ),
                                 ),
-                                Flexible(
-                                  child: RichText(
-                                      overflow: TextOverflow.ellipsis,
-                                      strutStyle: StrutStyle(
-                                        fontSize: 5,
-                                      ),
-                                      text: TextSpan(
-                                        text: widget.req.service.name,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: fontSizeXl,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Kanit'),
-                                      )),
-                                )
+                                RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    strutStyle: StrutStyle(
+                                      fontSize: 5,
+                                    ),
+                                    text: TextSpan(
+                                      text: widget.req.service.name,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: fontSizeXl,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Kanit'),
+                                    )),
                               ],
                             ),
                           ),
                           Expanded(
-                            flex: 3,
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: greenStatus,
-                                  maxRadius: 5,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  widget.req.status,
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              ],
+                            flex: 2,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: greenStatus,
+                                    maxRadius: 5,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    widget.req.status,
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -137,7 +137,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 4,
+                          flex: 3,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -170,37 +170,47 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Row(
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text('รุ่น: '),
-                                      Text(
-                                        widget.req.car.brand,
-                                        softWrap: true,
-                                        style: _textStyleSmall,
+                                      Row(
+                                        children: [
+                                          Text(
+                                            widget.req.car.brand,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            widget.req.car.model,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            widget.req.car.year,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        widget.req.car.model,
-                                        softWrap: true,
-                                        style: _textStyleSmall,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        widget.req.car.year,
-                                        softWrap: true,
-                                        style: _textStyleSmall,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        widget.req.car.regisNumber,
-                                        softWrap: true,
-                                        style: _textStyleSmall,
+                                      Row(
+                                        children: [
+                                          Text('ป้ายทะเบียน: '),
+                                          Text(
+                                            widget.req.car.regisNumber,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -238,7 +248,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                     width: 10,
                                   ),
                                   Container(
-                                    width: 200,
+                                    width: 180,
                                     child: Text(
                                       widget.req.addressUser,
                                       softWrap: true,
@@ -262,7 +272,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                     width: 10,
                                   ),
                                   Container(
-                                    width: 200,
+                                    width: 180,
                                     child: Text(
                                       widget.req.problemDesc,
                                       softWrap: true,
@@ -335,26 +345,46 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                           ),
                         ),
                         Expanded(
+                            flex: 1,
                             child: Column(
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: textColorBlack),
-                                child: IconButton(
-                                  icon: Icon(Icons.call),
-                                  onPressed: () {
-                                    UrlLauncher.launch(
-                                        'tel://${widget.req.user.phone}');
-                                  },
-                                  color: primaryColor,
-                                )),
-                            Text(
-                              'โทรสอบถาม',
-                              style: TextStyle(fontSize: fontSizeS),
-                            )
-                          ],
-                        ))
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      tEstimateDuration,
+                                    ),
+                                    Text(
+                                      widget.duration +
+                                          ' - ' +
+                                          (double.parse(widget.duration) + 5)
+                                              .toStringAsFixed(0) +
+                                          " นาที",
+                                      style: _textStyleBig,
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: textColorBlack),
+                                    child: IconButton(
+                                      icon: Icon(Icons.call),
+                                      onPressed: () {
+                                        UrlLauncher.launch(
+                                            'tel://${widget.req.user.phone}');
+                                      },
+                                      color: primaryColor,
+                                    )),
+                                Text(
+                                  'โทรสอบถาม',
+                                  style: TextStyle(fontSize: fontSizeS),
+                                )
+                              ],
+                            ))
                       ],
                     ),
                   ),

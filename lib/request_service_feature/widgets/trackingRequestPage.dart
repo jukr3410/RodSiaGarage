@@ -59,169 +59,163 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
     // destinationPosition = LatLng(
     //     double.parse(widget.requestService.geoLocationGarage.lat),
     //     double.parse(widget.requestService.geoLocationGarage.long));
-    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(LoadRequestService(requestServiceId: '619bf3b24f962e0016ea745a'));
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    currentPosition = LatLng(
+        double.parse(widget.requestService.geoLocationUser.lat),
+        double.parse(widget.requestService.geoLocationUser.long));
+
+    destinationPosition = LatLng(
+        double.parse(widget.requestService.geoLocationGarage.lat),
+        double.parse(widget.requestService.geoLocationGarage.long));
+    latlongs = [];
+    latlongs.add(currentPosition);
+    latlongs.add(destinationPosition);
+
+    // markers = getMarkers(latlongs, customIcon1!);
+    getPolyline(latlongs);
+
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
           title: Text(
-            titleStutus,
+            'สถานะ: ' + widget.requestService.status,
             style: TextStyle(color: textColorBlack),
           )),
       backgroundColor: bgColor,
       body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
         listener: (context, state) {
-          if (state is RequestServiceLoading) {
-            createMarker(context);
-          } else if (state is RequestServiceLoadSuccess) {
-            _requestService = state.requestService;
-            logger.d(_requestService.toJson());
-            setState(() {
-              titleStutus = state.requestService.status;
-            });
+          // if (state is RequestServiceLoading) {
+          //   createMarker(context);
+          // } else if (state is RequestServiceLoadSuccess) {
+          //   _requestService = state.requestService;
+          //   logger.d(_requestService.toJson());
+          //   setState(() {
+          //     titleStutus = state.requestService.status;
+          //   });
 
-            //_distanceMatrix = state.distanceMatrix;
-            currentPosition = LatLng(
-                double.parse(state.requestService.geoLocationGarage.lat),
-                double.parse(state.requestService.geoLocationGarage.long));
+          //   //_distanceMatrix = state.distanceMatrix;
+          //   currentPosition = LatLng(
+          //       double.parse(state.requestService.geoLocationUser.lat),
+          //       double.parse(state.requestService.geoLocationUser.long));
 
-            destinationPosition = LatLng(
-                double.parse(state.requestService.geoLocationUser.lat),
-                double.parse(state.requestService.geoLocationUser.long));
-            latlongs = [];
-            latlongs.add(currentPosition);
-            latlongs.add(destinationPosition);
+          //   destinationPosition = LatLng(
+          //       double.parse(state.requestService.geoLocationGarage.lat),
+          //       double.parse(state.requestService.geoLocationGarage.long));
+          //   latlongs = [];
+          //   latlongs.add(currentPosition);
+          //   latlongs.add(destinationPosition);
 
-            markers = getMarkers(latlongs, customIcon1!);
-            getPolyline(latlongs);
-
-            updateTrackingService();
-          } else if (state is CurrentLocationSuccess) {
-            currentPosition =
-                LatLng(state.position.latitude, state.position.longitude);
-            latlongs = [];
-            latlongs.add(currentPosition);
-            latlongs.add(destinationPosition);
-            markers = getMarkers(latlongs, customIcon1!);
-            getPolyline(latlongs);
-          } else if (state is RequestServiceComleted) {
-            navigateToRequestComplated(_requestService);
-          }
+          //   markers = getMarkers(latlongs, customIcon1!);
+          //   getPolyline(latlongs);
+          // } else if (state is RequestServiceComleted) {
+          //   navigateToRequestComplated(_requestService);
+          // }
         },
         builder: (context, state) {
-          if (state is RequestServiceLoadSuccess ||
-              state is CurrentLocationSuccess) {
-            return Stack(
-              children: <Widget>[
-                GoogleMap(
-                  initialCameraPosition:
-                      CameraPosition(target: currentPosition, zoom: 14.0),
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  compassEnabled: true,
-                  scrollGesturesEnabled: true,
-                  mapType: MapType.normal,
-                  //myLocationButtonEnabled: false,
-                  zoomGesturesEnabled: true,
-                  polylines: Set<Polyline>.of(polyline),
-                  markers: Set<Marker>.of(markers),
-                  onMapCreated: (GoogleMapController controller) {
-                    _mapController = controller;
-                  },
-                ),
-                // Show current location button
-                SafeArea(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 20.0),
-                      child: ClipOval(
-                        child: Material(
-                          color: primaryColor,
-                          child: InkWell(
-                            splashColor: primaryColor, // inkwell color
-                            child: SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: Icon(Icons.my_location),
-                            ),
-                            onTap: () {
-                              _mapController.animateCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: currentPosition,
-                                    zoom: 14.0,
-                                  ),
-                                ),
-                              );
-                            },
+          return Stack(
+            children: <Widget>[
+              GoogleMap(
+                initialCameraPosition:
+                    CameraPosition(target: currentPosition, zoom: 14.0),
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                compassEnabled: true,
+                scrollGesturesEnabled: true,
+                mapType: MapType.normal,
+                //myLocationButtonEnabled: false,
+                zoomGesturesEnabled: true,
+                polylines: Set<Polyline>.of(polyline),
+                markers: Set<Marker>.of(markers),
+                onMapCreated: (GoogleMapController controller) {
+                  _mapController = controller;
+                },
+              ),
+              // Show current location button
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0, top: 20.0),
+                    child: ClipOval(
+                      child: Material(
+                        color: primaryColor,
+                        child: InkWell(
+                          splashColor: primaryColor, // inkwell color
+                          child: SizedBox(
+                            width: 56,
+                            height: 56,
+                            child: Icon(Icons.my_location),
                           ),
+                          onTap: () {
+                            _mapController.animateCamera(
+                              CameraUpdate.newCameraPosition(
+                                CameraPosition(
+                                  target: currentPosition,
+                                  zoom: 14.0,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                SafeArea(
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TrackingRequestCard(
-                              req: _requestService,
-                              duration: "2"
-                              // ((_distanceMatrix
-                              //             .rows[0].elements[0].duration.value /
-                              //         60))
-                              //     .toStringAsFixed(0)
-                              ,
-                              distance: "2"
-                              // (_distanceMatrix
-                              //             .rows[0].elements[0].distance.value ~/
-                              //         1000)
-                              //     .toStringAsFixed(1)
-                              ,
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: ConfirmationSlider(
-                                    onConfirmation: () => changeStatus(),
-                                    width: cardWidthLarge,
-                                    foregroundColor: primaryColor,
-                                    sliderButtonContent: Icon(
-                                      Icons.chevron_right,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              SafeArea(
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TrackingRequestCard(
+                            req: widget.requestService,
+                            duration: "2"
+                            // ((_distanceMatrix
+                            //             .rows[0].elements[0].duration.value /
+                            //         60))
+                            //     .toStringAsFixed(0)
+                            ,
+                            distance: "2"
+                            // (_distanceMatrix
+                            //             .rows[0].elements[0].distance.value ~/
+                            //         1000)
+                            //     .toStringAsFixed(1)
+                            ,
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: ConfirmationSlider(
+                                  onConfirmation: () => changeStatus(),
+                                  width: cardWidthLarge,
+                                  foregroundColor: primaryColor,
+                                  sliderButtonContent: Icon(
+                                    Icons.chevron_right,
+                                    color: textColorBlack,
+                                    size: 40,
+                                  ),
+                                  iconColor: textColorBlack,
+                                  stickToEnd: false,
+                                  text: "เปลี่ยนสถานะเป็น",
+                                  textStyle: TextStyle(
                                       color: textColorBlack,
-                                      size: 40,
-                                    ),
-                                    iconColor: textColorBlack,
-                                    stickToEnd: false,
-                                    text:
-                                        "เปลี่ยนสถานะเป็น ${trackingStatus[trackingStatusIndex + 1]}",
-                                    textStyle: TextStyle(
-                                        color: textColorBlack,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: fontSizeL))),
-                          ],
-                        )))
-              ],
-            );
-          }
-          return Center(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-            child: CircularProgressIndicator(),
-          ));
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: fontSizeL))),
+                        ],
+                      )))
+            ],
+          );
         },
       ),
     );

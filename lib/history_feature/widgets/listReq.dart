@@ -24,7 +24,7 @@ class _ListReqState extends State<ListReq> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoadWithStatus(status: 'รอการตอบรับ'));
+      ..add(RequestServiceLoadWithStatus(status: 'รอยืนยัน'));
     super.initState();
   }
 
@@ -44,7 +44,7 @@ class _ListReqState extends State<ListReq> {
           builder: (context, state) {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
-              _reqServices.addAll(state.requestServices);
+              _reqServices = state.requestServices;
               _widget = ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
@@ -52,8 +52,9 @@ class _ListReqState extends State<ListReq> {
                   itemBuilder: (context, index) {
                     return cardNotify(_reqServices[index]);
                   });
-            } else if (state is RequestServicesError) {
-              _widget = Center(child: Text('ยังไม่มีการขอใข้บริการ!'));
+              if (state.requestServices.isEmpty) {
+                _widget = Center(child: Text('ยังไม่มีการขอใข้บริการ!'));
+              }
             }
             return _widget;
           }),
