@@ -31,7 +31,7 @@ class RequestServiceApi {
     final decodedJson = jsonDecode(response.body);
     logger.d(decodedJson);
     RequestService requestService = RequestService.fromJson(decodedJson);
-    logger.d(requestService);
+    logger.d(requestService.toString());
     return requestService;
   }
 
@@ -60,7 +60,9 @@ class RequestServiceApi {
   Future<bool> updateRequestStatus(
       {required RequestService requestService}) async {
     final url = '$baseUrl/request-services/${requestService.id}';
+
     final msg = jsonEncode(requestService.toJson());
+    logger.d(msg);
     final response =
         await http.patch(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {

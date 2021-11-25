@@ -32,21 +32,25 @@ class RequestServiceBloc
     if (event is RequestServiceInitial) {
       yield RequestServiceInitial();
     } else if (event is LoadRequestService) {
-      yield* _mapLoadRequestServiceToState(event);
+      yield* _mapLoadRequestServiceToState(event.requestServiceId);
     } else if (event is UpdateRequestService) {
-      yield* _mapUpdateRequestServiceToState(event);
+      yield* _mapUpdateRequestServiceToState(event.requestService);
+    } else if (event is UpdateRequestServiceAccept) {
+      yield* _mapUpdateRequestServiceAcceptToState(event.requestService);
+    } else if (event is UpdateRequestServiceCancle) {
+      yield* _mapUpdateRequestServiceCancleToState(event.requestService);
     }
   }
 
   Stream<RequestServiceState> _mapLoadRequestServiceToState(
-      LoadRequestService event) async* {
+      String requestServiceId) async* {
     try {
       yield RequestServiceLoading();
 
       final requestService = await this
           .requestServiceRepository
-          .getRequestService(id: event.requestServiceId);
-      logger.d("GarageConfirm: ${requestService.confirmRequest}");
+          .getRequestService(id: requestServiceId);
+      logger.d("GarageConfirm: ${requestService}");
       yield RequestServiceLoadSuccess(requestService: requestService);
       yield RequestServiceInService();
     } catch (e) {
@@ -55,15 +59,46 @@ class RequestServiceBloc
   }
 
   Stream<RequestServiceState> _mapUpdateRequestServiceToState(
-      UpdateRequestService event) async* {
+      RequestService requestService) async* {
     try {
       yield UpdatingRequestService();
-      final isUpdated = await this
+      await this
           .requestServiceRepository
-          .updateRequestStatus(requestServiceAdd: event.requestServiceAdd);
+          .updateRequestStatus(requestService: requestService);
 
       yield UpdatedRequestService();
     } catch (e) {
+      logger.e(e);
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapUpdateRequestServiceAcceptToState(
+      RequestService requestService) async* {
+    try {
+      yield UpdatingRequestService();
+      await this
+          .requestServiceRepository
+          .updateRequestStatus(requestService: requestService);
+
+      yield UpdatedRequestServiceAccept();
+    } catch (e) {
+      logger.e(e);
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapUpdateRequestServiceCancleToState(
+      RequestService requestService) async* {
+    try {
+      yield UpdatingRequestService();
+      await this
+          .requestServiceRepository
+          .updateRequestStatus(requestService: requestService);
+
+      yield UpdatedRequestServiceCancle();
+    } catch (e) {
+      logger.e(e);
       yield RequestServiceError();
     }
   }

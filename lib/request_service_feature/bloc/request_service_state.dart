@@ -32,6 +32,10 @@ class UpdatingRequestService extends RequestServiceState {}
 
 class UpdatedRequestService extends RequestServiceState {}
 
+class UpdatedRequestServiceAccept extends RequestServiceState {}
+
+class UpdatedRequestServiceCancle extends RequestServiceState {}
+
 class RequestServiceInService extends RequestServiceState {}
 
 class RequestServiceComleted extends RequestServiceState {}

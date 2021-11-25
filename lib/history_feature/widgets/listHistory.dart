@@ -54,8 +54,9 @@ class _ListhistoryState extends State<Listhistory> {
                   itemBuilder: (context, index) {
                     return cardNotify(_reqServices[index]);
                   });
-            } else if (state is RequestServicesError) {
-              _widget = Center(child: Text('ไม่มีประวัติการใข้งาน!'));
+              if (state.requestServices.isEmpty) {
+                _widget = Center(child: Text('ยังไม่มีการให้บริการ!'));
+              }
             }
             return _widget;
           }),
