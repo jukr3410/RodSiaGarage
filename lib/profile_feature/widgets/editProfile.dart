@@ -39,15 +39,17 @@ class _EditProfileState extends State<EditProfile> {
   String imageProfile = '';
   bool addImageProfile = false;
   bool deleteImageProfile = false;
+  Garage _garage = gargeMockup;
 
   final ImagePicker _picker = ImagePicker();
   Future getImage() async {
     final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = photo;
-      addImageProfile = true;
-    });
+    if (photo != null) {
+      setState(() {
+        _image = File(photo.path);
+        addImageProfile = true;
+      });
+    }
   }
 
   OpeningDayOfWeek _openingDayOfWeek = OpeningDayOfWeek(
@@ -71,7 +73,7 @@ class _EditProfileState extends State<EditProfile> {
   // We start with all days selected.
   final values = List.filled(7, false);
 
-  late XFile? _image;
+  File? _image;
 
   @override
   void initState() {
@@ -83,7 +85,8 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     imageProfile = widget.garage.logoImage.toString();
-
+    logger.d(imageProfile);
+    _garage = widget.garage;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -101,9 +104,8 @@ class _EditProfileState extends State<EditProfile> {
           backgroundColor: textColorBlack,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: bgColor),
-            onPressed: () => navigateBack(),
-          ),
+              icon: Icon(Icons.arrow_back_ios, color: bgColor),
+              onPressed: () => navigatorToProfilePage(widget.garage)),
         ),
         backgroundColor: Colors.transparent,
         resizeToAvoidBottomInset: false,
@@ -368,7 +370,8 @@ class _EditProfileState extends State<EditProfile> {
                                     _openingDayOfWeek.su == false &&
                                     _openingDayOfWeek.sa == false &&
                                     _openingDayOfWeek.mo == false &&
-                                    _openingDayOfWeek.fr == false) {
+                                    _openingDayOfWeek.fr == false &&
+                                    deleteImageProfile == false) {
                                   _navigateAndDisplayEditError(context);
                                 } else {
                                   _navigateAndDisplayEdit(context);
@@ -426,22 +429,22 @@ class _EditProfileState extends State<EditProfile> {
             ));
     if (result == 'Ok') {
       if (name != '') {
-        widget.garage.name = name;
+        _garage.name = name;
       }
       if (email != '') {
         widget.garage.email = email;
       }
       if (address != '') {
-        this.widget.garage.address.addressDesc = address;
-        this.widget.garage.address.geoLocation.lat =
+        _garage.address.addressDesc = address;
+        _garage.address.geoLocation.lat =
             this.cameraPosition.target.latitude.toString();
-        this.widget.garage.address.geoLocation.long =
+        _garage.address.geoLocation.long =
             this.cameraPosition.target.longitude.toString();
       }
       if (openingTime != '') {
-        widget.garage.openingHour!.open =
+        _garage.openingHour!.open =
             '${timeRange!.startTime.hour}.${timeRange!.startTime.minute}';
-        widget.garage.openingHour!.close =
+        _garage.openingHour!.close =
             '${timeRange!.endTime.hour}.${timeRange!.endTime.minute}';
       }
       if (_openingDayOfWeek.we == false &&
@@ -452,11 +455,17 @@ class _EditProfileState extends State<EditProfile> {
           _openingDayOfWeek.mo == false &&
           _openingDayOfWeek.fr == false) {
       } else {
-        widget.garage.openingDayOfWeek = _openingDayOfWeek;
+        _garage.openingDayOfWeek = _openingDayOfWeek;
       }
-      logger.d(widget.garage.toJson());
+      if (deleteImageProfile == true) {
+        _garage.logoImage = '';
+      }
+      logger.d(_garage.toJson());
       _profileBloc.add(GarageUpdateNoPassword(
-          garage: widget.garage, image: File(_image!.path)));
+          garage: _garage,
+          image: deleteImageProfile == true || addImageProfile == false
+              ? null
+              : _image!));
     }
   }
 
@@ -562,7 +571,8 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   _showImageProfile(String profileImage) {
-    if (deleteImageProfile == true && addImageProfile == false) {
+    if (profileImage == '' && addImageProfile == false ||
+        deleteImageProfile == true && addImageProfile == false) {
       return Stack(
         children: <Widget>[
           CircleAvatar(

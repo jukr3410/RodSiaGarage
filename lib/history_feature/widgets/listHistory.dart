@@ -45,7 +45,7 @@ class _ListhistoryState extends State<Listhistory> {
           builder: (context, state) {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
-              _reqServices.addAll(state.requestServices);
+              _reqServices = state.requestServices;
 
               _widget = ListView.builder(
                   shrinkWrap: true,

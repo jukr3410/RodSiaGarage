@@ -44,6 +44,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           backgroundColor: primaryColor,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
+              onPressed: () =>
+                  Navigator.of(context).popUntil((route) => route.isFirst)),
         ),
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(

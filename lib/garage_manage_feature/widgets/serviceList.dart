@@ -69,7 +69,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                 child: CircularProgressIndicator(),
               ));
             } else if (state is ServicesLoadSuccess) {
-              _services.addAll(state.services);
+              _services = state.services;
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
             } else if (state is ServicesError && _services.isEmpty) {
               return Center(
@@ -148,16 +148,10 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         tServiceGarage,
         style: TextStyle(color: textColorBlack, fontSize: fontSizeXl),
       ),
-      // leading: IconButton(
-      //   icon: Icon(
-      //     Icons.arrow_back,
-      //     color: iconColorBlack,
-      //   ),
-      //   onPressed: () {
-      //     navigateToMain();
-
-      //   },
-      // ),
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
+          onPressed: () =>
+              Navigator.of(context).popUntil((route) => route.isFirst)),
       actions: [
         // IconButton(
         //   icon: Icon(Icons.add, color: iconColorBlack),
@@ -237,7 +231,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   }
 
   void navigatorToListSerivce() {
-    Navigator.pushNamed(context, SERVICE_LIST_ROUTE,arguments: widget.garage);
+    Navigator.pushNamed(context, SERVICE_LIST_ROUTE, arguments: widget.garage);
   }
 
   Future<void> navigateToAddService(Garage garage) async {
