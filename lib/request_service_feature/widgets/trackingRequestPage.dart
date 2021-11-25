@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/distance_matrix.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
+import 'package:rodsiagarage/core/services/geo_location_service.dart';
 import 'package:rodsiagarage/home/app.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/request_service_feature/bloc/request_service_bloc.dart';
@@ -42,8 +43,11 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
 
   late RequestService _requestService;
   late DistanceMatrix _distanceMatrix;
+  final geoService = GeoLocatorService();
 
   String titleStutus = '';
+
+  int trackingStatusIndex = 0;
 
   @override
   void initState() {
@@ -57,6 +61,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
     //     double.parse(widget.requestService.geoLocationGarage.long));
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
       ..add(LoadRequestService(requestServiceId: '619bf3b24f962e0016ea745a'));
+
     super.initState();
   }
 
@@ -85,16 +90,26 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
 
             //_distanceMatrix = state.distanceMatrix;
             currentPosition = LatLng(
-                double.parse(state.requestService.geoLocationUser.lat),
-                double.parse(state.requestService.geoLocationUser.long));
-
-            destinationPosition = LatLng(
                 double.parse(state.requestService.geoLocationGarage.lat),
                 double.parse(state.requestService.geoLocationGarage.long));
+
+            destinationPosition = LatLng(
+                double.parse(state.requestService.geoLocationUser.lat),
+                double.parse(state.requestService.geoLocationUser.long));
             latlongs = [];
             latlongs.add(currentPosition);
             latlongs.add(destinationPosition);
 
+            markers = getMarkers(latlongs, customIcon1!);
+            getPolyline(latlongs);
+
+            updateTrackingService();
+          } else if (state is CurrentLocationSuccess) {
+            currentPosition =
+                LatLng(state.position.latitude, state.position.longitude);
+            latlongs = [];
+            latlongs.add(currentPosition);
+            latlongs.add(destinationPosition);
             markers = getMarkers(latlongs, customIcon1!);
             getPolyline(latlongs);
           } else if (state is RequestServiceComleted) {
@@ -102,7 +117,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           }
         },
         builder: (context, state) {
-          if (state is RequestServiceInService) {
+          if (state is RequestServiceLoadSuccess ||
+              state is CurrentLocationSuccess) {
             return Stack(
               children: <Widget>[
                 GoogleMap(
@@ -192,7 +208,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                                     ),
                                     iconColor: textColorBlack,
                                     stickToEnd: false,
-                                    text: "เปลี่ยนสถานะเป็น",
+                                    text:
+                                        "เปลี่ยนสถานะเป็น ${trackingStatus[trackingStatusIndex + 1]}",
                                     textStyle: TextStyle(
                                         color: textColorBlack,
                                         fontWeight: FontWeight.bold,
@@ -276,12 +293,48 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
     ));
   }
 
-  navigateToRequestComplated(RequestService? requestService) {
+  void navigateToRequestComplated(RequestService? requestService) {
     Navigator.pushReplacementNamed(context, RECAP_DETAIL_REQUREST_ROUTE,
         arguments: {'requestService': requestService});
   }
 
   void changeStatus() {
-    print('Slider changeStatus!');
+    trackingStatusIndex++;
+    if (trackingStatusIndex <= 3) {
+      logger.d("status changed: ${trackingStatus[trackingStatusIndex]}");
+      if (trackingStatus[trackingStatusIndex] == completeRequestService) {
+        // เรียก bloc
+      } else {
+        setState(() {
+          titleStutus = trackingStatus[trackingStatusIndex];
+          _requestService.status = trackingStatus[trackingStatusIndex];
+        });
+      }
+    }
+  }
+
+  bool _isNotCompleted = true;
+
+  void updateTrackingService() async {
+    while (_isNotCompleted) {
+      await Future.delayed(Duration(milliseconds: 10000));
+
+      final position = await geoService.getLocation();
+      final distanceMatrix = await this.geoService.getDistanceMatrix(
+          startLatitude: position.latitude,
+          startLongitude: position.longitude,
+          endLatitude: double.parse(_requestService.geoLocationUser.lat),
+          endLongitude: double.parse(_requestService.geoLocationUser.long));
+
+      logger.d("position: ${position}");
+
+      _requestService.geoLocationGarage.lat = position.latitude.toString();
+      _requestService.geoLocationGarage.long = position.longitude.toString();
+
+      setState(() {
+        currentPosition = LatLng(position.latitude, position.longitude);
+        _distanceMatrix = distanceMatrix;
+      });
+    }
   }
 }

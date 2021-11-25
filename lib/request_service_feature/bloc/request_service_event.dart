@@ -19,11 +19,23 @@ class LoadRequestService extends RequestServiceEvent {
 }
 
 class UpdateRequestService extends RequestServiceEvent {
-  final RequestServiceAdd requestServiceAdd;
+  final RequestService requestService;
 
-  const UpdateRequestService({required this.requestServiceAdd});
+  const UpdateRequestService({required this.requestService});
 
   @override
   String toString() =>
-      'UpdateRequestService {requestServiceAdd: $requestServiceAdd}';
+      'UpdateRequestService requestService: ${requestService.toJson()}';
 }
+
+class UpdateTrackingRequestService extends RequestServiceEvent {
+  final RequestService requestService;
+
+  const UpdateTrackingRequestService({required this.requestService});
+
+  @override
+  String toString() =>
+      'UpdateTrackingRequestService requestService: ${requestService.toJson()}';
+}
+
+class GetCurrentLocation extends RequestServiceEvent {}

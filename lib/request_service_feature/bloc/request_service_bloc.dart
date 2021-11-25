@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/distance_matrix.dart';
 import 'package:rodsiagarage/core/models/request_service_add_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
@@ -25,6 +27,8 @@ class RequestServiceBloc
   RequestServiceBloc({required this.requestServiceRepository})
       : super(RequestServiceInitial());
 
+  bool _isNotCompleted = true;
+
   @override
   Stream<RequestServiceState> mapEventToState(
     RequestServiceEvent event,
@@ -35,6 +39,8 @@ class RequestServiceBloc
       yield* _mapLoadRequestServiceToState(event);
     } else if (event is UpdateRequestService) {
       yield* _mapUpdateRequestServiceToState(event);
+    } else if (event is GetCurrentLocation) {
+      yield* _mapGetCurrentLocationToState(event);
     }
   }
 
@@ -60,9 +66,66 @@ class RequestServiceBloc
       yield UpdatingRequestService();
       final isUpdated = await this
           .requestServiceRepository
-          .updateRequestStatus(requestServiceAdd: event.requestServiceAdd);
+          .updateRequestStatus(requestService: event.requestService);
 
       yield UpdatedRequestService();
+    } catch (e) {
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapGetCurrentLocationToState(
+      GetCurrentLocation event) async* {
+    try {
+      //yield CurrentLocationLoading();
+      final position = await geoService.getLocation();
+
+      yield CurrentLocationSuccess(position: position);
+    } catch (e) {
+      logger.e(e);
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapUpdateTrackingServiceToState(
+      UpdateTrackingRequestService event) async* {
+    try {
+      yield RequestServiceLoading();
+      while (_isNotCompleted) {
+        await Future.delayed(Duration(milliseconds: 1000));
+
+        // get new location grage
+        final position = await geoService.getLocation();
+
+        final distanceMatrix = await this.geoService.getDistanceMatrix(
+            startLatitude:
+                double.parse(event.requestService.geoLocationUser.lat),
+            startLongitude:
+                double.parse(event.requestService.geoLocationUser.long),
+            endLatitude: position.latitude,
+            endLongitude: position.longitude);
+
+        // set new location garage
+        event.requestService.geoLocationGarage.lat =
+            position.latitude.toString();
+        event.requestService.geoLocationGarage.long =
+            position.longitude.toString();
+
+        final isUpdated = await this
+            .requestServiceRepository
+            .updateRequestStatus(requestService: event.requestService);
+
+        logger.d("GarageConfirm: ${event.requestService.confirmRequest}");
+        yield RequestServiceLoadSuccess(
+            requestService: event.requestService,
+            distanceMatrix: distanceMatrix);
+        if (event.requestService.status != completeRequestService) {
+          yield RequestServiceInService();
+        } else {
+          _isNotCompleted = false;
+          yield RequestServiceComleted();
+        }
+      }
     } catch (e) {
       yield RequestServiceError();
     }

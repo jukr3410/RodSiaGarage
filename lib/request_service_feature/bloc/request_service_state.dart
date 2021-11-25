@@ -35,3 +35,17 @@ class UpdatedRequestService extends RequestServiceState {}
 class RequestServiceInService extends RequestServiceState {}
 
 class RequestServiceComleted extends RequestServiceState {}
+
+class CurrentLocationLoading extends RequestServiceState {}
+
+class CurrentLocationSuccess extends RequestServiceState {
+  final Position position;
+
+  const CurrentLocationSuccess({required this.position});
+
+  @override
+  List<Object> get props => [position];
+
+  @override
+  String toString() => 'CurrentLocationSuccess {position: $position}';
+}
