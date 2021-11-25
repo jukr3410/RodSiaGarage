@@ -211,7 +211,12 @@ class AppRouter {
       case EDIR_IMAGES_ROUTE:
         Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
-            builder: (_) => EditImageGarage(garage: garage));
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(garageRepository: GarageRepository()),
+                child: EditImageGarage(
+                  garage: garage,
+                )));
 
       case SUPPORT_CENTER_ROUTE:
         return MaterialPageRoute(builder: (_) => SupportCenterPage());

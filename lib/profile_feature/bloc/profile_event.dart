@@ -25,8 +25,9 @@ class GarageUpdate extends ProfileEvent {
 
 class GarageUpdateNoPassword extends ProfileEvent {
   final Garage garage;
+  final File? image;
 
-  const GarageUpdateNoPassword(this.garage);
+  const GarageUpdateNoPassword({required this.garage, this.image});
 
   @override
   List<Object> get props => [garage];
@@ -55,4 +56,14 @@ class CheckPassword extends ProfileEvent {
 class UploadImage extends ProfileEvent {
   final File image;
   const UploadImage({required this.image});
+}
+
+class UploadImageProfile extends ProfileEvent {
+  final File image;
+  const UploadImageProfile({required this.image});
+}
+
+class UploadMultiImage extends ProfileEvent {
+  final List<File> images;
+  const UploadMultiImage({required this.images});
 }

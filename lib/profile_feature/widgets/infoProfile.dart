@@ -86,6 +86,7 @@ class _InfoProfileState extends State<InfoProfile> {
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
         width: 100,
+        height: 100,
       );
     }
   }

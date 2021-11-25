@@ -178,23 +178,21 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: TrackingRequestCard(
-                                  requestService: _requestService,
-                                  duration: "2"
-                                  // ((_distanceMatrix
-                                  //             .rows[0].elements[0].duration.value /
-                                  //         60))
-                                  //     .toStringAsFixed(0)
-                                  ,
-                                  distance: "2"
-                                  // (_distanceMatrix
-                                  //             .rows[0].elements[0].distance.value ~/
-                                  //         1000)
-                                  //     .toStringAsFixed(1)
-                                  ,
-                                )),
+                            TrackingRequestCard(
+                              req: _requestService,
+                              duration: "2"
+                              // ((_distanceMatrix
+                              //             .rows[0].elements[0].duration.value /
+                              //         60))
+                              //     .toStringAsFixed(0)
+                              ,
+                              distance: "2"
+                              // (_distanceMatrix
+                              //             .rows[0].elements[0].distance.value ~/
+                              //         1000)
+                              //     .toStringAsFixed(1)
+                              ,
+                            ),
                             Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: ConfirmationSlider(

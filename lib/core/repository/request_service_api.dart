@@ -39,6 +39,7 @@ class RequestServiceApi {
       {required String status}) async {
     GarageDB garageToken = await garageDao.getGarageToken();
     List<RequestService> requestServices = [];
+    logger.d(garageToken.garage_id);
     final url =
         '$baseUrl/request-services/garage/${garageToken.garage_id}?status=$status';
     final response = await http.get(Uri.parse(url));

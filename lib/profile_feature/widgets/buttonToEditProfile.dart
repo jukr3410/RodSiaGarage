@@ -19,7 +19,7 @@ class _buttonToEditProfileState extends State<buttonToEditProfile> {
         },
         child: Text(
           tEdit,
-          style: TextStyle(fontSize: fontSizeL, color: Colors.white),
+          style: TextStyle(fontSize: fontSizeL, color: textColorBlack),
         ));
   }
 

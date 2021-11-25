@@ -30,11 +30,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } else if (event is CheckPassword) {
       yield* _checkPasswordToState(event.garageLogin);
     } else if (event is GarageUpdateNoPassword) {
-      yield* _mapGarageUpdateNoPasswordToState(event.garage);
+      yield* _mapGarageUpdateNoPasswordToState(event.garage, event.image);
     } else if (event is GarageUpdatePassword) {
       yield* _mapGarageUpdatePasswordToState(event.garage);
     } else if (event is UploadImage) {
       yield* _uploadImageToState(event.image);
+    } else if (event is UploadImageProfile) {
+      yield* _uploadImageProfileToState(event.image);
+    } else if (event is UploadMultiImage) {
+      yield* _uploadMultiImageToState(event.images);
     }
   }
 
@@ -69,10 +73,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Stream<ProfileState> _mapGarageUpdateNoPasswordToState(Garage garage) async* {
+  Stream<ProfileState> _mapGarageUpdateNoPasswordToState(
+      Garage garage, File? image) async* {
     try {
       yield ProfileUpdating();
       await this.garageRepository.updateGarageNoPassword(garage: garage);
+      if (image != null) {
+        await this.garageRepository.updateGarageProfile(image: image);
+      }
       yield ProfileUpdated();
     } catch (e) {
       logger.e(e);
@@ -109,6 +117,32 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _uploadImageToState(File image) async* {
     try {
       bool status = await this.garageRepository.updateGarageImage(image: image);
+      if (status == true) {
+        yield UploadImageSuccess();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _uploadImageProfileToState(File image) async* {
+    try {
+      bool status =
+          await this.garageRepository.updateGarageProfile(image: image);
+      if (status == true) {
+        yield UploadImageSuccess();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _uploadMultiImageToState(List<File> images) async* {
+    try {
+      bool status =
+          await this.garageRepository.updateGarageMultiImage(images: images);
       if (status == true) {
         yield UploadImageSuccess();
       }
