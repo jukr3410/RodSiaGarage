@@ -20,32 +20,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late GarageInfoBloc _garageInfoBloc;
 
-  final notifications = FlutterLocalNotificationsPlugin();
-
   @override
   void initState() {
     _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad());
     super.initState();
-
-    //Android Settings
-    //here to parse the app icon that is in the folder : android/app/src/main/res/drawable
-    final settingsAndroid = AndroidInitializationSettings('app_icon');
-
-    //iOS Settings
-    final settingsIOS = IOSInitializationSettings(
-        onDidReceiveLocalNotification: (id, title, body, payload) {
-      return onSelectNotification(payload: payload.toString());
-    });
-
-    notifications.initialize(
-        InitializationSettings(android: settingsAndroid, iOS: settingsIOS),
-        onSelectNotification: onSelectNotification(
-            payload: "test")); //the action when click the notification
-  }
-
-  onSelectNotification({required String payload}) {
-    return Navigator.pushNamed(context, SUPPORT_CENTER_ROUTE);
   }
 
   @override
@@ -176,9 +155,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               iconSize: 100,
                               onPressed: () {
-                                // navigatorTosupportCenter();
-                                showOngoingNotification(notifications,
-                                    title: 'Title', body: 'Body');
+                                navigatorTosupportCenter();
                               }),
                         ),
                         Text(tSupportCenter)
