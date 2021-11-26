@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
@@ -37,21 +38,10 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
             child: Column(
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 60,
-                  child: ClipOval(
-                      child: Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/219/219983.png',
-                    fit: BoxFit.cover,
-                  )
-                      // Image.asset(
-                      //   tImageAsset('profile'),
-                      //   height: 100,
-                      //   width: 100,
-                      //   fit: BoxFit.cover,
-                      // ),
-                      ),
-                ),
+                    backgroundColor: Colors.transparent,
+                    radius: 60,
+                    child:
+                        _proFileImage(widget.requestService.user.profileImage)),
                 Text(
                   widget.requestService.user.name,
                   style: TextStyle(
@@ -195,5 +185,23 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
         ),
       ),
     );
+  }
+
+  _proFileImage(String profileImage) {
+    if (profileImage == '') {
+      return Image.asset(tImageAsset('profile-homePage'),
+          width: 100, height: 100);
+    } else {
+      return CachedNetworkImage(
+        imageUrl: profileImage,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        width: 100,
+        height: 100,
+      );
+    }
   }
 }
