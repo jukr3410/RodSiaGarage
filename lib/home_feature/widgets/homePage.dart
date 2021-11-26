@@ -152,7 +152,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                               iconSize: 100,
                               onPressed: () {
-                                navigatorTosupportCenter();
+                                //navigatorTosupportCenter();
+                                navigatorToRecap();
                               }),
                         ),
                         Text(tSupportCenter)
@@ -165,8 +166,12 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       }
-      return Center(
-        child: CircularProgressIndicator(),
+      return Container(
+        color: textColorWhite,
+        child: Center(
+            child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+        )),
       );
     }, listener: (context, state) {
       return;
@@ -203,6 +208,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   // test navigate
+  void navigatorToRecap() {
+    Navigator.pushNamed(context, RECAP_DETAIL_REQUREST_ROUTE);
+  }
+
   void trackingRequestService() {
     Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE);
   }

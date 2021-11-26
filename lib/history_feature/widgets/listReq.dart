@@ -18,7 +18,9 @@ class _ListReqState extends State<ListReq> {
   late RequestServiceBloc _requestServiceBloc;
   List<RequestService> _reqServices = [];
   Widget _widget = Center(
-    child: CircularProgressIndicator(),
+    child: CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+    ),
   );
 
   @override

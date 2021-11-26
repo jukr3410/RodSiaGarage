@@ -158,7 +158,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                               });
                         }
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(primaryColor),
+                          ),
                         );
                       }),
                   SizedBox(

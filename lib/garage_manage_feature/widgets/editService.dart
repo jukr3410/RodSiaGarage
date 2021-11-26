@@ -159,7 +159,9 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                           });
                     }
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+                      ),
                     );
                   }),
                   SizedBox(

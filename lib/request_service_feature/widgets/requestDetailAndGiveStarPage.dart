@@ -22,6 +22,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: primaryColor,
         title: Container(
           alignment: Alignment.centerRight,
@@ -108,7 +109,9 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                       height: buttonHeightSmall + 5,
                       width: buttonWidthLarge,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          navigateToHome();
+                        },
                         child: Text(tBackToHomePage),
                         style: flatButtonStyle(primaryColor, textColorBlack),
                       ),
@@ -121,5 +124,9 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
         ),
       ),
     );
+  }
+
+  navigateToHome() {
+    Navigator.pushReplacementNamed(context, MAIN_ROUTE);
   }
 }

@@ -55,10 +55,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 )),
           );
         }
-        return Center(
-          child: CircularProgressIndicator(
-            backgroundColor: bgColor,
-          ),
+        return Container(
+          color: textColorWhite,
+          child: Center(
+              child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+          )),
         );
       },
     );
