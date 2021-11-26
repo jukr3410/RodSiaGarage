@@ -40,26 +40,26 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       yield RegisterLoading();
       // test
-      yield RegisterAddNumberSuccess();
+      //yield RegisterAddNumberSuccess();
 
-      // var isPhoneNumberExist = await this
-      //     .garageRepository
-      //     .checkUsedNumberPhone(garage: event.garage);
-      // logger.d("isPhoneNumberExist: $isPhoneNumberExist");
+      var isPhoneNumberExist = await this
+          .garageRepository
+          .checkUsedNumberPhone(garage: event.garage);
+      logger.d("isPhoneNumberExist: $isPhoneNumberExist");
 
-      // if (isPhoneNumberExist == false) {
-      //   var addedNumber =
-      //       await this.garageRepository.addGarage(garage: event.garage);
-      //   logger.d("addedNumber: $addedNumber");
-      //   if (addedNumber == true) {
-      //     yield RegisterAddNumberSuccess();
-      //   } else if (addedNumber == false) {
-      //     yield RegisterError();
-      //   }
-      //   //yield RegisterAddNumberSuccess();
-      // } else if (isPhoneNumberExist == true) {
-      //   yield RegisterAddNumberExist();
-      // }
+      if (isPhoneNumberExist == false) {
+        var addedNumber =
+            await this.garageRepository.addGarage(garage: event.garage);
+        logger.d("addedNumber: $addedNumber");
+        if (addedNumber == true) {
+          yield RegisterAddNumberSuccess();
+        } else if (addedNumber == false) {
+          yield RegisterError();
+        }
+        //yield RegisterAddNumberSuccess();
+      } else if (isPhoneNumberExist == true) {
+        yield RegisterAddNumberExist();
+      }
     } catch (e) {
       logger.e(e);
       yield RegisterError();
@@ -71,15 +71,15 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       yield RegisterLoading();
       // test
-      yield RegisterVerifySuccess();
+      // yield RegisterVerifySuccess();
 
-      // var isSuccess =
-      //     await this.garageRepository.verifyOtpGarage(garage: event.garage);
-      // if (isSuccess == true) {
-      //   yield RegisterVerifySuccess();
-      // } else {
-      //   yield RegisterVerifyFailed();
-      // }
+      var isSuccess =
+          await this.garageRepository.verifyOtpGarage(garage: event.garage);
+      if (isSuccess == true) {
+        yield RegisterVerifySuccess();
+      } else {
+        yield RegisterVerifyFailed();
+      }
     } catch (e) {
       logger.e(e);
       yield RegisterError();
@@ -91,17 +91,17 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       yield RegisterLoading();
       // test
-      yield RegisterSendVerifyOtpSuccess();
+      //yield RegisterSendVerifyOtpSuccess();
 
-      // var isSendOtp = await this
-      //     .garageRepository
-      //     .requestSendOtpGarage(garage: event.garage);
-      // logger.d("RegisterSendOtp: $isSendOtp");
-      // if (isSendOtp == true) {
-      //   yield RegisterSendVerifyOtpSuccess();
-      // } else {
-      //   yield RegisterError();
-      // }
+      var isSendOtp = await this
+          .garageRepository
+          .requestSendOtpGarage(garage: event.garage);
+      logger.d("RegisterSendOtp: $isSendOtp");
+      if (isSendOtp == true) {
+        yield RegisterSendVerifyOtpSuccess();
+      } else {
+        yield RegisterError();
+      }
     } catch (e) {
       logger.e(e);
       yield RegisterError();
