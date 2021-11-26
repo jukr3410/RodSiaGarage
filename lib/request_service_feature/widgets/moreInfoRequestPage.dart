@@ -2,18 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiagarage/constants.dart';
-import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
-import 'package:rodsiagarage/global_widgets/buttonAcceptAndDecline.dart';
-import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
 import 'package:rodsiagarage/main.dart';
-import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/request_service_feature/bloc/request_service_bloc.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class MoreInfoRequestPage extends StatefulWidget {
@@ -83,9 +79,13 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
           listener: (context, state) {
             if (state is UpdatedRequestServiceAccept) {
               logger.d("widget.req: ${widget.req.toJson()}");
+              showTopSnackBar(
+                  context, CustomSnackBar.success(message: "ยืนยันเรียบร้อย"));
               navigatorToTrackingPage(widget.req);
             }
             if (state is UpdatedRequestServiceCancel) {
+              showTopSnackBar(
+                  context, CustomSnackBar.info(message: "ปฏิเสธคำขอ"));
               navigatorToHomePage();
             }
             if (state is RequestServiceLoadSuccess) {}
