@@ -38,10 +38,10 @@ class UpdateRequestServiceAccept extends RequestServiceEvent {
       'UpdateRequestService {requestService: ${requestService.toJson()}}';
 }
 
-class UpdateRequestServiceCancle extends RequestServiceEvent {
+class UpdateRequestServiceCancel extends RequestServiceEvent {
   final RequestService requestService;
 
-  const UpdateRequestServiceCancle({required this.requestService});
+  const UpdateRequestServiceCancel({required this.requestService});
 
   @override
   String toString() =>

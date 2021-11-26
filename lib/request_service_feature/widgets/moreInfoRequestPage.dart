@@ -82,16 +82,13 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
         body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
           listener: (context, state) {
             if (state is UpdatedRequestServiceAccept) {
-              // _requestServiceBloc
-              //     .add(LoadRequestService(requestServiceId: widget.req.id));
+              logger.d("widget.req: ${widget.req.toJson()}");
+              navigatorToTrackingPage(widget.req);
             }
-            if (state is UpdatedRequestServiceCancle) {
+            if (state is UpdatedRequestServiceCancel) {
               navigatorToHomePage();
             }
-            if (state is RequestServiceLoadSuccess) {
-              navigatorToTrackingPage(state.requestService);
-              logger.d(state.requestService.toJson());
-            }
+            if (state is RequestServiceLoadSuccess) {}
             if (state is CurrentLocationAndDistanceSuccess) {
               logger.d(
                   "distance: ${state.distanceMatrix!.rows[0].elements[0].distance.text}");
@@ -317,7 +314,7 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
                                                   width: 10,
                                                 ),
                                                 Text(
-                                                  '~ ' + distance,
+                                                  distance,
                                                   softWrap: true,
                                                   style: _textStyleSmall,
                                                 ),
@@ -513,16 +510,7 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
                                   onPressed: () {
                                     _navigateCancle(context);
                                   },
-                                )
-                                // GFButton(
-                                //   onPressed: () {
-                                //     _navigateCancle(context);
-                                //   },
-                                //   text: tDeclineThai,
-                                //   textColor: textColorBlack,
-                                //   type: GFButtonType.outline,
-                                // )
-                                )
+                                ))
                           ],
                         ),
                       ),
@@ -644,7 +632,7 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
       widget.req.status = 'ปฏิเสธ';
       logger.d(widget.req.id);
       _requestServiceBloc
-          .add(UpdateRequestServiceCancle(requestService: widget.req));
+          .add(UpdateRequestServiceCancel(requestService: widget.req));
     }
   }
 
@@ -671,7 +659,8 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
   }
 
   navigatorToHomePage() {
-    Navigator.pushNamed(context, MAIN_ROUTE);
+    //Navigator.pushNamed(context, MAIN_ROUTE);
+    Navigator.pop(context);
   }
 
   navigateToRequestServiceList() {
