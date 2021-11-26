@@ -58,4 +58,12 @@ class UpdateTrackingRequestService extends RequestServiceEvent {
       'UpdateTrackingRequestService requestService: ${requestService.toJson()}';
 }
 
-class GetCurrentLocation extends RequestServiceEvent {}
+class GetCurrentLocationAndDistance extends RequestServiceEvent {
+  final GeoLocation geoLocationUser;
+
+  const GetCurrentLocationAndDistance({required this.geoLocationUser});
+
+  @override
+  String toString() =>
+      'GetCurrentAndDistanceLocation geoLocationUser: ${geoLocationUser.toJson()}';
+}

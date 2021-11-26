@@ -35,7 +35,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   late LatLng destinationPosition;
 
   List<LatLng> latlongs = [];
-  BitmapDescriptor? customIcon1;
+  BitmapDescriptor customIcon1 = BitmapDescriptor.defaultMarker;
   List<Marker> markers = <Marker>[];
 
   PolylinePoints polylinePoints = PolylinePoints();
@@ -49,37 +49,31 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
 
   int trackingStatusIndex = 0;
 
+  String distance = "0 กม.";
+
   @override
   void initState() {
-    //_requestService = widget.requestService;
-    // currentPosition = LatLng(
-    //     double.parse(widget.requestService.geoLocationUser.lat),
-    //     double.parse(widget.requestService.geoLocationUser.long));
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
+      ..add(GetCurrentLocationAndDistance(
+          geoLocationUser: widget.requestService.geoLocationUser));
+    currentPosition = LatLng(
+        double.parse(widget.requestService.geoLocationGarage.lat),
+        double.parse(widget.requestService.geoLocationGarage.long));
 
-    // destinationPosition = LatLng(
-    //     double.parse(widget.requestService.geoLocationGarage.lat),
-    //     double.parse(widget.requestService.geoLocationGarage.long));
-    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+    destinationPosition = LatLng(
+        double.parse(widget.requestService.geoLocationUser.lat),
+        double.parse(widget.requestService.geoLocationUser.long));
+    latlongs.add(currentPosition);
+    latlongs.add(destinationPosition);
 
+    getMarkers(latlongs, customIcon1);
+    getPolyline(latlongs);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    currentPosition = LatLng(
-        double.parse(widget.requestService.geoLocationUser.lat),
-        double.parse(widget.requestService.geoLocationUser.long));
-
-    destinationPosition = LatLng(
-        double.parse(widget.requestService.geoLocationGarage.lat),
-        double.parse(widget.requestService.geoLocationGarage.long));
-    latlongs = [];
-    latlongs.add(currentPosition);
-    latlongs.add(destinationPosition);
-
-    // markers = getMarkers(latlongs, customIcon1!);
-    getPolyline(latlongs);
-
+    createMarker(context);
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
@@ -118,6 +112,19 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           // } else if (state is RequestServiceComleted) {
           //   navigateToRequestComplated(_requestService);
           // }
+          if (state is CurrentLocationAndDistanceSuccess) {
+            currentPosition =
+                LatLng(state.position.latitude, state.position.longitude);
+            destinationPosition = LatLng(
+                double.parse(widget.requestService.geoLocationUser.lat),
+                double.parse(widget.requestService.geoLocationUser.long));
+            latlongs = [];
+            latlongs.add(currentPosition);
+            latlongs.add(destinationPosition);
+
+            getMarkers(latlongs, customIcon1);
+            getPolyline(latlongs);
+          }
         },
         builder: (context, state) {
           return Stack(
@@ -129,7 +136,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                 myLocationButtonEnabled: false,
                 compassEnabled: true,
                 scrollGesturesEnabled: true,
-                mapType: MapType.normal,
+                mapType: MapType.terrain,
                 //myLocationButtonEnabled: false,
                 zoomGesturesEnabled: true,
                 polylines: Set<Polyline>.of(polyline),
@@ -253,6 +260,9 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
 
       markers.add(marker);
     });
+    setState(() {
+      this.markers = markers;
+    });
     return markers;
   }
 
@@ -309,24 +319,27 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
 
   void updateTrackingService() async {
     while (_isNotCompleted) {
-      await Future.delayed(Duration(milliseconds: 10000));
+      await Future.delayed(Duration(milliseconds: 5000));
 
-      final position = await geoService.getLocation();
-      final distanceMatrix = await this.geoService.getDistanceMatrix(
-          startLatitude: position.latitude,
-          startLongitude: position.longitude,
-          endLatitude: double.parse(_requestService.geoLocationUser.lat),
-          endLongitude: double.parse(_requestService.geoLocationUser.long));
+      // final position = await geoService.getLocation();
+      // final distanceMatrix = await this.geoService.getDistanceMatrix(
+      //     startLatitude: position.latitude,
+      //     startLongitude: position.longitude,
+      //     endLatitude: double.parse(_requestService.geoLocationUser.lat),
+      //     endLongitude: double.parse(_requestService.geoLocationUser.long));
 
-      logger.d("position: ${position}");
+      // logger.d("position: ${position}");
 
-      _requestService.geoLocationGarage.lat = position.latitude.toString();
-      _requestService.geoLocationGarage.long = position.longitude.toString();
+      // _requestService.geoLocationGarage.lat = position.latitude.toString();
+      // _requestService.geoLocationGarage.long = position.longitude.toString();
 
-      setState(() {
-        currentPosition = LatLng(position.latitude, position.longitude);
-        _distanceMatrix = distanceMatrix;
-      });
+      // setState(() {
+      //   currentPosition = LatLng(position.latitude, position.longitude);
+      //   _distanceMatrix = distanceMatrix;
+      // });
+
+      _requestServiceBloc.add(GetCurrentLocationAndDistance(
+          geoLocationUser: widget.requestService.geoLocationUser));
     }
   }
 }

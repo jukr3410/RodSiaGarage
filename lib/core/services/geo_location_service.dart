@@ -38,7 +38,7 @@ class GeoLocatorService {
       required double endLongitude}) async {
     String API_KEY = Secrets.API_KEY;
     final url =
-        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=$startLatitude,$startLongitude&destinations=$endLatitude,$endLongitude&key=$API_KEY';
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=$startLatitude,$startLongitude&destinations=$endLatitude,$endLongitude&key=$API_KEY&language=th';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');

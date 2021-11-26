@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/distance_matrix.dart';
+import 'package:rodsiagarage/core/models/geo_location_model.dart';
 import 'package:rodsiagarage/core/models/request_service_add_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/repository/request_service_api.dart';
@@ -43,6 +44,8 @@ class RequestServiceBloc
       yield* _mapUpdateRequestServiceAcceptToState(event.requestService);
     } else if (event is UpdateRequestServiceCancle) {
       yield* _mapUpdateRequestServiceCancleToState(event.requestService);
+    } else if (event is GetCurrentLocationAndDistance) {
+      yield* _mapGetCurrentLocationAndDistanceToState(event);
     }
   }
 
@@ -107,13 +110,21 @@ class RequestServiceBloc
     }
   }
 
-  Stream<RequestServiceState> _mapGetCurrentLocationToState(
-      GetCurrentLocation event) async* {
+  Stream<RequestServiceState> _mapGetCurrentLocationAndDistanceToState(
+      GetCurrentLocationAndDistance event) async* {
     try {
       //yield CurrentLocationLoading();
       final position = await geoService.getLocation();
+      final distanceMatrix = await this.geoService.getDistanceMatrix(
+          startLatitude: position.latitude,
+          startLongitude: position.longitude,
+          endLatitude: double.parse(event.geoLocationUser.lat),
+          endLongitude: double.parse(event.geoLocationUser.long));
 
-      yield CurrentLocationSuccess(position: position);
+      logger.d("distanceMatrix: ${distanceMatrix.toJson()}");
+
+      yield CurrentLocationAndDistanceSuccess(
+          position: position, distanceMatrix: distanceMatrix);
     } catch (e) {
       logger.e(e);
       yield RequestServiceError();

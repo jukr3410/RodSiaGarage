@@ -42,10 +42,12 @@ class RequestServiceComleted extends RequestServiceState {}
 
 class CurrentLocationLoading extends RequestServiceState {}
 
-class CurrentLocationSuccess extends RequestServiceState {
+class CurrentLocationAndDistanceSuccess extends RequestServiceState {
   final Position position;
+  final DistanceMatrix? distanceMatrix;
 
-  const CurrentLocationSuccess({required this.position});
+  const CurrentLocationAndDistanceSuccess(
+      {required this.position, this.distanceMatrix});
 
   @override
   List<Object> get props => [position];

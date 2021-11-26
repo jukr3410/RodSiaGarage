@@ -31,38 +31,50 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
   late LatLng destinationPosition;
 
   List<LatLng> latlongs = [];
-  BitmapDescriptor? customIcon1;
+  BitmapDescriptor customIcon1 = BitmapDescriptor.defaultMarker;
   List<Marker> markers = <Marker>[];
 
   PolylinePoints polylinePoints = PolylinePoints();
   List<Polyline> polyline = [];
   late RequestServiceBloc _requestServiceBloc;
 
+  String distance = "0 กม.";
+
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+    currentPosition = LatLng(double.parse(widget.req.geoLocationGarage.lat),
+        double.parse(widget.req.geoLocationGarage.long));
 
+    destinationPosition = LatLng(double.parse(widget.req.geoLocationUser.lat),
+        double.parse(widget.req.geoLocationUser.long));
+    latlongs.add(currentPosition);
+    latlongs.add(destinationPosition);
+
+    getMarkers(latlongs, customIcon1);
+    getPolyline(latlongs);
+    _requestServiceBloc.add(GetCurrentLocationAndDistance(
+        geoLocationUser: widget.req.geoLocationUser));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    currentPosition = LatLng(double.parse(widget.req.geoLocationUser.lat),
-        double.parse(widget.req.geoLocationUser.long));
-
-    destinationPosition = LatLng(double.parse(widget.req.geoLocationGarage.lat),
-        double.parse(widget.req.geoLocationGarage.long));
-    latlongs = [];
-    latlongs.add(currentPosition);
-    latlongs.add(destinationPosition);
-
-    // markers = getMarkers(latlongs, customIcon1!);
-    getPolyline(latlongs);
+    createMarker(context);
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: iconColorBlack,
+            ),
+            onPressed: () {
+              navigateToRequestServiceList();
+            },
+          ),
           title: Text(
-            'ข้อมูลขอใช้บริการ',
-            style: TextStyle(color: textColorBlack),
+            'ยืนยันคำขอบริการ',
+            style: TextStyle(color: textColorBlack, fontSize: fontSizeL),
           ),
           centerTitle: true,
           backgroundColor: primaryColor,
@@ -70,8 +82,8 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
         body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
           listener: (context, state) {
             if (state is UpdatedRequestServiceAccept) {
-              _requestServiceBloc
-                  .add(LoadRequestService(requestServiceId: widget.req.id));
+              // _requestServiceBloc
+              //     .add(LoadRequestService(requestServiceId: widget.req.id));
             }
             if (state is UpdatedRequestServiceCancle) {
               navigatorToHomePage();
@@ -80,405 +92,447 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
               navigatorToTrackingPage(state.requestService);
               logger.d(state.requestService.toJson());
             }
+            if (state is CurrentLocationAndDistanceSuccess) {
+              logger.d(
+                  "distance: ${state.distanceMatrix!.rows[0].elements[0].distance.text}");
+              setState(() {
+                distance =
+                    state.distanceMatrix!.rows[0].elements[0].distance.text;
+              });
+            }
           },
           builder: (context, state) {
-            return Stack(
-              children: [
-                GoogleMap(
-                  initialCameraPosition:
-                      CameraPosition(target: currentPosition, zoom: 14.0),
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  compassEnabled: true,
-                  scrollGesturesEnabled: true,
-                  mapType: MapType.normal,
-                  //myLocationButtonEnabled: false,
-                  zoomGesturesEnabled: true,
-                  polylines: Set<Polyline>.of(polyline),
-                  markers: Set<Marker>.of(markers),
-                  onMapCreated: (GoogleMapController controller) {
-                    _mapController = controller;
-                  },
-                ),
-                // Show current location button
-                SafeArea(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 20.0),
-                      child: ClipOval(
-                        child: Material(
-                          color: primaryColor,
-                          child: InkWell(
-                            splashColor: primaryColor, // inkwell color
-                            child: SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: Icon(Icons.my_location),
-                            ),
-                            onTap: () {
-                              _mapController.animateCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: currentPosition,
-                                    zoom: 14.0,
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 24.0),
+              child: Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.45,
+                    width: double.infinity,
+                    child: GoogleMap(
+                      initialCameraPosition:
+                          CameraPosition(target: currentPosition, zoom: 14.0),
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
+                      compassEnabled: true,
+                      scrollGesturesEnabled: true,
+                      mapType: MapType.terrain,
+                      //myLocationButtonEnabled: false,
+                      zoomGesturesEnabled: true,
+                      polylines: Set<Polyline>.of(polyline),
+                      markers: Set<Marker>.of(markers),
+                      onMapCreated: (GoogleMapController controller) {
+                        _mapController = controller;
+                      },
+                    ),
+                  ),
+                  // Show current location button
+                  SafeArea(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: ClipOval(
+                          child: Material(
+                            color: primaryColor,
+                            child: InkWell(
+                              splashColor: primaryColor, // inkwell color
+                              child: SizedBox(
+                                width: 56,
+                                height: 56,
+                                child: Icon(Icons.my_location),
+                              ),
+                              onTap: () {
+                                _mapController.animateCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: currentPosition,
+                                      zoom: 14.0,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(defualtPaddingLow),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: borderRadiusMedium,
-                            boxShadow: [boxShadow],
-                            color: bgColor,
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: borderRadiusMediumOnlyTop,
-                                  color: primaryColor,
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(defualtPaddingLow),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: borderRadiusMedium,
+                              boxShadow: [boxShadow],
+                              color: bgColor,
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: borderRadiusMediumOnlyTop,
+                                    color: primaryColor,
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.all(defualtPaddingLow),
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          flex: 7,
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15),
+                                                child: Image.asset(
+                                                  tImageAsset(widget.req.service
+                                                      .serviceType.name),
+                                                  width: 27,
+                                                ),
+                                              ),
+                                              Flexible(
+                                                child: RichText(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    strutStyle: StrutStyle(
+                                                      fontSize: 5,
+                                                    ),
+                                                    text: TextSpan(
+                                                      text: widget
+                                                          .req.service.name,
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: fontSizeXl,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily: 'Kanit'),
+                                                    )),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.all(defualtPaddingLow),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: defualtPaddingMedium,
+                                      left: defualtPaddingMedium,
+                                      top: defualtPaddingLow,
+                                      bottom: defualtPaddingLow),
                                   child: Row(
                                     children: [
-                                      Flexible(
-                                        flex: 7,
-                                        child: Row(
+                                      Expanded(
+                                        flex: 4,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 15),
-                                              child: Image.asset(
-                                                tImageAsset(widget.req.service
-                                                    .serviceType.name),
-                                                width: 27,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.supervised_user_circle,
+                                                  color: textColorBlack,
+                                                  size: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  widget.req.user.name,
+                                                  softWrap: true,
+                                                  style: _textStyleSmall,
+                                                ),
+                                              ],
                                             ),
-                                            Flexible(
-                                              child: RichText(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  strutStyle: StrutStyle(
-                                                    fontSize: 5,
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  tImageAsset(
+                                                      widget.req.car.type),
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('รุ่น: '),
+                                                    Text(
+                                                      widget.req.car.brand,
+                                                      softWrap: true,
+                                                      style: _textStyleSmall,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      widget.req.car.model,
+                                                      softWrap: true,
+                                                      style: _textStyleSmall,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      widget.req.car.year,
+                                                      softWrap: true,
+                                                      style: _textStyleSmall,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    Text(
+                                                      widget
+                                                          .req.car.regisNumber,
+                                                      softWrap: true,
+                                                      style: _textStyleSmall,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  tImageAsset('distance'),
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  '~ ' + distance,
+                                                  softWrap: true,
+                                                  style: _textStyleSmall,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  tImageAsset('location2'),
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  width: 200,
+                                                  child: Text(
+                                                    widget.req.addressUser,
+                                                    softWrap: true,
+                                                    style: _textStyleSmall,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
-                                                  text: TextSpan(
-                                                    text:
-                                                        widget.req.service.name,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: fontSizeXl,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily: 'Kanit'),
-                                                  )),
-                                            )
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  tImageAsset('desc'),
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  width: 200,
+                                                  child: Text(
+                                                    widget.req.problemDesc,
+                                                    softWrap: true,
+                                                    style: _textStyleSmall,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.image,
+                                                  color: textColorBlack,
+                                                  size: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                    height: 40,
+                                                    child: ListView.builder(
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        shrinkWrap: true,
+                                                        itemCount: widget
+                                                            .req.images!.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Row(
+                                                            children: [
+                                                              GestureDetector(
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  width: 40,
+                                                                  height: 40,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  imageUrl: widget
+                                                                      .req
+                                                                      .images![
+                                                                          index]
+                                                                      .image,
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      CircularProgressIndicator(
+                                                                    color:
+                                                                        textColorBlack,
+                                                                  ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error),
+                                                                ),
+                                                                onTap: () {
+                                                                  _navigateAndDisplayImage(
+                                                                      context,
+                                                                      widget
+                                                                          .req
+                                                                          .images![
+                                                                              index]
+                                                                          .image);
+                                                                },
+                                                              ),
+                                                              SizedBox(
+                                                                width: 5,
+                                                              )
+                                                            ],
+                                                          );
+                                                        })),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
                                           ],
                                         ),
                                       ),
+                                      Expanded(
+                                          child: Column(
+                                        children: [
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: textColorBlack),
+                                              child: IconButton(
+                                                icon: Icon(Icons.call),
+                                                onPressed: () {
+                                                  UrlLauncher.launch(
+                                                      'tel://${widget.req.user.phone}');
+                                                },
+                                                color: primaryColor,
+                                              )),
+                                          Text(
+                                            'โทรสอบถาม',
+                                            style:
+                                                TextStyle(fontSize: fontSizeS),
+                                          )
+                                        ],
+                                      ))
                                     ],
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: defualtPaddingMedium,
-                                    left: defualtPaddingMedium,
-                                    top: defualtPaddingLow,
-                                    bottom: defualtPaddingLow),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 4,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.supervised_user_circle,
-                                                color: textColorBlack,
-                                                size: 20,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                widget.req.user.name,
-                                                softWrap: true,
-                                                style: _textStyleSmall,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                tImageAsset(
-                                                    widget.req.car.type),
-                                                width: 20,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text('รุ่น: '),
-                                                  Text(
-                                                    widget.req.car.brand,
-                                                    softWrap: true,
-                                                    style: _textStyleSmall,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    widget.req.car.model,
-                                                    softWrap: true,
-                                                    style: _textStyleSmall,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    widget.req.car.year,
-                                                    softWrap: true,
-                                                    style: _textStyleSmall,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    widget.req.car.regisNumber,
-                                                    softWrap: true,
-                                                    style: _textStyleSmall,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                tImageAsset('distance'),
-                                                width: 20,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                '~ 12 กิโลเมตร.',
-                                                softWrap: true,
-                                                style: _textStyleSmall,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                tImageAsset('location2'),
-                                                width: 20,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Container(
-                                                width: 200,
-                                                child: Text(
-                                                  widget.req.addressUser,
-                                                  softWrap: true,
-                                                  style: _textStyleSmall,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                tImageAsset('desc'),
-                                                width: 20,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Container(
-                                                width: 200,
-                                                child: Text(
-                                                  widget.req.problemDesc,
-                                                  softWrap: true,
-                                                  style: _textStyleSmall,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.image,
-                                                color: textColorBlack,
-                                                size: 20,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Container(
-                                                  height: 40,
-                                                  child: ListView.builder(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      shrinkWrap: true,
-                                                      itemCount: widget
-                                                          .req.images!.length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return Row(
-                                                          children: [
-                                                            GestureDetector(
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                width: 40,
-                                                                height: 40,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                imageUrl: widget
-                                                                    .req
-                                                                    .images![
-                                                                        index]
-                                                                    .image,
-                                                                placeholder: (context,
-                                                                        url) =>
-                                                                    CircularProgressIndicator(
-                                                                  color:
-                                                                      textColorBlack,
-                                                                ),
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) =>
-                                                                    Icon(Icons
-                                                                        .error),
-                                                              ),
-                                                              onTap: () {
-                                                                _navigateAndDisplayImage(
-                                                                    context,
-                                                                    widget
-                                                                        .req
-                                                                        .images![
-                                                                            index]
-                                                                        .image);
-                                                              },
-                                                            ),
-                                                            SizedBox(
-                                                              width: 5,
-                                                            )
-                                                          ],
-                                                        );
-                                                      })),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                        child: Column(
-                                      children: [
-                                        Container(
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: textColorBlack),
-                                            child: IconButton(
-                                              icon: Icon(Icons.call),
-                                              onPressed: () {
-                                                UrlLauncher.launch(
-                                                    'tel://${widget.req.user.phone}');
-                                              },
-                                              color: primaryColor,
-                                            )),
-                                        Text(
-                                          'โทรสอบถาม',
-                                          style: TextStyle(fontSize: fontSizeS),
-                                        )
-                                      ],
-                                    ))
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: buttonWidthSmall,
-                          height: buttonHeightSmall,
-                          child: TextButton(
-                            onPressed: () {
-                              _navigateAccept(context);
-                            },
-                            child: Text(tOKThai),
-                            style:
-                                flatButtonStyle(primaryColor, textColorBlack),
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                                flex: 45,
+                                child: Container(
+                                  width: buttonWidthSmall,
+                                  height: buttonHeightSmall,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      _navigateAccept(context);
+                                    },
+                                    child: Text(tOKThai),
+                                    style: flatButtonStyle(
+                                        primaryColor, textColorBlack),
+                                  ),
+                                )),
+                            Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                width: 2,
+                              ),
+                            ),
+                            Expanded(
+                                flex: 45,
+                                child: TextButton(
+                                  child: Text(tDeclineThai),
+                                  style: TextButton.styleFrom(
+                                    primary: textColorBlack,
+                                    side: BorderSide(
+                                        color: Colors.black26, width: 1),
+                                  ),
+                                  onPressed: () {
+                                    _navigateCancle(context);
+                                  },
+                                )
+                                // GFButton(
+                                //   onPressed: () {
+                                //     _navigateCancle(context);
+                                //   },
+                                //   text: tDeclineThai,
+                                //   textColor: textColorBlack,
+                                //   type: GFButtonType.outline,
+                                // )
+                                )
+                          ],
                         ),
-                        GFButton(
-                          onPressed: () {
-                            _navigateCancle(context);
-                          },
-                          text: tDeclineThai,
-                          textColor: textColorBlack,
-                          type: GFButtonType.transparent,
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             );
           },
         ));
@@ -508,6 +562,18 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
     );
   }
 
+  createMarker(context) {
+    ImageConfiguration configuration = createLocalImageConfiguration(context);
+
+    BitmapDescriptor.fromAssetImage(
+            configuration, 'assets/images/car-repair.png')
+        .then((icon) {
+      setState(() {
+        customIcon1 = icon;
+      });
+    });
+  }
+
   List<Marker> getMarkers(List<LatLng> latlongs, BitmapDescriptor icon) {
     var markers = <Marker>[];
     BitmapDescriptor setIcon = BitmapDescriptor.defaultMarker;
@@ -520,11 +586,14 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
       Marker marker = Marker(
           markerId: MarkerId(latlong.toString()),
           draggable: false,
-          icon: setIcon,
+          icon: BitmapDescriptor.defaultMarker,
           onTap: () {},
           position: latlong);
 
       markers.add(marker);
+    });
+    setState(() {
+      this.markers = markers;
     });
     return markers;
   }
@@ -556,6 +625,7 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
       width: 5,
       color: textColorBlack,
     ));
+    setState(() {});
   }
 
   void _navigateAndDisplayImage(BuildContext context, String image) async {
@@ -602,5 +672,9 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
 
   navigatorToHomePage() {
     Navigator.pushNamed(context, MAIN_ROUTE);
+  }
+
+  navigateToRequestServiceList() {
+    Navigator.pop(context);
   }
 }
