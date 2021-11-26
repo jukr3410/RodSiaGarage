@@ -587,7 +587,7 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
   }
 
   void getPolyline(List<LatLng> latlongs) async {
-    //var polyline = <Polyline>[];
+    var polyline = <Polyline>[];
 
     List<LatLng> polylineCoordinates = [];
 
@@ -613,7 +613,9 @@ class _MoreInfoRequestPageState extends State<MoreInfoRequestPage> {
       width: 5,
       color: textColorBlack,
     ));
-    setState(() {});
+    setState(() {
+      this.polyline = polyline;
+    });
   }
 
   void _navigateAndDisplayImage(BuildContext context, String image) async {

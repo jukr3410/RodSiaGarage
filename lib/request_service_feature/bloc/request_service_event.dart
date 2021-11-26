@@ -67,3 +67,13 @@ class GetCurrentLocationAndDistance extends RequestServiceEvent {
   String toString() =>
       'GetCurrentAndDistanceLocation geoLocationUser: ${geoLocationUser.toJson()}';
 }
+
+class UpdateRequestServiceComplete extends RequestServiceEvent {
+  final RequestService requestService;
+
+  const UpdateRequestServiceComplete({required this.requestService});
+
+  @override
+  String toString() =>
+      'UpdateRequestService {requestService: ${requestService.toJson()}}';
+}

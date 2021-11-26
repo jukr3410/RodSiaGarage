@@ -76,11 +76,12 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 8,
+                            flex: 100,
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: defualtPaddingLow),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: defualtPaddingLow),
                                   child: Image.asset(
                                     tImageAsset(
                                         widget.req.service.serviceType.name),
@@ -103,27 +104,27 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                               ],
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: greenStatus,
-                                    maxRadius: 5,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    widget.req.status,
-                                    style: TextStyle(fontSize: 12),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Expanded(
+                          //   flex: 2,
+                          //   child: Align(
+                          //     alignment: Alignment.centerRight,
+                          //     child: Row(
+                          //       children: [
+                          //         CircleAvatar(
+                          //           backgroundColor: greenStatus,
+                          //           maxRadius: 5,
+                          //         ),
+                          //         SizedBox(
+                          //           width: 5,
+                          //         ),
+                          //         Text(
+                          //           widget.req.status,
+                          //           style: TextStyle(fontSize: 12),
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -229,7 +230,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                     width: 10,
                                   ),
                                   Text(
-                                    '~ 12 กิโลเมตร.',
+                                    widget.distance,
                                     softWrap: true,
                                     style: _textStyleSmall,
                                   ),

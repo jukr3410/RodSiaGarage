@@ -44,6 +44,8 @@ class RequestServiceBloc
       yield* _mapUpdateRequestServiceAcceptToState(event.requestService);
     } else if (event is UpdateRequestServiceCancel) {
       yield* _mapUpdateRequestServiceCancelToState(event.requestService);
+    } else if (event is UpdateRequestServiceComplete) {
+      yield* _mapUpdateRequestServiceCompleteToState(event.requestService);
     } else if (event is GetCurrentLocationAndDistance) {
       yield* _mapGetCurrentLocationAndDistanceToState(event);
     }
@@ -104,6 +106,21 @@ class RequestServiceBloc
           .updateRequestStatus(requestService: requestService);
 
       yield UpdatedRequestServiceCancel();
+    } catch (e) {
+      logger.e(e);
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapUpdateRequestServiceCompleteToState(
+      RequestService requestService) async* {
+    try {
+      yield UpdatingRequestService();
+      await this
+          .requestServiceRepository
+          .updateRequestStatus(requestService: requestService);
+
+      yield RequestServiceComleted();
     } catch (e) {
       logger.e(e);
       yield RequestServiceError();

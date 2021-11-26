@@ -18,6 +18,8 @@ import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/trackingRequestCard.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
+import 'dart:async';
+
 class TrackingRequestPage extends StatefulWidget {
   RequestService requestService;
   TrackingRequestPage({Key? key, required this.requestService})
@@ -41,21 +43,22 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   PolylinePoints polylinePoints = PolylinePoints();
   List<Polyline> polyline = [];
 
-  late RequestService _requestService;
-  late DistanceMatrix _distanceMatrix;
-  final geoService = GeoLocatorService();
+  //late RequestService _requestService;
+  //late DistanceMatrix _distanceMatrix;
+  //final geoService = GeoLocatorService();
 
   String titleStutus = '';
-
   int trackingStatusIndex = 0;
-
   String distance = "0 กม.";
+  int duration = 0;
 
   @override
   void initState() {
-    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(GetCurrentLocationAndDistance(
-          geoLocationUser: widget.requestService.geoLocationUser));
+    widget.requestService.status = trackingStatus[trackingStatusIndex];
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+    // ..add(GetCurrentLocationAndDistance(
+    //     geoLocationUser: widget.requestService.geoLocationUser));
+
     currentPosition = LatLng(
         double.parse(widget.requestService.geoLocationGarage.lat),
         double.parse(widget.requestService.geoLocationGarage.long));
@@ -68,6 +71,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
 
     getMarkers(latlongs, customIcon1);
     getPolyline(latlongs);
+
+    updateTrackingService();
     super.initState();
   }
 
@@ -79,40 +84,21 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           centerTitle: true,
           backgroundColor: primaryColor,
           automaticallyImplyLeading: false,
-          title: Text(
-            'สถานะ: ' + widget.requestService.status,
-            style: TextStyle(color: textColorBlack),
+          title: Container(
+            child: Text(
+              'สถานะ ' + widget.requestService.status,
+              style: TextStyle(color: textColorBlack),
+            ),
           )),
       backgroundColor: bgColor,
       body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
         listener: (context, state) {
-          // if (state is RequestServiceLoading) {
-          //   createMarker(context);
-          // } else if (state is RequestServiceLoadSuccess) {
-          //   _requestService = state.requestService;
-          //   logger.d(_requestService.toJson());
-          //   setState(() {
-          //     titleStutus = state.requestService.status;
-          //   });
-
-          //   //_distanceMatrix = state.distanceMatrix;
-          //   currentPosition = LatLng(
-          //       double.parse(state.requestService.geoLocationUser.lat),
-          //       double.parse(state.requestService.geoLocationUser.long));
-
-          //   destinationPosition = LatLng(
-          //       double.parse(state.requestService.geoLocationGarage.lat),
-          //       double.parse(state.requestService.geoLocationGarage.long));
-          //   latlongs = [];
-          //   latlongs.add(currentPosition);
-          //   latlongs.add(destinationPosition);
-
-          //   markers = getMarkers(latlongs, customIcon1!);
-          //   getPolyline(latlongs);
-          // } else if (state is RequestServiceComleted) {
-          //   navigateToRequestComplated(_requestService);
-          // }
           if (state is CurrentLocationAndDistanceSuccess) {
+            widget.requestService.geoLocationGarage.lat =
+                state.position.latitude.toString();
+            widget.requestService.geoLocationGarage.long =
+                state.position.longitude.toString();
+
             currentPosition =
                 LatLng(state.position.latitude, state.position.longitude);
             destinationPosition = LatLng(
@@ -123,7 +109,17 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
             latlongs.add(destinationPosition);
 
             getMarkers(latlongs, customIcon1);
-            getPolyline(latlongs);
+            if (widget.requestService.status != completeRequestService) {
+              getPolyline(latlongs);
+            }
+            setState(() {
+              distance =
+                  state.distanceMatrix!.rows[0].elements[0].distance.text;
+              duration =
+                  state.distanceMatrix!.rows[0].elements[0].duration.value;
+            });
+          } else if (state is RequestServiceComleted) {
+            navigateToRequestComplated(widget.requestService);
           }
         },
         builder: (context, state) {
@@ -188,13 +184,13 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                         children: [
                           TrackingRequestCard(
                             req: widget.requestService,
-                            duration: "2"
+                            duration: (duration / 60).toStringAsFixed(0)
                             // ((_distanceMatrix
                             //             .rows[0].elements[0].duration.value /
                             //         60))
                             //     .toStringAsFixed(0)
                             ,
-                            distance: "2"
+                            distance: distance
                             // (_distanceMatrix
                             //             .rows[0].elements[0].distance.value ~/
                             //         1000)
@@ -214,10 +210,11 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                                   ),
                                   iconColor: textColorBlack,
                                   stickToEnd: false,
-                                  text: "เปลี่ยนสถานะเป็น",
+                                  text: "เปลี่ยนสถานะเป็น " +
+                                      trackingStatus[trackingStatusIndex + 1],
                                   textStyle: TextStyle(
                                       color: textColorBlack,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.values[4],
                                       fontSize: fontSizeL))),
                         ],
                       )))
@@ -254,7 +251,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       Marker marker = Marker(
           markerId: MarkerId(latlong.toString()),
           draggable: false,
-          icon: setIcon,
+          icon: BitmapDescriptor.defaultMarker,
           onTap: () {},
           position: latlong);
 
@@ -267,7 +264,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   }
 
   void getPolyline(List<LatLng> latlongs) async {
-    //var polyline = <Polyline>[];
+    var polyline = <Polyline>[];
 
     List<LatLng> polylineCoordinates = [];
 
@@ -293,24 +290,33 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       width: 5,
       color: textColorBlack,
     ));
+
+    setState(() {
+      this.polyline = polyline;
+    });
   }
 
   void navigateToRequestComplated(RequestService? requestService) {
     Navigator.pushReplacementNamed(context, RECAP_DETAIL_REQUREST_ROUTE,
-        arguments: {'requestService': requestService});
+        arguments: requestService);
   }
 
   void changeStatus() {
-    trackingStatusIndex++;
-    if (trackingStatusIndex <= 3) {
+    if (trackingStatusIndex <= 4) {
+      trackingStatusIndex++;
       logger.d("status changed: ${trackingStatus[trackingStatusIndex]}");
+      setState(() {
+        titleStutus = trackingStatus[trackingStatusIndex];
+        widget.requestService.status = trackingStatus[trackingStatusIndex];
+      });
       if (trackingStatus[trackingStatusIndex] == completeRequestService) {
         // เรียก bloc
+        _requestServiceBloc.add(UpdateRequestServiceComplete(
+            requestService: widget.requestService));
+        _isNotCompleted = false;
       } else {
-        setState(() {
-          titleStutus = trackingStatus[trackingStatusIndex];
-          _requestService.status = trackingStatus[trackingStatusIndex];
-        });
+        _requestServiceBloc
+            .add(UpdateRequestService(requestService: widget.requestService));
       }
     }
   }
@@ -320,26 +326,11 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   void updateTrackingService() async {
     while (_isNotCompleted) {
       await Future.delayed(Duration(milliseconds: 5000));
-
-      // final position = await geoService.getLocation();
-      // final distanceMatrix = await this.geoService.getDistanceMatrix(
-      //     startLatitude: position.latitude,
-      //     startLongitude: position.longitude,
-      //     endLatitude: double.parse(_requestService.geoLocationUser.lat),
-      //     endLongitude: double.parse(_requestService.geoLocationUser.long));
-
-      // logger.d("position: ${position}");
-
-      // _requestService.geoLocationGarage.lat = position.latitude.toString();
-      // _requestService.geoLocationGarage.long = position.longitude.toString();
-
-      // setState(() {
-      //   currentPosition = LatLng(position.latitude, position.longitude);
-      //   _distanceMatrix = distanceMatrix;
-      // });
-
-      _requestServiceBloc.add(GetCurrentLocationAndDistance(
-          geoLocationUser: widget.requestService.geoLocationUser));
+      logger.d("updateTracking...");
+      _requestServiceBloc
+        ..add(GetCurrentLocationAndDistance(
+            geoLocationUser: widget.requestService.geoLocationUser))
+        ..add(UpdateRequestService(requestService: widget.requestService));
     }
   }
 }
