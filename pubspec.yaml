@@ -95,6 +95,7 @@ dependencies:
 
   # notify
   flutter_local_notifications: ^9.1.4
+  workmanager: ^0.4.1
 
 
 dev_dependencies:
