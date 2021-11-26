@@ -93,6 +93,10 @@ dependencies:
   multi_image_picker2: ^5.0.02
   photo_view: ^0.13.0
 
+  # notify
+  flutter_local_notifications: ^9.1.4
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

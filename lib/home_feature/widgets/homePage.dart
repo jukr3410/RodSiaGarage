@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/dao/garage_dao.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
+import 'package:rodsiagarage/utils/local_notification_helper.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -17,11 +19,33 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late GarageInfoBloc _garageInfoBloc;
+
+  final notifications = FlutterLocalNotificationsPlugin();
+
   @override
   void initState() {
     _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad());
     super.initState();
+
+    //Android Settings
+    //here to parse the app icon that is in the folder : android/app/src/main/res/drawable
+    final settingsAndroid = AndroidInitializationSettings('app_icon');
+
+    //iOS Settings
+    final settingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) {
+      return onSelectNotification(payload: payload.toString());
+    });
+
+    notifications.initialize(
+        InitializationSettings(android: settingsAndroid, iOS: settingsIOS),
+        onSelectNotification: onSelectNotification(
+            payload: "test")); //the action when click the notification
+  }
+
+  onSelectNotification({required String payload}) {
+    return Navigator.pushNamed(context, SUPPORT_CENTER_ROUTE);
   }
 
   @override
@@ -152,7 +176,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                               iconSize: 100,
                               onPressed: () {
-                                navigatorTosupportCenter();
+                                // navigatorTosupportCenter();
+                                showOngoingNotification(notifications,
+                                    title: 'Title', body: 'Body');
                               }),
                         ),
                         Text(tSupportCenter)
