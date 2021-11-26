@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               iconSize: 100,
                               onPressed: () {
-                                trackingRequestService();
+                                navigatorTosupportCenter();
                               }),
                         ),
                         Text(tSupportCenter)
