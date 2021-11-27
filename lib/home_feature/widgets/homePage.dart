@@ -58,13 +58,17 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          state.garage.name,
-                          style: TextStyle(
-                              fontSize: fontSizeXXl,
-                              fontWeight: FontWeight.w600),
-                          softWrap: true,
-                          maxLines: 1,
+                        Container(
+                          width: 180,
+                          child: Text(
+                            state.garage.name,
+                            style: TextStyle(
+                                fontSize: fontSizeXXl,
+                                fontWeight: FontWeight.w600),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                         Row(
                           children: [
@@ -90,11 +94,17 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.grey.shade700,
                                   fontSize: fontSizeM),
                             ),
-                            Text(
-                              state.garage.email,
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize: fontSizeM),
+                            Container(
+                              width: 180,
+                              child: Text(
+                                state.garage.email,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    fontSize: fontSizeM),
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                             )
                           ],
                         ),
@@ -126,22 +136,6 @@ class _HomePageState extends State<HomePage> {
                               }),
                         ),
                         Text(tServiceThai)
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          height: 80,
-                          child: IconButton(
-                              icon: Image.asset(
-                                tImageAsset('history'),
-                              ),
-                              iconSize: 100,
-                              onPressed: () {
-                                navigatorToHistory();
-                              }),
-                        ),
-                        Text(tHistory)
                       ],
                     ),
                     Column(

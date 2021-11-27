@@ -156,8 +156,8 @@ class _EditImageGarageState extends State<EditImageGarage> {
             CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: image,
-              width: 95,
-              height: 95,
+              width: 85,
+              height: 85,
               placeholder: (context, url) => CircularProgressIndicator(
                 color: textColorBlack,
               ),
@@ -174,7 +174,7 @@ class _EditImageGarageState extends State<EditImageGarage> {
                   icon: Icon(
                     Icons.delete,
                     size: 20,
-                    color: bgColor,
+                    color: redStatus,
                   ),
                 )),
           ],

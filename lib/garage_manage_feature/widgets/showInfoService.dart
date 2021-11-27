@@ -18,7 +18,7 @@ class ShowInfoService extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-              top: defualtPaddingLow,
+              top: defualtPaddingMedium,
               bottom: defualtPaddingLow,
               left: defualtPaddingMedium,
               right: defualtPaddingMedium),
@@ -33,7 +33,7 @@ class ShowInfoService extends StatelessWidget {
                 height: 65,
               ),
               SizedBox(
-                width: 10,
+                height: 10,
               ),
               Text(
                 service.name,

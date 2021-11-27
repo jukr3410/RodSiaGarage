@@ -221,52 +221,54 @@ class _EditProfileState extends State<EditProfile> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Row(
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            GFButton(
-                                                shape: GFButtonShape.pills,
-                                                onPressed: () {
-                                                  navigateLocationPicker(
-                                                      context);
-                                                },
-                                                text: "แผนที่",
-                                                icon: Icon(
-                                                  Icons.location_on,
-                                                  color: textColorBlack,
-                                                ),
-                                                color: textColorWhite,
-                                                textColor: textColorBlack),
-                                          ],
-                                        ),
-                                        // Text(
-                                        //   locationResult == null
-                                        //       ? "กดเพื่อเลือกตำแหน่ง"
-                                        //       : "${locationResult!.latLng!.latitude}\n${locationResult!.latLng!.longitude}",
-                                        //   style: const TextStyle(
-                                        //       color: textColorBlack,
-                                        //       fontSize: fontSizeM),
-                                        // ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: 230,
-                                          child: Text(
-                                              address.isEmpty
-                                                  ? widget.garage.address
-                                                      .addressDesc
-                                                  : address,
-                                              style: const TextStyle(
-                                                  color: textColorBlack,
-                                                  fontSize: fontSizeM),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2),
-                                        )
-                                      ],
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              GFButton(
+                                                  shape: GFButtonShape.pills,
+                                                  onPressed: () {
+                                                    navigateLocationPicker(
+                                                        context);
+                                                  },
+                                                  text: "แผนที่",
+                                                  icon: Icon(
+                                                    Icons.location_on,
+                                                    color: textColorBlack,
+                                                  ),
+                                                  color: textColorWhite,
+                                                  textColor: textColorBlack),
+                                            ],
+                                          ),
+                                          // Text(
+                                          //   locationResult == null
+                                          //       ? "กดเพื่อเลือกตำแหน่ง"
+                                          //       : "${locationResult!.latLng!.latitude}\n${locationResult!.latLng!.longitude}",
+                                          //   style: const TextStyle(
+                                          //       color: textColorBlack,
+                                          //       fontSize: fontSizeM),
+                                          // ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: 200,
+                                            child: Text(
+                                                address.isEmpty
+                                                    ? widget.garage.address
+                                                        .addressDesc
+                                                    : address,
+                                                style: const TextStyle(
+                                                    color: textColorBlack,
+                                                    fontSize: fontSizeM),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     Container(
                                       child: Row(

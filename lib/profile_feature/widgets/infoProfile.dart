@@ -39,13 +39,16 @@ class _InfoProfileState extends State<InfoProfile> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.garage.name,
-                  style: TextStyle(
-                      fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
-                  softWrap: true,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Container(
+                  width: 180,
+                  child: Text(
+                    widget.garage.name,
+                    style: TextStyle(
+                        fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
+                    softWrap: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 Row(
                   children: [
@@ -55,13 +58,19 @@ class _InfoProfileState extends State<InfoProfile> {
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(tEmailThai + ': '),
-                    Text(
-                      widget.garage.email,
-                    )
-                  ],
+                Container(
+                  width: 180,
+                  child: Row(
+                    children: [
+                      Text(tEmailThai + ': '),
+                      Text(
+                        widget.garage.email,
+                        softWrap: true,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
                 ),
               ],
             )
@@ -76,6 +85,7 @@ class _InfoProfileState extends State<InfoProfile> {
       return Image.asset(
         tImageAsset('profile-homePage'),
         width: 100,
+        height: 100,
       );
     } else {
       return CachedNetworkImage(
