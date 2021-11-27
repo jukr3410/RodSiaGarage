@@ -172,6 +172,7 @@ class _AddInfoState extends State<AddInfo> {
                                         // maxLength: 25,
                                         onChanged: (value) =>
                                             {_garage.name = value},
+                                        textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.name,
                                         autofocus: true,
                                         textAlign: TextAlign.start,
@@ -215,6 +216,7 @@ class _AddInfoState extends State<AddInfo> {
                                                   ? _garage.email = ""
                                                   : _garage.email = value
                                             },
+                                        textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.name,
                                         autofocus: true,
                                         textAlign: TextAlign.start,
@@ -255,7 +257,8 @@ class _AddInfoState extends State<AddInfo> {
                                         // maxLength: 25,
                                         onChanged: (value) =>
                                             {_garage.password = value},
-                                        keyboardType: TextInputType.name,
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.text,
                                         autofocus: true,
                                         obscureText: true,
                                         textAlign: TextAlign.start,
@@ -292,12 +295,14 @@ class _AddInfoState extends State<AddInfo> {
                                             return null;
                                           }
                                         }),
+
                                     SizedBox(
                                       height: 10,
                                     ),
                                     TextFormField(
                                         // maxLength: 25,
-                                        keyboardType: TextInputType.name,
+                                        textInputAction: TextInputAction.done,
+                                        keyboardType: TextInputType.text,
                                         autofocus: true,
                                         obscureText: true,
                                         textAlign: TextAlign.start,
