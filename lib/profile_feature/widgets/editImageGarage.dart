@@ -44,15 +44,13 @@ class _EditImageGarageState extends State<EditImageGarage> {
   @override
   void initState() {
     _profileBloc = BlocProvider.of<ProfileBloc>(context);
-
+    garage = widget.garage;
+    imagesGarage = widget.garage.images!;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    garage = widget.garage;
-    imagesGarage = widget.garage.images!;
-
     return Container(
       decoration: BoxDecoration(color: bgColor
           // gradient: LinearGradient(
