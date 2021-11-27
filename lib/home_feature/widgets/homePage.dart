@@ -8,7 +8,6 @@ import 'package:rodsiagarage/core/dao/garage_dao.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
-import 'package:rodsiagarage/utils/local_notification_helper.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
