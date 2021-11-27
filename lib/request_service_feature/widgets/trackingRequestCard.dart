@@ -272,16 +272,18 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Container(
-                                    width: 180,
-                                    child: Text(
-                                      widget.req.problemDesc,
-                                      softWrap: true,
-                                      style: _textStyleSmall,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
+                                  widget.req.problemDesc.isEmpty
+                                      ? Text('ไม่มีรายละเอียดเพิ่มเติม')
+                                      : Container(
+                                          width: 180,
+                                          child: Text(
+                                            widget.req.problemDesc,
+                                            softWrap: true,
+                                            style: _textStyleSmall,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                 ],
                               ),
                               SizedBox(
@@ -297,46 +299,51 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Container(
-                                      height: 40,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: widget.req.images!.length,
-                                          itemBuilder: (context, index) {
-                                            return Row(
-                                              children: [
-                                                GestureDetector(
-                                                  child: CachedNetworkImage(
-                                                    width: 40,
-                                                    height: 40,
-                                                    fit: BoxFit.cover,
-                                                    imageUrl: widget.req
-                                                        .images![index].image,
-                                                    placeholder: (context,
-                                                            url) =>
-                                                        CircularProgressIndicator(
-                                                      color: textColorBlack,
-                                                    ),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Icon(Icons.error),
-                                                  ),
-                                                  onTap: () {
-                                                    _navigateAndDisplayImage(
-                                                        context,
-                                                        widget
+                                  widget.req.images == null
+                                      ? Text('ไม่มีรูป')
+                                      : Container(
+                                          height: 40,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              shrinkWrap: true,
+                                              itemCount:
+                                                  widget.req.images!.length,
+                                              itemBuilder: (context, index) {
+                                                return Row(
+                                                  children: [
+                                                    GestureDetector(
+                                                      child: CachedNetworkImage(
+                                                        width: 40,
+                                                        height: 40,
+                                                        fit: BoxFit.cover,
+                                                        imageUrl: widget
                                                             .req
                                                             .images![index]
-                                                            .image);
-                                                  },
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                )
-                                              ],
-                                            );
-                                          })),
+                                                            .image,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            CircularProgressIndicator(
+                                                          color: textColorBlack,
+                                                        ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                                      onTap: () {
+                                                        _navigateAndDisplayImage(
+                                                            context,
+                                                            widget
+                                                                .req
+                                                                .images![index]
+                                                                .image);
+                                                      },
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    )
+                                                  ],
+                                                );
+                                              })),
                                 ],
                               ),
                               SizedBox(
