@@ -42,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //yield LoginInitial();
       yield LoginSuccess();
     } catch (error) {
-      yield LoginFaliure(error: error.toString());
+      yield LoginFaliure(error: 'หมายเลขโทรศัพท์หรือรหัสผ่านไม่ถูกต้อง');
     }
   }
 }

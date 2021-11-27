@@ -97,8 +97,8 @@ class _OtpState extends State<Otp> {
           child: BlocConsumer<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterSendVerifyOtpSuccess) {
-                showTopSnackBar(
-                    context, CustomSnackBar.info(message: "ส่งรหัสยืนยันแล้ว"));
+                showTopSnackBar(context,
+                    CustomSnackBar.success(message: "ส่งรหัสยืนยันแล้ว"));
               } else if (state is RegisterVerifySuccess) {
                 navigateToAddInfo(_garage);
                 showTopSnackBar(
