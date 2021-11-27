@@ -17,10 +17,9 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-GlobalKey<FormState> _form = GlobalKey<FormState>();
-
 class _LoginScreenState extends State<LoginScreen> {
   final _controller = TextEditingController();
+  GlobalKey<FormState> _form = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -175,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         border: OutlineInputBorder(
                                             borderRadius: borderRadiusMedium,
                                             borderSide: BorderSide.none),
-                                        hintText: tPasswordThai,
+                                        hintText: tPassword,
                                         hintStyle: GoogleFonts.alata(
                                             textStyle: TextStyle(
                                                 color: textColorBlack,
@@ -280,11 +279,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _onLoginButtonPressed() {
+    logger.d(phoneController.text);
+    logger.d(passwordController.text);
     _loginBloc.add(LoginButtonPressed(
       phone: phoneController.text,
       password: passwordController.text,
     ));
-    logger.d(phoneController.text);
   }
 
   void navigateToAddNumber() {
