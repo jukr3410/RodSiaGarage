@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fswitch/fswitch.dart';
 import 'package:locally/locally.dart';
+import 'package:rodsiagarage/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
+import 'package:rodsiagarage/core/repository/garage_repository.dart';
 import 'package:rodsiagarage/core/repository/request_service_api.dart';
 import 'package:rodsiagarage/global_widgets/InboxPage.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
@@ -14,11 +16,13 @@ import 'package:rodsiagarage/global_widgets/menusSetting.dart';
 import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiagarage/history_feature/widgets/viewbar.dart';
 import 'package:rodsiagarage/home/appBar.dart';
+import 'package:rodsiagarage/home/bloc/home_bloc.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
+import 'package:rodsiagarage/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
@@ -45,7 +49,22 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     locally = Locally(
       context: context,
       payload: 'test',
-      pageRoute: MaterialPageRoute(builder: (context) => CustomAppBar()),
+      pageRoute: MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(providers: [
+                BlocProvider(
+                    create: (BuildContext context) => AuthenticationBloc(
+                        garageRepository: GarageRepository())),
+                BlocProvider(
+                  create: (BuildContext context) => HomeBloc(),
+                ),
+                BlocProvider(
+                  create: (BuildContext context) =>
+                      ProfileBloc(garageRepository: GarageRepository()),
+                ),
+                BlocProvider(
+                    create: (BuildContext context) =>
+                        GarageInfoBloc(garageRepository: GarageRepository()))
+              ], child: CustomAppBar())),
       appIcon: 'mipmap/ic_launcher',
     );
     locally.show(title: "บริการรถเสีย", message: "มีคำขอใช้บริการใหม่");
