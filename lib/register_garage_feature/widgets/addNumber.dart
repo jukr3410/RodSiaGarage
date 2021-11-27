@@ -160,7 +160,8 @@ class _AddNumberState extends State<AddNumber> {
                                 textAlign: TextAlign.start,
                                 style: GoogleFonts.alata(
                                     textStyle: TextStyle(
-                                        color: textColorBlack, fontSize: fontSizeL)),
+                                        color: textColorBlack,
+                                        fontSize: fontSizeL)),
                                 // inputFormatters: [
                                 //   MaskedInputFormatter('###-###-####'),
                                 // ]
