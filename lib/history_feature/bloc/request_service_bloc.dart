@@ -67,6 +67,7 @@ class RequestServiceBloc
     try {
       while (true) {
         await Future.delayed(Duration(milliseconds: 1000));
+        logger.d("loading request service ...");
         final requestServices = await this
             .requestServiceRepository
             .getRequestServiceListWithStatus(status: status);

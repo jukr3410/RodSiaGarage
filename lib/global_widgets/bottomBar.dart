@@ -56,7 +56,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad());
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoadWithStatus(status: 'รอยืนยัน'));
+      ..add(RequestServiceLoadWithStatusRealTime(status: 'รอยืนยัน'));
     super.initState();
   }
 
