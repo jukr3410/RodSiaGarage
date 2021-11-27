@@ -24,4 +24,17 @@ class RequestServicesLoadSuccess extends RequestServiceState {
       'ServicesLoadSuccess { requestServices: ${requestServices.toList()} }';
 }
 
+class RequestServicesLoadRealTimeSuccess extends RequestServiceState {
+  final List<RequestService> requestServices;
+
+  const RequestServicesLoadRealTimeSuccess({required this.requestServices});
+
+  @override
+  List<Object> get props => [requestServices];
+
+  @override
+  String toString() =>
+      'ServicesLoadSuccess { requestServices: ${requestServices.toList()} }';
+}
+
 class RequestServicesError extends RequestServiceState {}

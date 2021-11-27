@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:rodsiagarage/core/repository/request_service_api.dart';
 import 'package:rodsiagarage/router.dart';
 
 void main() {

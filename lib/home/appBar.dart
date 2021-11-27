@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:fswitch/fswitch.dart';
+import 'package:locally/locally.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/repository/request_service_api.dart';
+import 'package:rodsiagarage/core/repository/request_service_repository.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupBackHomePage.dart';
 import 'package:rodsiagarage/global_widgets/bottomBar.dart';
+import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 
 class CustomAppBar extends StatefulWidget {
@@ -36,7 +40,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
           return SafeArea(
             child: Scaffold(
                 resizeToAvoidBottomInset: false,
-                bottomNavigationBar: BottomNavigrationBar(garage: state.garage),
+                bottomNavigationBar: BlocProvider(
+                    create: (context) => RequestServiceBloc(
+                        requestServiceRepository: RequestServiceRepository()),
+                    child: BottomNavigrationBar(garage: state.garage)),
                 body: Center(
                   child: Column(
                     children: [

@@ -33,6 +33,8 @@ class RequestServiceBloc
       yield RequestServiceInitial();
     } else if (event is RequestServiceLoadWithStatus) {
       yield* _mapRequestServiceLoadWithStatusToState(event.status);
+    } else if (event is RequestServiceLoadWithStatusRealTime) {
+      yield* _mapRequestServiceLoadWithStatusRealTimeToState(event.status);
     }
   }
 
@@ -54,6 +56,23 @@ class RequestServiceBloc
           .requestServiceRepository
           .getRequestServiceListWithStatus(status: status);
       yield RequestServicesLoadSuccess(requestServices: requestServices);
+    } catch (e) {
+      logger.e(e);
+      yield RequestServicesError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapRequestServiceLoadWithStatusRealTimeToState(
+      String status) async* {
+    try {
+      while (true) {
+        await Future.delayed(Duration(milliseconds: 1000));
+        final requestServices = await this
+            .requestServiceRepository
+            .getRequestServiceListWithStatus(status: status);
+        yield RequestServicesLoadRealTimeSuccess(
+            requestServices: requestServices);
+      }
     } catch (e) {
       logger.e(e);
       yield RequestServicesError();

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fswitch/fswitch.dart';
+import 'package:locally/locally.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/models/request_service_model.dart';
+import 'package:rodsiagarage/core/repository/request_service_api.dart';
 import 'package:rodsiagarage/global_widgets/InboxPage.dart';
 import 'package:rodsiagarage/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiagarage/global_widgets/alertShowChangeStatus.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
 import 'package:rodsiagarage/global_widgets/menusSetting.dart';
+import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiagarage/history_feature/widgets/viewbar.dart';
+import 'package:rodsiagarage/home/appBar.dart';
 import 'package:rodsiagarage/home_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/homePage.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:rodsiagarage/main.dart';
 import 'package:rodsiagarage/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiagarage/profile_feature/widgets/ProfilePage.dart';
 
@@ -28,10 +34,29 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   bool status = true;
 
   late GarageInfoBloc _garageInfoBloc;
+  late RequestServiceBloc _requestServiceBloc;
+
+  RequestServiceApi requestServiceApi = RequestServiceApi();
+  List<RequestService> requestServices = [];
+
+  showMessage() {
+    Locally locally;
+    logger.d('showMessage');
+    locally = Locally(
+      context: context,
+      payload: 'test',
+      pageRoute: MaterialPageRoute(builder: (context) => CustomAppBar()),
+      appIcon: 'mipmap/ic_launcher',
+    );
+    locally.show(title: "บริการรถเสีย", message: "มีคำขอใช้บริการใหม่");
+  }
+
   @override
   void initState() {
     _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad());
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
+      ..add(RequestServiceLoadWithStatus(status: 'รอยืนยัน'));
     super.initState();
   }
 
@@ -80,40 +105,50 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
       ViewBars(garage: widget.garage),
       MenusSetting(garage: widget.garage),
     ];
-    return SafeArea(
-      child: Scaffold(
-          appBar: setAppBar(),
-          body: _pageWidget.elementAt(_selectedIndex),
-          extendBody: true,
+    return BlocListener<RequestServiceBloc, RequestServiceState>(
+      listener: (context, state) {
+        if (state is RequestServicesLoadRealTimeSuccess) {
+          if (requestServices.length < state.requestServices.length) {
+            showMessage();
+          }
+          requestServices = state.requestServices;
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+            appBar: setAppBar(),
+            body: _pageWidget.elementAt(_selectedIndex),
+            extendBody: true,
 
-          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          // floatingActionButton:
-          //     Container(height: 60, width: 60, child: _buttonHomePage()),
-          bottomNavigationBar: Container(
-            height: 60,
-            child: FancyBottomNavigation(
-                tabs: _menuBarTest,
-                onTabChangedListener: _onItemTapped,
-                barBackgroundColor: primaryColor,
-                initialSelection: 0,
-                inactiveIconColor: textColorBlack,
-                circleColor: textColorBlack,
-                textColor: Colors.transparent),
-          )
-          // BottomNavigationBar(
-          //   items: _menuBar,
-          //   currentIndex: _selectedIndex,
-          //   unselectedItemColor: Colors.grey.shade700,
-          //   onTap: _onItemTapped,
-          //   fixedColor: Colors.black,
-          //   type: BottomNavigationBarType.fixed,
-          //   selectedFontSize: 13,
-          //   showUnselectedLabels: false,
-          //   showSelectedLabels: false,
-          //   unselectedIconTheme: IconThemeData(size: 24),
-          //   backgroundColor: hexToColor(primaryCodeColor),
-          // ),
-          ),
+            // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            // floatingActionButton:
+            //     Container(height: 60, width: 60, child: _buttonHomePage()),
+            bottomNavigationBar: Container(
+              height: 60,
+              child: FancyBottomNavigation(
+                  tabs: _menuBarTest,
+                  onTabChangedListener: _onItemTapped,
+                  barBackgroundColor: primaryColor,
+                  initialSelection: 0,
+                  inactiveIconColor: textColorBlack,
+                  circleColor: textColorBlack,
+                  textColor: Colors.transparent),
+            )
+            // BottomNavigationBar(
+            //   items: _menuBar,
+            //   currentIndex: _selectedIndex,
+            //   unselectedItemColor: Colors.grey.shade700,
+            //   onTap: _onItemTapped,
+            //   fixedColor: Colors.black,
+            //   type: BottomNavigationBarType.fixed,
+            //   selectedFontSize: 13,
+            //   showUnselectedLabels: false,
+            //   showSelectedLabels: false,
+            //   unselectedIconTheme: IconThemeData(size: 24),
+            //   backgroundColor: hexToColor(primaryCodeColor),
+            // ),
+            ),
+      ),
     );
   }
 

@@ -17,3 +17,8 @@ class RequestServiceLoadWithStatus extends RequestServiceEvent {
   final String status;
   const RequestServiceLoadWithStatus({required this.status});
 }
+
+class RequestServiceLoadWithStatusRealTime extends RequestServiceEvent {
+  final String status;
+  const RequestServiceLoadWithStatusRealTime({required this.status});
+}

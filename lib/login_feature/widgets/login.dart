@@ -109,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   TextFormField(
                                       // maxLength: 25,
+                                      textInputAction: TextInputAction.next,
                                       keyboardType: TextInputType.number,
                                       autofocus: true,
                                       textAlign: TextAlign.start,
@@ -151,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   TextFormField(
                                       // maxLength: 25,
+                                      textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.text,
                                       autofocus: true,
                                       obscureText: true,
