@@ -176,6 +176,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   setAppBar() {
     return AppBar(
       backgroundColor: primaryColor,
+      automaticallyImplyLeading: false,
       title: Align(
         alignment: Alignment.centerRight,
         child: Row(
@@ -192,7 +193,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
             ),
             Text(
               'สถานะ: ร้าน' + isGarageOpen(widget.garage),
-              style: TextStyle(color: textColorBlack,fontSize: fontSizeM),
+              style: TextStyle(color: textColorBlack, fontSize: fontSizeM),
             ),
           ],
         ),

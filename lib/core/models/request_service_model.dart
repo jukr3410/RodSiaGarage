@@ -60,7 +60,9 @@ class RequestService {
       images: List<ImageGarage>.from(
           json["images"].map((x) => ImageGarage.fromJson(x))),
       createdAt: DateTime.parse(json["createdAt"]),
-      review: Review.fromJson(json["review"]));
+      review: json["review"] != null
+          ? Review.fromJson(json["review"])
+          : Review(text: "", star: 0));
 
   Map<String, dynamic> toJson() => {
         "_id": id,
