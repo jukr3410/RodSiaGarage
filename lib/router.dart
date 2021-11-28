@@ -217,7 +217,12 @@ class AppRouter {
 
       case PROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;
-        return MaterialPageRoute(builder: (_) => ProfilePage(garage: garage));
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+              create: (BuildContext context) =>
+                  ServiceBloc(serviceRepository: ServiceRepository()),
+              child: ProfilePage(garage: garage)),
+        );
 
       case EDITPROFILE_ROUTE:
         Garage garage = settings.arguments as Garage;

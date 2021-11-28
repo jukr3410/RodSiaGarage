@@ -212,8 +212,8 @@ const trackingStatus = [
   ''
 ];
 
-const menusSetting = ['โปรไฟล์', 'การตั้งค่า', 'ออกจากระบบ'];
-const menusSettingRoute = [PROFILE_ROUTE, SETTING_ROUTE];
+const menusSetting = ['โปรไฟล์', 'ออกจากระบบ'];
+const menusSettingRoute = [PROFILE_ROUTE];
 
 Garage gargeMockup = Garage(
     id: '1',

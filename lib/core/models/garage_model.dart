@@ -41,6 +41,7 @@ class Garage {
   String? otp;
   bool validatePhone;
   List<Service>? services;
+
   List<TypeCarRepairs> typeCarRepairs;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(

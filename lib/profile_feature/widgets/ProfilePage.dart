@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/garage_model.dart';
+import 'package:rodsiagarage/core/models/service_model.dart';
 import 'package:rodsiagarage/core/models/user_model.dart';
+import 'package:rodsiagarage/garage_manage_feature/bloc/service_bloc.dart';
 import 'package:rodsiagarage/home_feature/widgets/carouselImage.dart';
 import 'package:rodsiagarage/profile_feature/widgets/buttonToEditProfile.dart';
 import 'package:rodsiagarage/profile_feature/widgets/infoAddress.dart';
@@ -20,6 +23,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  List<Service> _services = [];
+  late ServiceBloc _serviceBloc;
+
+  @override
+  void initState() {
+    _serviceBloc = BlocProvider.of<ServiceBloc>(context)
+      ..add(ServiceLoad(garageId: widget.garage.id));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,65 +66,103 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(defualtPaddingMedium),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InfoProfile(
-                  garage: widget.garage,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'วันเวลาเปิด-ปิด:',
-                  style: TextStyle(
-                      fontSize: fontSizeM, fontWeight: FontWeight.w600),
-                ),
-                Text(_showOpenDate()),
-                Text(
-                    '${widget.garage.openingHour!.open.toString()} - ${widget.garage.openingHour!.close.toString()} น.'),
-                SizedBox(
-                  height: 10,
-                ),
-                InfoAddress(
-                  garage: widget.garage,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'รูปภาพเพิ่มเติม:',
-                  style: TextStyle(
-                      fontSize: fontSizeM, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                CarouselImage(images: widget.garage.images!),
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  child: Column(
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: textColorBlack),
-                          child: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              navigatorToEditImages();
-                            },
-                            color: primaryColor,
-                          )),
-                      SizedBox(
-                        height: 5,
+            child: BlocConsumer<ServiceBloc, ServiceState>(
+              listener: (context, state) {
+                if (state is ServicesLoadSuccess) {
+                  _services = state.services;
+                }
+              },
+              builder: (context, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InfoProfile(
+                      garage: widget.garage,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'วันเวลาเปิด-ปิด:',
+                      style: TextStyle(
+                          fontSize: fontSizeM, fontWeight: FontWeight.w600),
+                    ),
+                    Text(_showOpenDate()),
+                    Text(
+                        '${widget.garage.openingHour!.open.toString()} - ${widget.garage.openingHour!.close.toString()} น.'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('ประเภทรถ'+tServiceThai + ': ',
+                        style: TextStyle(
+                            fontSize: fontSizeM, fontWeight: FontWeight.w600)),
+                    Container(
+                      width: 200,
+                      height: 25,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.garage.typeCarRepairs.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Image.asset(
+                                  tImageAsset(
+                                      widget.garage.typeCarRepairs[index].type),
+                                  width: 25,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                )
+                              ],
+                            );
+                          }),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InfoAddress(
+                      garage: widget.garage,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'รูปภาพเพิ่มเติม:',
+                      style: TextStyle(
+                          fontSize: fontSizeM, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    CarouselImage(images: widget.garage.images!),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      child: Column(
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: textColorBlack),
+                              child: IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  navigatorToEditImages();
+                                },
+                                color: primaryColor,
+                              )),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text('แก้ไขรูปภาพ')
+                        ],
                       ),
-                      Text('แก้ไขรูปภาพ')
-                    ],
-                  ),
-                )
-              ],
+                    )
+                  ],
+                );
+              },
             ),
           ),
         ),

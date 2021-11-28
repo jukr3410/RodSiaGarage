@@ -81,6 +81,18 @@ class _EditProfileState extends State<EditProfile> {
 
   File? _image;
 
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return primaryColor;
+    }
+    return textColorBlack;
+  }
+
   @override
   void initState() {
     _profileBloc = BlocProvider.of<ProfileBloc>(context);
@@ -346,102 +358,128 @@ class _EditProfileState extends State<EditProfile> {
                                       },
                                       values: values,
                                     ),
-                                    GFRadioListTile(
-                                      titleText: 'Two-wheel',
-                                      avatar: GFAvatar(
-                                        child: Image.asset(
-                                            tImageAsset('two-wheel')),
-                                      ),
-                                      size: 25,
-                                      activeBorderColor: Colors.green,
-                                      focusColor: Colors.green,
-                                      type: GFRadioType.square,
-                                      value: 0,
-                                      groupValue: twoWheelState,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          twoWheelState = value;
-                                          _typeCarRepairs.add(TypeCarRepairs(
-                                              type: 'two-Wheel'));
-                                        });
-                                      },
-                                      inactiveIcon: null,
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          checkColor: Colors.white,
+                                          fillColor: MaterialStateProperty
+                                              .resolveWith(getColor),
+                                          value: twoWheelState,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              twoWheelState = value!;
+                                              _typeCarRepairs.add(
+                                                  TypeCarRepairs(
+                                                      type: 'two-wheel'));
+                                            });
+                                          },
+                                        ),
+                                        Image.asset(
+                                          tImageAsset(
+                                            'two-wheel',
+                                          ),
+                                          width: 25,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Two-wheel')
+                                      ],
                                     ),
-                                    GFRadioListTile(
-                                      titleText: 'Three-wheel',
-                                      avatar: GFAvatar(
-                                        child: Image.asset(
-                                            tImageAsset('three-wheel')),
-                                      ),
-                                      size: 25,
-                                      activeBorderColor: Colors.green,
-                                      focusColor: Colors.green,
-                                      type: GFRadioType.square,
-                                      value: 0,
-                                      groupValue: threeWheelState,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          threeWheelState = value;
-                                        });
-                                      },
-                                      inactiveIcon: null,
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          checkColor: Colors.white,
+                                          fillColor: MaterialStateProperty
+                                              .resolveWith(getColor),
+                                          value: threeWheelState,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              threeWheelState = value!;
+                                              _typeCarRepairs.add(
+                                                  TypeCarRepairs(
+                                                      type:
+                                                          'three-wheel'));
+                                            });
+                                          },
+                                        ),
+                                        Image.asset(
+                                          tImageAsset(
+                                            'three-wheel',
+                                          ),
+                                          width: 25,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Three-wheel')
+                                      ],
                                     ),
-                                    GFRadioListTile(
-                                      titleText: 'Four-wheel',
-                                      avatar: GFAvatar(
-                                        child: Image.asset(
-                                            tImageAsset('four-wheel')),
-                                      ),
-                                      size: 25,
-                                      activeBorderColor: Colors.green,
-                                      focusColor: Colors.green,
-                                      type: GFRadioType.square,
-                                      value: 0,
-                                      groupValue: twoWheelState,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fourWheelState = value;
-                                        });
-                                      },
-                                      inactiveIcon: null,
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          checkColor: Colors.white,
+                                          fillColor: MaterialStateProperty
+                                              .resolveWith(getColor),
+                                          value: fourWheelState,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              fourWheelState = value!;
+                                              _typeCarRepairs.add(
+                                                  TypeCarRepairs(
+                                                      type:
+                                                          'four-wheel'));
+                                            });
+                                          },
+                                        ),
+                                        Image.asset(
+                                          tImageAsset(
+                                            'four-wheel',
+                                          ),
+                                          width: 25,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Four-wheel')
+                                      ],
                                     ),
-                                    GFRadioListTile(
-                                      titleText: 'heavy-wheel',
-                                      avatar: GFAvatar(
-                                        child: Image.asset(
-                                            tImageAsset('heavy-wheel')),
-                                      ),
-                                      size: 25,
-                                      activeBorderColor: Colors.green,
-                                      focusColor: Colors.green,
-                                      type: GFRadioType.square,
-                                      value: 0,
-                                      groupValue: twoWheelState,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          heavyWheelState = value;
-                                        });
-                                      },
-                                      inactiveIcon: null,
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          checkColor: Colors.white,
+                                          fillColor: MaterialStateProperty
+                                              .resolveWith(getColor),
+                                          value: heavyWheelState,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              heavyWheelState = value!;
+                                              _typeCarRepairs.add(
+                                                  TypeCarRepairs(
+                                                      type:
+                                                          'heavy-wheel'));
+                                            });
+                                          },
+                                        ),
+                                        Image.asset(
+                                          tImageAsset(
+                                            'heavy-wheel',
+                                          ),
+                                          width: 25,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Heavy-wheel')
+                                      ],
                                     ),
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: GFButton(
-                                        onPressed: () {
-                                          _navigatorToEditPassword();
-                                        },
-                                        child: Text('เปลี่ยนรหัสผ่าน'),
-                                        type: GFButtonType.transparent,
-                                        color: textColorBlack,
-                                      ),
-                                    )
                                   ],
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           TextButton(
                               onPressed: () {
@@ -457,7 +495,8 @@ class _EditProfileState extends State<EditProfile> {
                                     _openingDayOfWeek.sa == false &&
                                     _openingDayOfWeek.mo == false &&
                                     _openingDayOfWeek.fr == false &&
-                                    deleteImageProfile == false) {
+                                    deleteImageProfile == false &&
+                                    _typeCarRepairs.isEmpty) {
                                   _navigateAndDisplayEditError(context);
                                 } else {
                                   _navigateAndDisplayEdit(context);
@@ -545,6 +584,9 @@ class _EditProfileState extends State<EditProfile> {
       }
       if (deleteImageProfile == true) {
         _garage.logoImage = '';
+      }
+      if (_typeCarRepairs.isNotEmpty) {
+        _garage.typeCarRepairs = _typeCarRepairs;
       }
       logger.d(_garage.toJson());
       _profileBloc.add(GarageUpdateNoPassword(
