@@ -191,83 +191,96 @@ class _LoginScreenState extends State<LoginScreen> {
                                         //         ""),
                                       ])),
                                   SizedBox(
-                                    height: 30,
+                                    height: 20,
                                   ),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                        TextButton(
-                            onPressed: () {
-                              if (_form.currentState!.validate()) {
-                                //navigateToMain();
-                                if (state is! LoginLoading) {
-                                  _onLoginButtonPressed();
-                                } else {
-                                  null;
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: TextButton(
+                              onPressed: () {
+                                if (_form.currentState!.validate()) {
+                                  //navigateToMain();
+                                  if (state is! LoginLoading) {
+                                    _onLoginButtonPressed();
+                                  } else {
+                                    null;
+                                  }
                                 }
-                              }
-                            },
-                            style: TextButton.styleFrom(
-                              elevation: 2,
-                              shadowColor: Colors.black,
-                              shape: StadiumBorder(),
-                              padding: EdgeInsets.only(
-                                  left: 110, right: 110, top: 20, bottom: 20),
-                              primary: textColorBlack,
-                              backgroundColor: textColorBlack,
-                              onSurface: Colors.black,
-                            ),
-                            child: Text(tLogin,
-                                style: GoogleFonts.alata(
-                                  textStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ))),
+                              },
+                              style: TextButton.styleFrom(
+                                elevation: 2,
+                                shadowColor: Colors.black,
+                                shape: StadiumBorder(),
+                                padding: EdgeInsets.only(top: 20, bottom: 20),
+                                primary: textColorBlack,
+                                backgroundColor: textColorBlack,
+                                onSurface: Colors.black,
+                              ),
+                              child: Text(tLogin,
+                                  style: GoogleFonts.alata(
+                                    textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ))),
+                        ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            navigateToAddNumber();
-                          },
-                          child: Text(
-                            tRegistration,
-                            style: GoogleFonts.alata(
-                                textStyle: TextStyle(
-                              color: textColorBlack,
-                              fontSize: fontSizeL,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 15.0,
-                                  color: Colors.blueGrey,
-                                  offset: Offset(2.0, 2.0),
-                                ),
-                              ],
-                              fontWeight: FontWeight.normal,
-                            )),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                navigateToAddNumber();
+                              },
+                              child: Text(
+                                tRegistration,
+                                style: GoogleFonts.alata(
+                                    textStyle: TextStyle(
+                                  color: textColorBlack,
+                                  fontSize: fontSizeL,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 15.0,
+                                      color: Colors.blueGrey,
+                                      offset: Offset(2.0, 2.0),
+                                    ),
+                                  ],
+                                  fontWeight: FontWeight.normal,
+                                )),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                navigateToResetPassword();
+                              },
+                              child: Text(
+                                tForgetPassword + "?",
+                                style: GoogleFonts.alata(
+                                    textStyle: TextStyle(
+                                  color: textColorBlack,
+                                  fontSize: fontSizeL,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 15.0,
+                                      color: Colors.blueGrey,
+                                      offset: Offset(2.0, 2.0),
+                                    ),
+                                  ],
+                                  fontWeight: FontWeight.normal,
+                                )),
+                              ),
+                            ),
+                          ],
                         ),
-                        // SizedBox(
-                        //   height: 40,
-                        // ),
-
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       vertical: 20, horizontal: 40),
-                        //   child: Text(
-                        //       "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
-                        //       textAlign: TextAlign.center,
-                        //       style: GoogleFonts.alata(
-                        //         textStyle: TextStyle(
-                        //           color: textColorBlack,
-                        //           fontSize: 12,
-                        //           fontWeight: FontWeight.normal,
-                        //         ),
-                        //       )),
-                        // )
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                        ),
                       ],
                     ),
                   )
@@ -295,6 +308,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void navigateToMain() {
     Navigator.pushReplacementNamed(context, MAIN_ROUTE);
+  }
+
+  void navigateToResetPassword() {
+    logger.d("navigate reset password");
   }
 
   @override

@@ -35,6 +35,9 @@ const NOTIFY_ROUTE = '/notify';
 const EDIT_PASSWOED_ROUTE = '/edit_profile_password';
 const EDIR_IMAGES_ROUTE = '/edit_images';
 const SHOWINFO_DETAILREQ_ROUTE = '/showinfo_detailReq';
+const FORGOT_PHONE_ROUTE = '/forgot_password';
+const FORGOT_OTP_ROUTE = "/forgot_otp";
+const FORGOT_RESET_PASS_ROUTE = "/forgot_reset_password";
 
 // font size
 const fontSizeXXl = 20.0;
@@ -188,6 +191,7 @@ const tServiceType = 'ประเภทบริการ';
 const tHistory = 'ประวัติ';
 const tSupportCenter = 'ศูนย์ช่วยเหลือ';
 const tLogin = 'เข้าสู่ระบบ';
+const tForgetPassword = 'ลืมรหัสผ่าน';
 
 //Confirm Request
 const waitingForConfirm = "รอยืนยัน";
