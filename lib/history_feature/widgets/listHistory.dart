@@ -48,7 +48,7 @@ class _ListhistoryState extends State<Listhistory> {
           builder: (context, state) {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
-              logger.d("History: ${state.requestServices[0].review!.toJson()}");
+              //logger.d("History: ${state.requestServices[0].review!.toJson()}");
               _reqServices = state.requestServices;
 
               _widget = ListView.builder(
