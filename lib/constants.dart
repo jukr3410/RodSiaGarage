@@ -65,6 +65,7 @@ const primaryCodeColor = '#FECE2F';
 const iconColorBlack = Color(0xff38454C);
 const iconColorWhite = Colors.white;
 const iconColorRed = Color(0xffDA5B49);
+const textColorGreen = Colors.green;
 
 const cardColor = Colors.white;
 
@@ -150,7 +151,7 @@ const tNext = 'ถัดไป';
 const tBackToHomePage = 'กลับสู่หน้าหลัก';
 const tServiceThai = 'บริการ';
 const tFinishProvideService = 'การให้บริการเสร็จสิ้นแล้ว!';
-const tMoreInfoThai = 'ดูรายละเอียดเพิ่มเติม';
+const tMoreInfoThai = 'รายละเอียดเพิ่มเติม';
 const tConfirmSuccessThai = 'ยืนยันเสร็จสิ้นการบริการ';
 const tServiceOfGarageThai = 'บริการของร้าน';
 const tCallbackForMoreInfo = 'ติดต่อกลับเพื่อสอบถามรายละเอียด';
