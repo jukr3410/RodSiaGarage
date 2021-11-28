@@ -5,6 +5,7 @@
 import 'dart:convert';
 import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/geo_location_model.dart';
+import 'package:rodsiagarage/core/models/review_model.dart';
 import 'car_model.dart';
 import 'geo_location_model.dart';
 import 'service_model.dart';
@@ -28,7 +29,8 @@ class RequestService {
       required this.geoLocationUser,
       required this.geoLocationGarage,
       this.images,
-      required this.createdAt});
+      required this.createdAt,
+      this.review});
 
   String id;
   String problemDesc;
@@ -42,22 +44,23 @@ class RequestService {
   GeoLocation geoLocationGarage;
   List<ImageGarage>? images;
   DateTime createdAt;
+  Review? review;
 
   factory RequestService.fromJson(Map<String, dynamic> json) => RequestService(
-        id: json["_id"],
-        problemDesc: json["problemDesc"],
-        user: User.fromJson(json["user"]),
-        service: Service.fromJson(json["service"]),
-        car: Car.fromJson(json["car"]),
-        confirmRequest: json["confirmRequest"],
-        status: json["status"],
-        addressUser: json['addressUser'],
-        geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
-        geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
-        images: List<ImageGarage>.from(
-            json["images"].map((x) => ImageGarage.fromJson(x))),
-        createdAt: DateTime.parse(json["createdAt"]),
-      );
+      id: json["_id"],
+      problemDesc: json["problemDesc"],
+      user: User.fromJson(json["user"]),
+      service: Service.fromJson(json["service"]),
+      car: Car.fromJson(json["car"]),
+      confirmRequest: json["confirmRequest"],
+      status: json["status"],
+      addressUser: json['addressUser'],
+      geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
+      geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
+      images: List<ImageGarage>.from(
+          json["images"].map((x) => ImageGarage.fromJson(x))),
+      createdAt: DateTime.parse(json["createdAt"]),
+      review: Review.fromJson(json["review"]));
 
   Map<String, dynamic> toJson() => {
         "_id": id,

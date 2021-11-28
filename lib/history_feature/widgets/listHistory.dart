@@ -6,6 +6,7 @@ import 'package:rodsiagarage/core/models/garage_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/history_feature/bloc/request_service_bloc.dart';
+import 'package:rodsiagarage/main.dart';
 
 class Listhistory extends StatefulWidget {
   final Garage garage;
@@ -47,6 +48,7 @@ class _ListhistoryState extends State<Listhistory> {
           builder: (context, state) {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
+              logger.d("History: ${state.requestServices[0].review!.toJson()}");
               _reqServices = state.requestServices;
 
               _widget = ListView.builder(

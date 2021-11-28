@@ -6,34 +6,26 @@ import 'dart:convert';
 
 import 'package:rodsiagarage/core/models/user_model.dart';
 
-ReviewAdd reviewFromJson(String str) => ReviewAdd.fromJson(json.decode(str));
+Review reviewFromJson(String str) => Review.fromJson(json.decode(str));
 
-String reviewToJson(ReviewAdd data) => json.encode(data.toJson());
+String reviewToJson(Review data) => json.encode(data.toJson());
 
-class ReviewAdd {
-  ReviewAdd({
-    required this.id,
+class Review {
+  Review({
     required this.text,
     required this.star,
-    required this.user,
   });
 
-  String id;
   String text;
   int star;
-  User user;
 
-  factory ReviewAdd.fromJson(Map<String, dynamic> json) => ReviewAdd(
-        id: json["_id"],
+  factory Review.fromJson(Map<String, dynamic> json) => Review(
         text: json["text"],
         star: json["star"],
-        user: User.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "text": text,
         "star": star,
-        "user": user.toJson(),
       };
 }
