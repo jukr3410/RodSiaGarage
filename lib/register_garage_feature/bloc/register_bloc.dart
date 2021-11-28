@@ -30,6 +30,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield* _mapRegisterSendOtpToState(event);
     } else if (event is RegisterButtonPressed) {
       yield* _mapRegisterButtonPressedToState(event);
+    } else if (event is ResetButtonPressed) {
+      yield* _mapResetButtonPressedToState(event);
+    } else if (event is ResetCheckPhoneNumber) {
+      yield* _mapResetCheckPhoneNumberToState(event);
     } else {
       yield RegisterInitial();
     }
@@ -123,6 +127,42 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } catch (e) {
       logger.e(e);
       yield RegisterError();
+    }
+  }
+
+  Stream<RegisterState> _mapResetCheckPhoneNumberToState(
+      ResetCheckPhoneNumber event) async* {
+    try {
+      yield ResetLoading();
+      logger.d("Phone: ${event.garage.phone}");
+      var isPhoneNumberExist = await this
+          .garageRepository
+          .checkUsedNumberPhone(garage: event.garage);
+      logger.d("isPhoneNumberExist: $isPhoneNumberExist");
+
+      if (isPhoneNumberExist == false) {
+        yield ResetNumberNotExist();
+      } else if (isPhoneNumberExist == true) {
+        yield ResetNumberExist();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield RegisterError();
+    }
+  }
+
+  Stream<RegisterState> _mapResetButtonPressedToState(
+      ResetButtonPressed event) async* {
+    try {
+      yield ResetLoading();
+
+      final res = await this
+          .garageRepository
+          .updateGaragePassword(garage: event.garage);
+      yield ResetSuccess();
+    } catch (e) {
+      logger.e(e);
+      yield ResetError();
     }
   }
 

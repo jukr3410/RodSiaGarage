@@ -63,3 +63,24 @@ class RegisterSendOtp extends RegisterEvent {
   @override
   String toString() => 'RegisterSendOtpAgian garage: ${garage}';
 }
+
+class ResetCheckPhoneNumber extends RegisterEvent {
+  final Garage garage;
+
+  const ResetCheckPhoneNumber({required this.garage});
+
+  @override
+  List<Object> get props => [garage];
+
+  @override
+  String toString() => 'RegisterAddNumber garage: ${garage.toJson()}';
+}
+
+class ResetButtonPressed extends RegisterEvent {
+  final Garage garage;
+
+  const ResetButtonPressed({required this.garage});
+
+  @override
+  String toString() => 'Register {garage: $garage}';
+}

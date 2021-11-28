@@ -24,3 +24,15 @@ class RegisterSendVerifyOtpSuccess extends RegisterState {}
 class RegisterVerifySuccess extends RegisterState {}
 
 class RegisterVerifyFailed extends RegisterState {}
+
+class ResetInitial extends RegisterState {}
+
+class ResetError extends RegisterState {}
+
+class ResetLoading extends RegisterState {}
+
+class ResetSuccess extends RegisterState {}
+
+class ResetNumberExist extends RegisterState {}
+
+class ResetNumberNotExist extends RegisterState {}

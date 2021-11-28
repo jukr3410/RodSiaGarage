@@ -36,6 +36,9 @@ import 'package:rodsiagarage/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addInfo.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/addNumber.dart';
 import 'package:rodsiagarage/register_garage_feature/widgets/otp.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/resetCheckNumber.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/resetOtp.dart';
+import 'package:rodsiagarage/register_garage_feature/widgets/resetPassword.dart';
 import 'package:rodsiagarage/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/moreInfoRequestPage.dart';
 import 'package:rodsiagarage/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
@@ -110,6 +113,33 @@ class AppRouter {
                 create: (BuildContext context) =>
                     RegisterBloc(garageRepository: GarageRepository()),
                 child: AddInfo(garage: garage)));
+
+      case FORGOT_PHONE_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RegisterBloc(garageRepository: GarageRepository()),
+                child: ResetCheckNumber()));
+
+      case FORGOT_OTP_ROUTE:
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RegisterBloc(garageRepository: GarageRepository()),
+                child: ResetOtp(
+                  garage: garage,
+                )));
+
+      case FORGOT_RESET_PASS_ROUTE:
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RegisterBloc(garageRepository: GarageRepository()),
+                child: ResetPassword(
+                  garage: garage,
+                )));
 
       case EDIT_GARAGE_ROUTE:
         return MaterialPageRoute(
@@ -246,9 +276,8 @@ class AppRouter {
         RequestService requestService = settings.arguments as RequestService;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) =>
-                    RequestServiceBloc(
-                        requestServiceRepository: RequestServiceRepository()),
+                create: (BuildContext context) => RequestServiceBloc(
+                    requestServiceRepository: RequestServiceRepository()),
                 child: MoreInfoRequestPage(
                   req: requestService,
                 )));
