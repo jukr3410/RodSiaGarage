@@ -26,7 +26,7 @@ class _ListReqState extends State<ListReq> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoadWithStatus(status: 'รอยืนยัน'));
+      ..add(RequestServiceLoadWithStatus(status: waitingForConfirm));
     super.initState();
   }
 

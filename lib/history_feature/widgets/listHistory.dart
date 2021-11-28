@@ -27,7 +27,7 @@ class _ListhistoryState extends State<Listhistory> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoadWithStatus(status: 'เสร็จสิ้น'));
+      ..add(RequestServiceLoadWithStatus(status: completeRequestService));
     super.initState();
   }
 
