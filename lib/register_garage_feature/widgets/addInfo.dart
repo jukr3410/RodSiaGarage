@@ -80,6 +80,8 @@ class _AddInfoState extends State<AddInfo> {
   // start with all days selected.
   final values = List.filled(7, false);
 
+  bool _passwordVisible = false;
+
   @override
   void initState() {
     _registerBloc = BlocProvider.of<RegisterBloc>(context);
@@ -260,7 +262,7 @@ class _AddInfoState extends State<AddInfo> {
                                         textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.text,
                                         autofocus: true,
-                                        obscureText: true,
+                                        obscureText: !_passwordVisible,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
                                             color: textColorBlack,
@@ -274,6 +276,22 @@ class _AddInfoState extends State<AddInfo> {
                                           prefixIcon: Icon(
                                             Icons.security_rounded,
                                             color: textColorBlack,
+                                          ),
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              // Based on passwordVisible state choose the icon
+                                              _passwordVisible
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: textColorBlack,
+                                            ),
+                                            onPressed: () {
+                                              // Update the state i.e. toogle the state of passwordVisible variable
+                                              setState(() {
+                                                _passwordVisible =
+                                                    !_passwordVisible;
+                                              });
+                                            },
                                           ),
                                           fillColor: Colors.white,
                                           alignLabelWithHint: true,
@@ -304,7 +322,7 @@ class _AddInfoState extends State<AddInfo> {
                                         textInputAction: TextInputAction.done,
                                         keyboardType: TextInputType.text,
                                         autofocus: true,
-                                        obscureText: true,
+                                        obscureText: !_passwordVisible,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
                                             color: textColorBlack,

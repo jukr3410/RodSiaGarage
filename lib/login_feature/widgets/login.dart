@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late LoginBloc _loginBloc;
 
+  bool _passwordVisible = false;
+
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
@@ -155,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.text,
                                       autofocus: true,
-                                      obscureText: true,
+                                      obscureText: !_passwordVisible,
                                       textAlign: TextAlign.start,
                                       style: GoogleFonts.alata(
                                           textStyle: TextStyle(
@@ -170,6 +172,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                         prefixIcon: Icon(
                                           Icons.security_rounded,
                                           color: textColorBlack,
+                                        ),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            // Based on passwordVisible state choose the icon
+                                            _passwordVisible
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: textColorBlack,
+                                          ),
+                                          onPressed: () {
+                                            // Update the state i.e. toogle the state of passwordVisible variable
+                                            setState(() {
+                                              _passwordVisible =
+                                                  !_passwordVisible;
+                                            });
+                                          },
                                         ),
                                         fillColor: Colors.white,
                                         alignLabelWithHint: true,
