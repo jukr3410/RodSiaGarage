@@ -52,6 +52,12 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  bool twoWheelState = false;
+  bool threeWheelState = false;
+  bool fourWheelState = false;
+  bool heavyWheelState = false;
+  List<TypeCarRepairs> _typeCarRepairs = [];
+
   OpeningDayOfWeek _openingDayOfWeek = OpeningDayOfWeek(
       mo: false,
       tu: false,
@@ -339,6 +345,84 @@ class _EditProfileState extends State<EditProfile> {
                                         setTimeOfDay();
                                       },
                                       values: values,
+                                    ),
+                                    GFRadioListTile(
+                                      titleText: 'Two-wheel',
+                                      avatar: GFAvatar(
+                                        child: Image.asset(
+                                            tImageAsset('two-wheel')),
+                                      ),
+                                      size: 25,
+                                      activeBorderColor: Colors.green,
+                                      focusColor: Colors.green,
+                                      type: GFRadioType.square,
+                                      value: 0,
+                                      groupValue: twoWheelState,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          twoWheelState = value;
+                                          _typeCarRepairs.add(TypeCarRepairs(
+                                              type: 'two-Wheel'));
+                                        });
+                                      },
+                                      inactiveIcon: null,
+                                    ),
+                                    GFRadioListTile(
+                                      titleText: 'Three-wheel',
+                                      avatar: GFAvatar(
+                                        child: Image.asset(
+                                            tImageAsset('three-wheel')),
+                                      ),
+                                      size: 25,
+                                      activeBorderColor: Colors.green,
+                                      focusColor: Colors.green,
+                                      type: GFRadioType.square,
+                                      value: 0,
+                                      groupValue: threeWheelState,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          threeWheelState = value;
+                                        });
+                                      },
+                                      inactiveIcon: null,
+                                    ),
+                                    GFRadioListTile(
+                                      titleText: 'Four-wheel',
+                                      avatar: GFAvatar(
+                                        child: Image.asset(
+                                            tImageAsset('four-wheel')),
+                                      ),
+                                      size: 25,
+                                      activeBorderColor: Colors.green,
+                                      focusColor: Colors.green,
+                                      type: GFRadioType.square,
+                                      value: 0,
+                                      groupValue: twoWheelState,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          fourWheelState = value;
+                                        });
+                                      },
+                                      inactiveIcon: null,
+                                    ),
+                                    GFRadioListTile(
+                                      titleText: 'heavy-wheel',
+                                      avatar: GFAvatar(
+                                        child: Image.asset(
+                                            tImageAsset('heavy-wheel')),
+                                      ),
+                                      size: 25,
+                                      activeBorderColor: Colors.green,
+                                      focusColor: Colors.green,
+                                      type: GFRadioType.square,
+                                      value: 0,
+                                      groupValue: twoWheelState,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          heavyWheelState = value;
+                                        });
+                                      },
+                                      inactiveIcon: null,
                                     ),
                                     Align(
                                       alignment: Alignment.centerRight,

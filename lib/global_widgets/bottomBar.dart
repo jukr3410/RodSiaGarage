@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fswitch/fswitch.dart';
@@ -174,51 +176,150 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   setAppBar() {
     return AppBar(
       backgroundColor: primaryColor,
-      title: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Align(
-          //     alignment: Alignment.centerLeft,
-          //     child: Text(
-          //       _menuBarTest[_selectedIndex].title,
-          //       style: TextStyle(color: textColorBlack),
-          //     )),
-          Align(
-            alignment: Alignment.centerRight,
-            child: FSwitch(
-              open: status,
-              height: 30,
-              width: 75,
-              onChanged: (v) {
-                _navigateToChangeStatus(context, v);
-              },
-              closeChild: Text(
-                'Offline',
-                style: TextStyle(fontSize: 12),
-              ),
-              openChild: Text(
-                'Online',
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-              openColor: Colors.green.shade600,
+      title: Align(
+        alignment: Alignment.centerRight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            CircleAvatar(
+              backgroundColor: isGarageOpen(widget.garage) == 'เปิด'
+                  ? greenStatus
+                  : redStatus,
+              maxRadius: 5,
             ),
-          ),
-          // Align(
-          //   alignment: Alignment.centerRight,
-          //   child: IconButton(
-          //     icon: Icon(
-          //       Icons.notifications,
-          //       color: textColorBlack,
-          //       size: 30,
-          //     ),
-          //     onPressed: () {},
-          //   ),
-          // ),
-        ],
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'สถานะ: ร้าน' + isGarageOpen(widget.garage),
+              style: TextStyle(color: textColorBlack,fontSize: fontSizeM),
+            ),
+          ],
+        ),
+        // FSwitch(
+        //     open: status,
+        //     height: 30,
+        //     width: 75,
+        //     onChanged: (v) {
+        //       _navigateToChangeStatus(context, v);
+        //     },
+        //     closeChild: Text(
+        //       'Offline',
+        //       style: TextStyle(fontSize: 12),
+        //     ),
+        //     openChild: Text(
+        //       'Online',
+        //       style: TextStyle(
+        //         fontSize: 12,
+        //       ),
+        //     ),
+        //     openColor: Colors.green.shade600,
+        //   ),
       ),
     );
+  }
+
+  String isGarageOpen(Garage garage) {
+    DateTime now = DateTime.now();
+
+    // logger.d(now.hour.toString() +
+    //     ":" +
+    //     now.minute.toString() +
+    //     ":" +
+    //     now.second.toString() +
+    //     ", day: " +
+    //     now.weekday.toString());
+    var openGarage = garage.openingHour!.open.split(".");
+    var closeGarage = garage.openingHour!.close.split(".");
+    // logger.d(openGarage);
+    var openHour = int.parse(openGarage[0]);
+    var openMinute = int.parse(openGarage[1]);
+    var closeHour = int.parse(closeGarage[0]);
+    var closeMinute = int.parse(closeGarage[1]);
+
+    var status = "ปิด";
+    var textColor = textColorRed;
+
+    switch (now.weekday) {
+      case 1:
+        if ((garage.openingDayOfWeek!.mo == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 2:
+        if ((garage.openingDayOfWeek!.tu == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 3:
+        if ((garage.openingDayOfWeek!.we == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 4:
+        if ((garage.openingDayOfWeek!.th == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 5:
+        if ((garage.openingDayOfWeek!.fr == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 6:
+        if ((garage.openingDayOfWeek!.sa == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 7:
+        if ((garage.openingDayOfWeek!.su == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+    }
+    return status;
   }
 
   void _navigateToChangeStatus(BuildContext context, bool v) async {

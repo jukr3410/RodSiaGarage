@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
@@ -47,13 +48,8 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                     backgroundColor: Colors.transparent,
                     radius: 60,
                     child: ClipOval(
-                      child: Image.asset(
-                        tImageAsset('profile-homePage'),
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        child: proFileImage(
+                            widget.requestService.user.profileImage)),
                   ),
                   Text(
                     widget.requestService.user.name,
@@ -140,6 +136,26 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
         ),
       ),
     );
+  }
+
+  proFileImage(String profileImage) {
+    if (profileImage == '') {
+      return Image.asset(
+        tImageAsset('profile-homePage'),
+        width: 100,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: profileImage,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        height: 100,
+        width: 100,
+      );
+    }
   }
 
   navigateToHome() {

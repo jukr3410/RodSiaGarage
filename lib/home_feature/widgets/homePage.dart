@@ -39,78 +39,87 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 40,
-                      child: ClipOval(
-                          child:
-                              _profileImage(state.garage.logoImage.toString())),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                Container(
+                  decoration: BoxDecoration(
+                      boxShadow: [boxShadow],
+                      borderRadius: borderRadiusMedium,
+                      color: bgColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(defualtPaddingLow),
+                    child: Row(
                       children: [
-                        Container(
-                          width: 180,
-                          child: Text(
-                            state.garage.name,
-                            style: TextStyle(
-                                fontSize: fontSizeXXl,
-                                fontWeight: FontWeight.w600),
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
+                        SizedBox(
+                          width: 10,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              tPhone + ': ',
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize: fontSizeM),
-                            ),
-                            Text(
-                              state.garage.phone,
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize: fontSizeM),
-                            )
-                          ],
+                        CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          radius: 40,
+                          child: ClipOval(
+                              child: _profileImage(
+                                  state.garage.logoImage.toString())),
                         ),
-                        Row(
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              tEmailThai + ': ',
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize: fontSizeM),
-                            ),
                             Container(
-                              width: 180,
+                              width: 170,
                               child: Text(
-                                state.garage.email,
+                                state.garage.name,
                                 style: TextStyle(
-                                    color: Colors.grey.shade700,
-                                    fontSize: fontSizeM),
+                                    fontSize: fontSizeXXl,
+                                    fontWeight: FontWeight.w600),
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
-                            )
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  tPhone + ': ',
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontSize: fontSizeM),
+                                ),
+                                Text(
+                                  state.garage.phone,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontSize: fontSizeM),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  tEmailThai + ': ',
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontSize: fontSizeM),
+                                ),
+                                Container(
+                                  width: 170,
+                                  child: Text(
+                                    state.garage.email,
+                                    style: TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontSize: fontSizeM),
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
-                        ),
+                        )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 20,

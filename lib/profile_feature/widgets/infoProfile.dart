@@ -26,53 +26,52 @@ class _InfoProfileState extends State<InfoProfile> {
           children: [
             Flexible(
               flex: 4,
-              child: Column(
-                children: [
-                  ClipOval(
-                      child: _proFileImage(widget.garage.logoImage.toString())),
-                ],
-              ),
+              child: ClipOval(
+                  child: _proFileImage(widget.garage.logoImage.toString())),
             ),
             SizedBox(
               width: 20,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 180,
-                  child: Text(
-                    widget.garage.name,
-                    style: TextStyle(
-                        fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
-                    softWrap: true,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 180,
+                    child: Text(
+                      widget.garage.name,
+                      style: TextStyle(
+                          fontSize: fontSizeXXl, fontWeight: FontWeight.w600),
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Row(
-                  children: [
-                    Text(tPhone + ': '),
-                    Text(
-                      widget.garage.phone,
-                    )
-                  ],
-                ),
-                Container(
-                  width: 180,
-                  child: Row(
+                  Row(
                     children: [
-                      Text(tEmailThai + ': '),
+                      Text(tPhone + ': '),
                       Text(
-                        widget.garage.email,
-                        softWrap: true,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        widget.garage.phone,
                       )
                     ],
                   ),
-                ),
-              ],
+                  Row(
+                    children: [
+                      Text(tEmailThai + ': '),
+                      Container(
+                        width: 130,
+                        child: Text(
+                          widget.garage.email,
+                          softWrap: true,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             )
           ],
         ),
