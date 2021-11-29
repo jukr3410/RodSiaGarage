@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
+import 'package:intl/intl.dart';
 import 'package:rodsiagarage/constants.dart';
 import 'package:rodsiagarage/core/models/request_service_model.dart';
 import 'package:rodsiagarage/global_widgets/hexTocolor.dart';
@@ -90,6 +91,13 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text('เวลา'),
+                                Text(
+                                  DateFormat('yyyy-MMM-dd  HH:MM น.').format(
+                                      DateTime.parse(widget
+                                          .requestService.createdAt
+                                          .toString())),
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                ),
                                 SizedBox(height: 20),
                                 Text(
                                   'สถานที่: ',

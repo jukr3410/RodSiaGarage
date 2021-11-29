@@ -54,12 +54,14 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                     widget.requestService.user.email,
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
-                  GFRating(
-                    color: primaryColor,
-                    borderColor: primaryColor,
-                    value: widget.requestService.review!.star.toDouble(),
-                    onChanged: (value) {},
-                  ),
+                  widget.requestService.review!.star == 0
+                      ? Text('')
+                      : GFRating(
+                          color: primaryColor,
+                          borderColor: primaryColor,
+                          value: widget.requestService.review!.star.toDouble(),
+                          onChanged: (value) {},
+                        ),
                   SizedBox(
                     height: 5,
                   ),
@@ -73,13 +75,19 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                           style: TextStyle(color: Colors.grey.shade600),
                         )
                       : Container(
-                          width: 250,
-                          child: Text(
-                            widget.requestService.review!.text,
-                            softWrap: true,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.grey.shade600),
+                          width: 200,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.requestService.review!.text,
+                                softWrap: true,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.grey.shade600),
+                              ),
+                            ],
                           ),
                         ),
                   SizedBox(height: 15),
@@ -188,7 +196,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                             'รูปภาพ: ',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          widget.requestService.images == null
+                          widget.requestService.images!.isEmpty
                               ? Text(
                                   'ไม่มีรูป',
                                   style: TextStyle(color: Colors.grey.shade600),
