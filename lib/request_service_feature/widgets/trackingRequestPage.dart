@@ -269,7 +269,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
     List<LatLng> polylineCoordinates = [];
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyA0WKpMAsoXdtAhRR3X56WgvCh4IN1cBps",
+      "map api",
       PointLatLng(currentPosition.latitude, currentPosition.longitude),
       PointLatLng(destinationPosition.latitude, destinationPosition.longitude),
       travelMode: TravelMode.driving,
